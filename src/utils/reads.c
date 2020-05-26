@@ -17,7 +17,10 @@ void	launch(char *input)
 	{
 		s = ft_strjoin("/bin/", arg_list[0]);
 		if ((execve(s, arg_list, NULL)) == -1)
+		{
 			ft_print(strerror(errno));
+			write(1, "\n", 1);
+		}
 		exit(0);
 	}
 	else
@@ -41,7 +44,9 @@ void	prompt(void)
 		print_prompt_prefix();
 		ret = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
 		// if (ret == -1)
-			// exit and error
+			// exit and error 
+			//ft_print(strerror(errno));
+			//exit(0);
 		if (ret)
 		{
 			while (buffer[ret - 1] != '\n')
