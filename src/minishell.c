@@ -20,7 +20,7 @@ void    print_prompt_prefix(void)
     write(1, "\033[0m", 6);
 }
 
-int main(int ac, char **av)
+int main(void)
 {
     char    buffer[150];
     char    *s;

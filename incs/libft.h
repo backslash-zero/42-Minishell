@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 14:39:28 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/05/26 20:44:06 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/05/26 21:00:20 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			*ft_memmove(void *dst, const void *src, size_t n);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 size_t			ft_strlen(const char *s);
-int				ft_strcmp(const char *s1, const char *s2)
+int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strnstr(const char *h, const char *nd, size_t len);
 int				ft_tolower(int c);

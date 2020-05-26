@@ -9,8 +9,7 @@
 #include <errno.h>
 #include "libft.h"
 
-void    print_prompt_prefix(void);
-void    shell_loop(void);
 void    ft_print(char *s);
+void    print_prompt_prefix(void);
 
 #endif
