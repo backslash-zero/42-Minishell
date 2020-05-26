@@ -11,6 +11,15 @@ void    ft_print(char *s)
         write(1, &s[j], 1);
 }
 
+void    print_prompt_prefix(void)
+{
+    write(1, "\033[1;35m", 8);
+    write(1, "MiniShell", 9);
+    write(1, "\033[1;33m", 8);
+    write(1, " > ", 3);
+    write(1, "\033[0m", 6);
+}
+
 int main(int ac, char **av)
 {
     char    buffer[150];
@@ -22,7 +31,7 @@ int main(int ac, char **av)
 
     while (1)
     {
-        ft_print("Minishell >");
+        print_prompt_prefix();
         read(1, buffer, 150);
         buffer[ft_strlen(buffer) - 1]= '\0';
         if (ft_strcmp("exit",buffer) == 0)
