@@ -22,7 +22,7 @@ void	launch(char *input)
 	{
 		s = ft_strjoin("/bin/", arg_list[0]);
 		if ((execve(s, arg_list, NULL)) == -1)
-			ft_print(strerror(errno));
+			ft_putstr(strerror(errno));
 	}
 	else
 		wait(&process);
