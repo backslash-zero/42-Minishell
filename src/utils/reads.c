@@ -5,13 +5,13 @@ void	launch(char *input)
     char    *s;
     char    *p;
     char    **arg_list;
-    int     i;
     pid_t   process;
 
 	if (ft_strcmp("exit",input) == 0)
 		exit(0);
 	p = ft_strdup(input);
 	arg_list = ft_split(p, ' ');
+	free(p);
 	process = fork();
 	if (process == 0)
 	{
@@ -22,13 +22,7 @@ void	launch(char *input)
 	}
 	else
 		wait(&process);
-	i = 0;
-	while (arg_list[i] != NULL)
-	{
-		free(arg_list[i]);
-		i++;
-	}
-	free(p);
+	free_tab(arg_list);
 }
 
 void	prompt(void)
