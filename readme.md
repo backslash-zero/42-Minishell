@@ -16,6 +16,9 @@ malloc, free, write, open, read, close, fork, wait, waitpid, wait3, wait4, signa
 All of these system calls are used to wait for state changes in a child of the calling process, and obtain information about the child whose state has changed.
 `wait` supends execution of 
 
+### Max arg
+As seen [here](https://serverfault.com/questions/163371/linux-command-line-character-limit), the maximum ammount of characters in a command in shell should be `131072`
+
 ## Ressources 
 [Création d'un minisystème](https://chrtophe.developpez.com/tutoriels/minisysteme/#L11)
 [Write a shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)
