@@ -16,5 +16,6 @@ void    ft_putstr(char *s);
 void    print_prompt_prefix(void);
 void	prompt(void);
 void	launch(char *input);
+void	free_tab(char **tab);
 
 #endif
