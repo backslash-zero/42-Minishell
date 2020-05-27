@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:55:23 by cmeunier          #+#    #+#             */
-/*   Updated: 2019/10/24 15:32:38 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:19:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/libft.h"
 
 void	ft_bzero(void *s, size_t n)
 {

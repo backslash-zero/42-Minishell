@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 15:08:47 by cmeunier          #+#    #+#             */
-/*   Updated: 2019/10/22 13:50:14 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:20:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/libft.h"
 
 static	char	*c_itoastr(char *str, int i, int n, int negative)
 {

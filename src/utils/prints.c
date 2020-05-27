@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 void    ft_print(char *s)
 {

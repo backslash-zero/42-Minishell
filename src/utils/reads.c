@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 void	launch(char *input)
 {

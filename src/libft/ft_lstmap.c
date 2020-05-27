@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 14:58:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2019/10/22 19:19:24 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:21:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/libft.h"
 
 t_list			*ft_lstmap(t_list *l, void *(*f)(void *), void (*dl)(void *))
 {
