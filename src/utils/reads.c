@@ -9,13 +9,11 @@ void	launch(char *input)
 
 	if (ft_strcmp("exit",input) == 0)
 		exit(0);
-	p = ft_strdup(input);
-	arg_list = ft_split(p, ' ');
-	free(p);
+	arg_list = ft_split(input, ' ');
 	process = fork();
 	if (process == -1)
 	{
-		ft_print(strerror(errno));
+		ft_putstr(strerror(errno));
 		exit(0);
 	}
 	if (process == 0)

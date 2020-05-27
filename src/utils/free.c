@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 void	free_tab(char **tab)
 {
