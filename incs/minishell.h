@@ -10,12 +10,13 @@
 #include <string.h>
 #include <errno.h>
 #include "libft.h"
+#include "env.h"
+#include "builtin.h"
 
-void    ft_print(char *s);
-void    ft_putstr(char *s);
 void    print_prompt_prefix(void);
 void	prompt(void);
 void	launch(char *input);
 void	free_tab(char **tab);
+int     arg_len(char **arg);
 
 #endif
