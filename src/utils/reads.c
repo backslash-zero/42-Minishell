@@ -1,6 +1,6 @@
 #include "../../incs/minishell.h"
 
-void	launch(char *input)
+void	launch(char *input, t_parse parse)
 {
     char    *s;
     char    **arg_list;
@@ -17,10 +17,11 @@ void	launch(char *input)
 	}
 	if (process == 0)
 	{
-		s = ft_strjoin("/bin/", arg_list[0]);
+		if (ft_checkbuiltins(arg_list, parse) == 0)
+			kill(process, SIGCHLD);
+		/*s = ft_strjoin("/bin/", arg_list[0]);
 		if ((execve(s, arg_list, NULL)) == -1)
-			ft_putstr(strerror(errno));
-		
+			ft_putstr(strerror(errno));*/
 	}
 	else
 		wait(&process);
@@ -31,6 +32,7 @@ void	prompt(void)
 {
 	char	buffer[MAX_INPUT_SIZE];
 	int		ret;
+	t_parse	parse;
 	
 	while (1)
 	{
@@ -42,6 +44,6 @@ void	prompt(void)
 			buffer[ret - 1] = '\0';
 		else
 			ft_strlcpy(buffer, "exit", 5);
-		launch(buffer);
+		launch(buffer, &parse);
 	}
 }
