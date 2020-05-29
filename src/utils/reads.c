@@ -34,7 +34,6 @@ void	prompt(void)
 	char	buffer[MAX_INPUT_SIZE];
 	int		ret;
 	t_parse	parse;
-	int i = 0;
 
 	ft_builtinstab(&parse);
 	while (1)
