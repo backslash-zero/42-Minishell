@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 int     arg_len(char **arg)
 {

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 char	*get_var(t_list *list, char *key)
 {
