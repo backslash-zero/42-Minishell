@@ -96,24 +96,24 @@ int add_elem(char *s)
 	return (1);
 }
 
-int		builtin_export(char **s)
+int		builtin_export(char **arg)
 {
 	t_list	*lst;
 	int		i;
 	int		start;
 	i = 1;
-	while (s[i])
+	while (arg[i])
 	{
-		if ((start = check_if_exist(g_export, s[i])))
+		if ((start = check_if_exist(g_export, arg[i])))
 		{
-			if (replace_elem(s[i], start))
+			if (replace_elem(arg[i], start))
 				return (1);
 			else
 				return (0);
 		}
 		else 
 		{
-			if (add_elem(s[i]))
+			if (add_elem(arg[i]))
 				return (1);
 			else
 				return (0);

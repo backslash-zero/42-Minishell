@@ -1,6 +1,6 @@
 #include "../../incs/minishell.h"
 
-int		builtin_exit(char **s)
+int		builtin_exit(char **arg)
 {
 	//free_tab(s);
 	//printf("i'm in exit\n");

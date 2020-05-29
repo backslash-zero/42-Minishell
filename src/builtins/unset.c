@@ -60,7 +60,7 @@ t_list  *unset_env(t_list *lst, char *s)
     }
 }
 
-int		builtin_unset(char **s)
+int		builtin_unset(char **arg)
 {
     int     i;
     t_list  *tmp0;
@@ -70,10 +70,10 @@ int		builtin_unset(char **s)
     tmp0 = g_env;
     tmp1 = g_export;
     printf("i'm in unset\n");
-    while (s[i] != '\0')
+    while (arg[i] != '\0')
     {
-        tmp0 = unset_env(tmp0, s[i]);
-        tmp1 = unset_env(tmp1, s[i]);
+        tmp0 = unset_env(tmp0, arg[i]);
+        tmp1 = unset_env(tmp1, arg[i]);
         i++;
     }
 	return(0);
