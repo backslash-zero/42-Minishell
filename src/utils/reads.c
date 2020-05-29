@@ -34,6 +34,7 @@ void	prompt(void)
 	int		ret;
 	t_parse	parse;
 	
+	ft_builtinstab(&parse);
 	while (1)
 	{
 		print_prompt_prefix();
