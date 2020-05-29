@@ -12,7 +12,7 @@ char	*current_dir(void)
 	return(dir);
 }
 
-int		builtin_pwd(void)
+int		builtin_pwd(char **s)
 {
 	ft_putstr(current_dir());
 	return(0);
