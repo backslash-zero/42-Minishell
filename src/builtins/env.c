@@ -7,8 +7,8 @@ char	*get_var(t_list *list, char *key)
     tmp = list;
     while(tmp)
     {
-        if (!(ft_strncmp(tmp->content, key, ft_strlen(key))))
-            return (ft_strdup(&tmp->content[ft_strlen(key)]));
+        if (!(ft_strncmp(tmp->content, key, (int)ft_strlen(key))))
+                return (ft_strdup((char *)&(tmp->content)[ft_strlen(key)]));
         tmp = tmp->next;
     }
     return (NULL);

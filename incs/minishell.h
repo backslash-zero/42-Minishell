@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include "error.h"
 #include "libft.h"
 #include "env.h"
 #include "builtin.h"

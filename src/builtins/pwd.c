@@ -7,8 +7,8 @@ char	*current_dir(void)
 	char *dir;
 
 	dir = NULL;
-	dir = getcwd(dir, 0);
-	// error if not assigned
+	if(!(dir = getcwd(dir, 0)))
+		ft_error();
 	return(dir);
 }
 

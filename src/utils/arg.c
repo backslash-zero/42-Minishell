@@ -2,9 +2,11 @@
 
 int     arg_len(char **arg)
 {
-    int i = 0;
+    int i;
 
-    while (arg[i])
-        i++;
-    return(i);
+    i = 0;
+	if (arg)
+		while (arg[i])
+			i++;
+	return (i);
 }
