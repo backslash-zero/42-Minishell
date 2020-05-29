@@ -71,7 +71,7 @@ int	replace_elem(char *s, int i)
 	return (1);
 }
 
-int add_to_list(char *s, t_list *lst)
+int add_to_list(char *s, t_list **lst)
 {
 	t_list *lst1;
 
@@ -96,12 +96,32 @@ int add_elem(char *s)
 	return (1);
 }
 
+int        print_export(char **arg)
+{
+    t_list *tmp;
+    
+    tmp = g_export;
+    while(tmp)
+    {
+        ft_putstr(tmp->content);
+        ft_putstr("\n");
+        tmp = tmp->next;
+    }
+    return(0);
+}
+
 int		builtin_export(char **arg)
 {
 	t_list	*lst;
 	int		i;
 	int		start;
 	i = 1;
+
+	if (arg_len(arg) == 1)
+	{
+		print_export(arg);
+		return (1);
+	}
 	while (arg[i])
 	{
 		if ((start = check_if_exist(g_export, arg[i])))

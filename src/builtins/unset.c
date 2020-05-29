@@ -25,7 +25,7 @@ t_list  *unset_env(t_list *lst, char *s)
     t_list  *lst3;
 
     lst2 = lst;
-   /* if (find_elem(lst2->content, s))
+    if (find_elem(lst2->content, s))
     {
         lst = lst->next;
         ft_lstdelone(lst2, free);
@@ -46,17 +46,6 @@ t_list  *unset_env(t_list *lst, char *s)
             lst3 = lst3->next;
         }
         return (lst);
-    }*/
-    while (lst2)
-    {
-        if (find_elem(lst2->content, s))
-        {
-            lst3 = lst2;
-            lst2 = lst2->next;
-            ft_lstdelone(lst3, free);
-            return (lst);
-        }
-        lst2 = lst2->next;
     }
 }
 
@@ -69,8 +58,7 @@ int		builtin_unset(char **arg)
     i = 1;
     tmp0 = g_env;
     tmp1 = g_export;
-    printf("i'm in unset\n");
-    while (arg[i] != '\0')
+    while (arg[i] != NULL)
     {
         tmp0 = unset_env(tmp0, arg[i]);
         tmp1 = unset_env(tmp1, arg[i]);
