@@ -1,48 +1,5 @@
 #include "../../incs/minishell.h"
 
-int		ft_cd(char **s)
-{
-	printf("i'm in cd\n");
-	return(0);
-}
-
-int		ft_pwd(char **s)
-{
-	printf("i'm in pwd\n");
-	return(0);
-}
-
-int		ft_export(char **s)
-{
-	printf("i'm in export\n");
-	return(0);
-}
-
-int		ft_unset(char **s)
-{
-	printf("i'm in unset\n");
-	return(0);
-}
-
-int		ft_env(char **s)
-{
-	printf("i'm in env\n");
-	return(0);
-}
-
-int		ft_exit(char **s)
-{
-	//free_tab(s);
-	//printf("i'm in exit\n");
-	//exit(0);
-
-	return(-1);
-}
-
-
-
-
-
 void	launch(char *input, t_parse *parse)
 {
     char    *s;

@@ -12,7 +12,7 @@ void	ft_builtinstab(t_parse *parse)
 }
 
 builtfunc_addr	builtins_func[] = {
-	&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env, &ft_exit
+	&builtin_echo, &builtin_cd, &builtin_pwd, &builtin_export, &builtin_unset, &builtin_env, &builtin_exit
 };
 
 int		ft_checkbuiltins(char **s, t_parse *parse)
