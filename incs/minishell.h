@@ -23,7 +23,7 @@ typedef struct      s_parse
 
 void    print_prompt_prefix(void);
 void	prompt(void);
-void	launch(char *input);
+void	launch(char *input, t_parse *parse);
 void	free_tab(char **tab);
 int     arg_len(char **arg);
 
