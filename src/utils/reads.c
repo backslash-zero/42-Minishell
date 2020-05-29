@@ -11,53 +11,69 @@ void	ft_builtinstab(t_parse *parse)
 	parse->builtnb[6] = "exit";
 }
 
-int		ft_echo(void)
+int		ft_echo(char **s)
 {
-	printf("i'm in echo\n");
-	return(1);
+	char	*s2;
+
+	if (ft_strcmp(s[1], "-n") == 0)
+	{
+		s2 = ft_strtrim_char(s[2],'"');
+		ft_putstr(s2);
+	}
+	else
+	{
+		s2 = ft_strtrim_char(s[1],'"');
+		ft_putstr(s2);
+		ft_putchar('\n');
+	}
+	free(s2);
+	return(0);
 }
 
-int		ft_cd(void)
+int		ft_cd(char **s)
 {
 	printf("i'm in cd\n");
-	return(1);
+	return(0);
 }
 
-int		ft_pwd(void)
+int		ft_pwd(char **s)
 {
 	printf("i'm in pwd\n");
-	return(1);
+	return(0);
 }
 
-int		ft_export(void)
+int		ft_export(char **s)
 {
 	printf("i'm in export\n");
-	return(1);
+	return(0);
 }
 
-int		ft_unset(void)
+int		ft_unset(char **s)
 {
 	printf("i'm in unset\n");
-	return(1);
+	return(0);
 }
 
-int		ft_env(void)
+int		ft_env(char **s)
 {
 	printf("i'm in env\n");
-	return(1);
+	return(0);
 }
 
-int		ft_exit(void)
+int		ft_exit(char **s)
 {
-	printf("i'm in exit\n");
-	return(1);
+	//free_tab(s);
+	//printf("i'm in exit\n");
+	//exit(0);
+
+	return(-1);
 }
 
 builtfunc_addr	builtins_func[] = {
 	&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env, &ft_exit
 };
 
-int		ft_checkbuiltins(char *s, t_parse *parse)
+int		ft_checkbuiltins(char **s, t_parse *parse)
 {
 	int i;
 	int	good;
@@ -66,14 +82,15 @@ int		ft_checkbuiltins(char *s, t_parse *parse)
 	good = 0;
 	while (i <= NB_BUILINS && good != 1)
 	{
-		if (ft_strcmp(s, parse->builtnb[i]) == 0)
+		if (ft_strcmp(s[0], parse->builtnb[i]) == 0)
 			good = 1;
 		if (good != 1)
 			i++;
 	}
 	if (good == 1)
 	{
-		builtins_func[i]();
+		if (builtins_func[i](s) == -1)
+			return(0);
 		return(1);
 	}
 	else
@@ -91,8 +108,8 @@ void	launch(char *input, t_parse *parse)
     char    **arg_list;
     pid_t   process;
 
-	if (ft_strcmp("exit",input) == 0)
-		exit(0);
+	/*if (ft_strcmp("exit",input) == 0)
+		exit(0);*/
 	arg_list = ft_split(input, ' ');
 	process = fork();
 	if (process == -1)
@@ -102,8 +119,8 @@ void	launch(char *input, t_parse *parse)
 	}
 	if (process == 0)
 	{
-		if (ft_checkbuiltins(arg_list[0], parse) == 0)
-			exit(0);
+		if (ft_checkbuiltins(arg_list, parse) == 0)
+			kill(process, SIGCHLD);
 		/*s = ft_strjoin("/bin/", arg_list[0]);
 		if ((execve(s, arg_list, NULL)) == -1)
 			ft_putstr(strerror(errno));*/
