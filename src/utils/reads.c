@@ -1,6 +1,6 @@
 #include "../../incs/minishell.h"
 
-void	launch(char *input, t_parse parse)
+void	launch(char *input, t_parse *parse)
 {
     char    *s;
     char    **arg_list;
