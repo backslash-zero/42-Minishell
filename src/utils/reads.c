@@ -6,8 +6,8 @@ void	launch(char *input, t_parse *parse)
     char    **arg_list;
     pid_t   process;
 
-	if (ft_strcmp("exit",input) == 0)
-		exit(0);
+	/*if (ft_strcmp("exit",input) == 0)
+		exit(0);*/
 	arg_list = ft_split(input, ' ');
 	process = fork();
 	if (process == -1)
