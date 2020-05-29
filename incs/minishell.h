@@ -21,6 +21,8 @@ typedef struct      s_parse
     char      *builtnb[NB_BUILINS];
 }                   t_parse;
 
+void	ft_builtinstab(t_parse *parse);
+int		ft_checkbuiltins(char **s, t_parse *parse);
 void    print_prompt_prefix(void);
 void	prompt(void);
 void	launch(char *input, t_parse *parse);

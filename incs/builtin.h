@@ -3,8 +3,6 @@
 
 
 char	*current_dir(void);
-void	ft_builtinstab(t_parse *parse);
-int		ft_checkbuiltins(char **s, t_parse *parse);
 int     builtin_echo(char **arg);
 int		builtin_cd(char **arg);
 int		builtin_pwd(char **arg);
