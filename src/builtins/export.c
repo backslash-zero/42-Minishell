@@ -52,6 +52,7 @@ int	set_value(t_list *lst, char *s1, char *s2)
 		}
 		lst = lst->next;
 	}
+	return (1 );
 }
 
 int	replace_elem(char *s, int i)
@@ -107,9 +108,16 @@ int		builtin_export(char **s)
 		{
 			if (replace_elem(s[i], start))
 				return (1);
+			else
+				return (0);
 		}
-		else if (add_elem(s[i]))
-			return (1);
+		else 
+		{
+			if (add_elem(s[i]))
+				return (1);
+			else
+				return (0);
+		}
 		i++;
 	}
 	return(0);
