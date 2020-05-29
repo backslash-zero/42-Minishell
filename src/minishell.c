@@ -1,7 +1,13 @@
 #include "../incs/minishell.h"
 
-int main(void)
+// set_var(g_env, "PWD=", current_dir());
+
+int		main(int ac, char **av, char **envp)
 {
-    prompt();
-    return (0);
+	(void)ac;
+	(void)av;
+	g_env = init_env(&g_env, envp);
+	prompt();
+	// free env
+	return (0);
 }

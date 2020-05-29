@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 14:39:28 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/05/26 21:00:20 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/05/28 14:19:32 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char			*ft_itoa(int n);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_putendl_fd(char *s, int fd);
+void		    ft_putstr(char *s);
 void			ft_putstr_fd(char *s, int fd);
 t_list			*ft_lstnew(void *content);
 void			ft_lstadd_front(t_list **alst, t_list *new);
