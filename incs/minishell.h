@@ -25,5 +25,12 @@ void    print_prompt_prefix(void);
 void	prompt(void);
 void	launch(char *input, t_parse *parse);
 void	free_tab(char **tab);
+int		ft_echo(char **s);
+int		ft_cd(char **s);
+int		ft_pwd(char **s);
+int		ft_export(char **s);
+int		ft_unset(char **s);
+int		ft_env(char **s);
+int		ft_exit(char **s);
 
 #endif
