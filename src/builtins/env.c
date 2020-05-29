@@ -62,7 +62,7 @@ t_list    *init_env(t_list **lst, char **tab)
 	return (*lst);
 }
 
-int        builtin_env(char **s)
+int        builtin_env(char **arg)
 {
     t_list *tmp;
     
