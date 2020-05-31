@@ -34,7 +34,7 @@ t_list  *unset_env(t_list *lst, char *s)
     else
     {
         lst3 = lst2->next;
-        while (lst3)
+        while (lst3 != NULL)
         {
             if (find_elem(lst3->content, s))
             {
@@ -47,21 +47,18 @@ t_list  *unset_env(t_list *lst, char *s)
         }
         return (lst);
     }
+    
 }
 
 int		builtin_unset(char **arg)
 {
     int     i;
-    t_list  *tmp0;
-    t_list  *tmp1;
 
     i = 1;
-    tmp0 = g_env;
-    tmp1 = g_export;
     while (arg[i] != NULL)
     {
-        tmp0 = unset_env(tmp0, arg[i]);
-        tmp1 = unset_env(tmp1, arg[i]);
+        g_export = unset_env(g_export, arg[i]);
+        g_env = unset_env(g_env, arg[i]);
         i++;
     }
 	return(0);
