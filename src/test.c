@@ -48,17 +48,17 @@ int		main(int ac, char **av, char **envp)
     builtin_env(arg);
 
     ft_putstr("\n\n");
-    /*arg[0] = "unset";
+    arg[0] = "unset";
     arg[1] = "minishell";
     builtin_unset(arg);
-    builtin_env(arg);*/
+   builtin_env(arg);
     
     ft_putstr("\n\n");
     arg[0] = "export";
     arg[1] = "testexport=5";
     builtin_export(arg);
-    builtin_env(arg);
-    ft_putstr("\n\n");
+   // builtin_env(arg);
+   /* ft_putstr("\n\n");
     arg[0] = "export";
     arg[1] = "test=5";
     builtin_export(arg);
@@ -66,7 +66,7 @@ int		main(int ac, char **av, char **envp)
     ft_putstr("\n\narg = Export\n");
     arg[0] = "export";
     arg[1] = NULL;
-    builtin_export(arg);
+    builtin_export(arg);*/
 
 	return (0);
 }
