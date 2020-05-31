@@ -53,12 +53,12 @@ t_list  *unset_env(t_list *lst, char *s)
 int		builtin_unset(char **arg)
 {
     int     i;
-
+    
     i = 1;
     while (arg[i] != NULL)
     {
-        g_export = unset_env(g_export, arg[i]);
         g_env = unset_env(g_env, arg[i]);
+        g_export = unset_env(g_export, arg[i]);
         i++;
     }
 	return(0);
