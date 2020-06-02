@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 15:21:33 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/05/27 14:31:15 by marvin           ###   ########.fr       */
+/*   Updated: 2020/05/31 23:04:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static void		*ft_memcpy_bis(void *dst, const void *src, size_t n)
 char			*ft_strdup(const char *s1)
 {
 	char	*cpy;
-	int		i;
 
-	i = 0;
 	if (!(cpy = malloc(sizeof(char) * (ft_strlen(s1) + 1))))
 		return (0);
 	return (ft_memcpy_bis(cpy, s1, ft_strlen(s1)));
