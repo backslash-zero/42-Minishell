@@ -110,11 +110,33 @@ int        print_export(char **arg)
     return(0);
 }
 
+int		check_export_arg(char *arg)
+{
+	int i;
+
+	i = 0;
+	if ((arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97 && arg[0] <= 122) || arg[0] == 95)
+	{
+		i++;
+		while (arg[i] && arg[i] != '=')
+		{
+			if ((arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97 && arg[0] <= 122) || arg[0] == 95 || (arg[i] >= 48 && arg[i] <= 57))
+				i++;
+			else
+				return (0);
+		}
+	}
+	else
+		return (0);
+	return (1);
+}
+
 int		builtin_export(char **arg)
 {
 	t_list	*lst;
 	int		i;
 	int		start;
+	int		j;
 	i = 1;
 
 	if (arg_len(arg) == 1)
@@ -122,7 +144,7 @@ int		builtin_export(char **arg)
 		print_export(arg);
 		return (1);
 	}
-	while (arg[i])
+	while (arg[i] && (j = check_export_arg(arg[i])))
 	{
 		if ((start = check_if_exist(g_export, arg[i])))
 		{
@@ -139,6 +161,11 @@ int		builtin_export(char **arg)
 				return (0);
 		}
 		i++;
+	}
+	if (j == 0)
+	{
+		ft_putstr("Arg error\n");
+		builtin_exit(arg);
 	}
 	return(0);
 }
