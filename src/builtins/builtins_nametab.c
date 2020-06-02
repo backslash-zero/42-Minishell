@@ -36,9 +36,6 @@ int		ft_checkbuiltins(char **s, t_parse *parse)
 		return(1);
 	}
 	else
-	{
-		printf("Error: fatality\n");
 		return (0);
-	}
 	/*A amelioer en faisant un exit avec un message d'erreur*/
 }
