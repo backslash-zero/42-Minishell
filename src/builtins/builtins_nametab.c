@@ -22,7 +22,7 @@ int		ft_checkbuiltins(char **s, t_parse *parse)
 
 	i = 0;
 	good = 0;
-	while (i <= NB_BUILINS && good != 1)
+	while (i < NB_BUILINS && good != 1)
 	{
 		if (ft_strcmp(s[0], parse->builtnb[i]) == 0)
 			good = 1;
