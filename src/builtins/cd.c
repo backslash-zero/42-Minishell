@@ -26,7 +26,6 @@ int 	builtin_cd(char **arg)
 
 	if (arg_len(arg) == 1)
 	{
-        ft_putstr("hey\n");
 		if (!(new_dir = get_var(g_env, "HOME=")))
             ft_error();
         //printf("this is the home path: %s", new_dir);
@@ -36,7 +35,6 @@ int 	builtin_cd(char **arg)
 	}
     else
     {
-        ft_putstr("ho\n");
         if (!ft_strcmp(arg[1], ""))
 			return (0);
         new_dir = arg[1];

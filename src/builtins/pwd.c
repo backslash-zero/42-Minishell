@@ -15,5 +15,6 @@ char	*current_dir(void)
 int		builtin_pwd(char **arg)
 {
 	ft_putstr(current_dir());
+	ft_putchar('\n');
 	return(0);
 }
