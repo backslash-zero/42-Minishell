@@ -79,7 +79,7 @@ int add_to_list(char *s, t_list **lst)
 		return(0);
 	if (!(lst1->content = ft_strdup(s)))
 		return (0);
-	lst1->next = 0;
+	lst1->next = NULL;
 	ft_lstadd_back(lst, lst1);
 	return (1);
 }
@@ -96,12 +96,40 @@ int add_elem(char *s)
 	return (1);
 }
 
-int        print_export(char **arg)
+void	sort_export(t_list *lst)
 {
-    t_list *tmp;
-    
+	t_list	*lst1;
+	void	*cont;
+	int		i;
+
+	if (!lst)
+		return ;
+	lst1 = lst;
+	i = ft_lstsize(g_export);
+	while (i)
+	{
+		while (lst)
+		{
+			while (lst->next && ft_strcmp(lst->content, lst->next->content) > 0)
+			{
+				cont = lst->next->content;
+				lst->next->content = lst->content;
+				lst->content = cont;
+			}
+			lst = lst->next;
+		}
+		lst = lst1;
+		i--;
+	}
+}
+
+int        print_export(void)
+{
+	t_list *tmp;
+
+	sort_export(g_export);
     tmp = g_export;
-    while(tmp)
+	while(tmp != NULL)
     {
         ft_putstr(tmp->content);
         ft_putstr("\n");
@@ -120,10 +148,21 @@ int		check_export_arg(char *arg)
 		i++;
 		while (arg[i] && arg[i] != '=')
 		{
-			if ((arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97 && arg[0] <= 122) || arg[0] == 95 || (arg[i] >= 48 && arg[i] <= 57))
+			if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 && arg[i] <= 122) || arg[i] == 95 || (arg[i] >= 48 && arg[i] <= 57))
 				i++;
 			else
 				return (0);
+		}
+		if (arg[i] == '=')
+		{
+			i++;
+			while (arg[i])
+			{
+				if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 && arg[i] <= 122) || arg[i] == 95 || (arg[i] >= 48 && arg[i] <= 57))
+					i++;
+				else
+					return (0);
+			}
 		}
 	}
 	else
@@ -141,23 +180,19 @@ int		builtin_export(char **arg)
 
 	if (arg_len(arg) == 1)
 	{
-		print_export(arg);
+		print_export();
 		return (1);
 	}
 	while (arg[i] && (j = check_export_arg(arg[i])))
 	{
 		if ((start = check_if_exist(g_export, arg[i])))
 		{
-			if (replace_elem(arg[i], start))
-				return (1);
-			else
+			if (!replace_elem(arg[i], start))
 				return (0);
 		}
 		else 
 		{
-			if (add_elem(arg[i]))
-				return (1);
-			else
+			if (!add_elem(arg[i]))
 				return (0);
 		}
 		i++;
