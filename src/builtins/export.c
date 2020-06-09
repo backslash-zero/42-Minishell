@@ -126,12 +126,27 @@ void	sort_export(t_list *lst)
 int        print_export(void)
 {
 	t_list *tmp;
+	int		i;
 
+	i = 0;
 	sort_export(g_export);
     tmp = g_export;
 	while(tmp != NULL)
     {
-        ft_putstr(tmp->content);
+		i = 0;
+		ft_putstr("declare -x ");
+        if (ft_strchr(tmp->content, '='))
+		{
+			while (tmp->content[i] != '=')
+				ft_putchar(tmp->content[i++]);
+			ft_putchar(tmp->content[i++]);
+			ft_putstr("\"");
+			while (tmp->content[i])
+				ft_putchar(tmp->content[i++]);
+			ft_putstr("\"");
+		}
+		else
+			ft_putstr(tmp->content);
         ft_putstr("\n");
         tmp = tmp->next;
     }
