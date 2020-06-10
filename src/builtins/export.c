@@ -39,20 +39,27 @@ int	set_value(t_list *lst, char *s1, char *s2)
 	t_list	*lst2;
 	char	*tmp;
 	char	*value;
+	char	*s3;
+	int		i;
 
 	if (!(value = ft_strdup(s1)))
 		return (0);
 	while (lst)
 	{
-		if (ft_strcmp(lst->content, s2) == 0)
+		i = 0;
+		while (lst->content[i] != '=' && lst->content[i])
+			i++;
+		s3 = ft_substr(s1, 0, i + 1);
+		if (ft_strcmp(s3, s2) == 0)
 		{
 			tmp = lst->content;
 			lst->content = value;
 			free (tmp);
 		}
 		lst = lst->next;
+		free(s3);
 	}
-	return (1 );
+	return (1);
 }
 
 int	replace_elem(char *s, int i)
@@ -61,12 +68,12 @@ int	replace_elem(char *s, int i)
 
 	if (ft_strchr(s, '='))
 	{
-			s1 = ft_substr(s, 0, i + 1);
-			if (!set_value(g_export, s, s1))
-				return (0);
-			if (!set_value(g_env, s, s1))
-				return (0);
-			free(s1);;
+		s1 = ft_substr(s, 0, i + 1);
+		if (!set_value(g_export, s, s1))
+			return (0);
+		if (!set_value(g_env, s, s1))
+			return (0);
+		free(s1);
 	}
 	return (1);
 }
