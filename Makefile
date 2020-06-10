@@ -43,9 +43,9 @@ $(NAME):	$(OBJ)
 			$(CC) $(FLAGS) $(LEAKS) $(OBJ) -I$(HEADER) libft.a -o $(NAME)
 
 clean:
-			/bin/rm -f  $(OBJ)
+			@/bin/rm -f  $(OBJ)
 			@(cd $(LIBFT) && $(MAKE) clean)
-			/bin/rm -f libft.a
+			@/bin/rm -f libft.a
 
 fclean: 	clean
 			/bin/rm -f $(NAME)
