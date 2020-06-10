@@ -6,26 +6,27 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 16:18:40 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/10 23:19:59 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/06/10 19:59:22 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/libft.h"
+#include "../../incs/ft_printf.h"
 
 char	*ft_substr(char const *s, unsigned int start, int len)
 {
-	char	*str;
 	int		i;
+	char	*copy;
 
-	if (!s)
-		return (NULL);
 	i = 0;
-	if (start >= (unsigned int)ft_strlen(s))
-		return (ft_calloc(1, 1));
-	if (!(str = malloc(sizeof(char) * (len + 1))))
+	while (s[i + start] && i < len)
+		i++;
+	if (len > i)
+		len = i;
+	if (!(copy = (char *)malloc(len + 1)))
 		return (NULL);
-	while (len-- > 0)
-		str[i++] = s[start++];
-	str[i] = '\0';
-	return (str);
+	i = -1;
+	while (++i < len)
+		copy[i] = s[start + i];
+	copy[i] = '\0';
+	return (copy);
 }

@@ -1,6 +1,6 @@
 #include "../../incs/minishell.h"
 
-void	launch(char *input, t_parse *parse)
+int		launch(char *input, t_parse *parse)
 {
     char    *s;
     char    **arg_list;
@@ -8,17 +8,18 @@ void	launch(char *input, t_parse *parse)
 
 	/*if (ft_strcmp("exit",input) == 0)
 		exit(0);*/
-	arg_list = ft_split(input, ' ');
+	if(!(arg_list = ft_split(input, ' ')))
+		return (ft_strerror());
 	process = fork();
 	if (process == -1)
-	{
-		ft_putstr(strerror(errno));
-		exit(0);
-	}
+		return (ft_strerror());
 	if (process == 0)
 	{
 		if (ft_checkbuiltins(arg_list, parse) == 0)
+		{
 			kill(process, SIGCHLD);
+			ft_error(CMD_NOT_FOUND, arg_list[0]);
+		}
 		/*s = ft_strjoin("/bin/", arg_list[0]);
 		if ((execve(s, arg_list, NULL)) == -1)
 			ft_putstr(strerror(errno));*/
@@ -26,6 +27,7 @@ void	launch(char *input, t_parse *parse)
 	else
 		wait(&process);
 	free_tab(arg_list);
+	return (0);
 }
 
 void	prompt(void)
@@ -45,6 +47,7 @@ void	prompt(void)
 			buffer[ret - 1] = '\0';
 		else
 			ft_strlcpy(buffer, "exit", 5);
-		launch(buffer, &parse);
+		if (launch(buffer, &parse) == -1)
+			return ;
 	}
 }
