@@ -3,7 +3,6 @@
 ## Algorithm mindmap
 [Mind map here](https://www.figma.com/file/G5oAf6m91dH57ye0YDG7cs/Minishell-Mindmap?node-id=0%3A1)
 
-
 ## About
 Minishell is simple shell.
 `process` :  a program in execution.
