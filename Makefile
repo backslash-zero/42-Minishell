@@ -31,7 +31,11 @@ OBJ			=	$(SRC:.c=.o)
 
 LIBFT		=	src/libft/
 
+PRINTF		=	src/ft_printf_fd/
+
 LIBFTEXEC	=	src/libft/libft.a
+
+PRINTFEXEC	=	src/ft_printf_fd/libftprintf.a 
 
 MOV			=	"."
 
@@ -40,12 +44,15 @@ all: 		$(NAME)
 $(NAME):	$(OBJ)
 			cd $(LIBFT) && $(MAKE) && $(MAKE) bonus
 			mv $(LIBFTEXEC) $(MOV)
-			$(CC) $(FLAGS) $(LEAKS) $(OBJ) -I$(HEADER) libft.a -o $(NAME)
+			cd $(PRINTF) && $(MAKE)
+			mv $(PRINTFEXEC) $(MOV)
+			$(CC) $(FLAGS) $(LEAKS) $(OBJ) -I$(HEADER) libft.a libftprintf.a -o $(NAME)
 
 clean:
 			@/bin/rm -f  $(OBJ)
 			@(cd $(LIBFT) && $(MAKE) clean)
-			@/bin/rm -f libft.a
+			@(cd $(PRINTF) && $(MAKE) clean)
+			/bin/rm -f libft.a libftprintf.a
 
 fclean: 	clean
 			/bin/rm -f $(NAME)
