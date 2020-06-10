@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_hex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/11 16:18:40 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/10 23:19:59 by cmeunier         ###   ########.fr       */
+/*   Created: 2019/11/27 17:42:35 by cmeunier          #+#    #+#             */
+/*   Updated: 2020/06/10 19:59:22 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/libft.h"
+#include "../../incs/ft_printf.h"
+#include <stdlib.h>
 
-char	*ft_substr(char const *s, unsigned int start, int len)
+void		ft_putnbr_hex(size_t nb)
 {
-	char	*str;
-	int		i;
+	char	*base;
 
-	if (!s)
-		return (NULL);
-	i = 0;
-	if (start >= (unsigned int)ft_strlen(s))
-		return (ft_calloc(1, 1));
-	if (!(str = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	while (len-- > 0)
-		str[i++] = s[start++];
-	str[i] = '\0';
-	return (str);
+	base = "0123456789abcdef";
+	if (nb <= 16 && nb > 0)
+		ft_putchar_fd(p->fd, base[nb]);
+	else if (nb > 0)
+	{
+		ft_putnbr_hex(nb / 16);
+		ft_putnbr_hex(nb % 16);
+	}
+	else if (nb == 0)
+		ft_putchar_fd(p->fd, base[nb]);
 }

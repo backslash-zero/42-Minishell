@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/11 16:18:40 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/10 23:19:59 by cmeunier         ###   ########.fr       */
+/*   Created: 2019/11/27 12:13:25 by cmeunier          #+#    #+#             */
+/*   Updated: 2020/06/10 19:59:22 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/libft.h"
+#include "../../incs/ft_printf.h"
 
-char	*ft_substr(char const *s, unsigned int start, int len)
+void	ft_putstr_fd(int fd, char *s)
 {
-	char	*str;
-	int		i;
-
-	if (!s)
-		return (NULL);
-	i = 0;
-	if (start >= (unsigned int)ft_strlen(s))
-		return (ft_calloc(1, 1));
-	if (!(str = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	while (len-- > 0)
-		str[i++] = s[start++];
-	str[i] = '\0';
-	return (str);
+	write(fd, s, ft_strlen(s));
 }

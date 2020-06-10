@@ -8,7 +8,7 @@ char	*current_dir(void)
 
 	dir = NULL;
 	if(!(dir = getcwd(dir, 0)))
-		ft_error();
+		ft_error("hey", NULL);
 	return(dir);
 }
 

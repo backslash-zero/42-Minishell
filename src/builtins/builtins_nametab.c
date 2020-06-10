@@ -37,5 +37,4 @@ int		ft_checkbuiltins(char **s, t_parse *parse)
 	}
 	else
 		return (0);
-	/*A amelioer en faisant un exit avec un message d'erreur*/
 }

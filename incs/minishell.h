@@ -15,6 +15,7 @@
 #include "libft.h"
 #include "env.h"
 #include "builtin.h"
+#include "ft_printf.h"
 
 typedef int			(*builtfunc_addr)(char **s);
 typedef struct      s_parse
@@ -26,7 +27,7 @@ void	ft_builtinstab(t_parse *parse);
 int		ft_checkbuiltins(char **s, t_parse *parse);
 void    print_prompt_prefix(void);
 void	prompt(void);
-void	launch(char *input, t_parse *parse);
+int 	launch(char *input, t_parse *parse);
 void	free_tab(char **tab);
 int     arg_len(char **arg);
 

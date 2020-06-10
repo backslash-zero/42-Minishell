@@ -49,7 +49,7 @@ $(NAME):	$(OBJ)
 			$(CC) $(FLAGS) $(LEAKS) $(OBJ) -I$(HEADER) libft.a libftprintf.a -o $(NAME)
 
 clean:
-			/bin/rm -f  $(OBJ)
+			@/bin/rm -f  $(OBJ)
 			@(cd $(LIBFT) && $(MAKE) clean)
 			@(cd $(PRINTF) && $(MAKE) clean)
 			/bin/rm -f libft.a libftprintf.a
