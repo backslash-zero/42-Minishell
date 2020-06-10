@@ -6,7 +6,7 @@
 #    By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/06 14:57:55 by cmeunier          #+#    #+#              #
-#    Updated: 2020/06/10 18:26:22 by cmeunier         ###   ########.fr        #
+#    Updated: 2020/06/10 23:59:33 by cmeunier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,19 +35,19 @@ NAME	=	libftprintf.a
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJ)
 	@echo "libftprintf.a ready"
 
 %.o:	%.c
 		@$(CC) $(FLAGS) -o $@ -c $<
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean:
 	$(MAKE) clean
-	rm -f $(NAME)
-	rm -f *~
+	@rm -f $(NAME)
+	@rm -f *~
 
 re:
 	$(MAKE) fclean

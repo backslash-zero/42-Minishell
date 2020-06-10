@@ -29,17 +29,18 @@ B_OBJ= $(B_SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) -I$(HEADER) -c $(SRC)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)	
+	@$(CC) $(FLAGS) -I$(HEADER) -c $(SRC)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
+	@echo $(NAME) ready	
 
 bonus: $(B_OBJ)
-	 $(CC) $(FLAGS) -I$(HEADER) -c $(B_SRC)
-	 ar rc $(NAME) $(B_OBJ)
-	 ranlib $(NAME)
+	@$(CC) $(FLAGS) -I$(HEADER) -c $(B_SRC)
+	@ar rc $(NAME) $(B_OBJ)
+	@ranlib $(NAME)
 
 clean:
-	/bin/rm -f $(OBJ) $(B_OBJ)
+	@/bin/rm -f $(OBJ) $(B_OBJ)
 fclean: clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 re: fclean all bonus

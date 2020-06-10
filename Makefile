@@ -42,20 +42,23 @@ MOV			=	"."
 all: 		$(NAME)
 
 $(NAME):	$(OBJ)
-			cd $(LIBFT) && $(MAKE) && $(MAKE) bonus
-			mv $(LIBFTEXEC) $(MOV)
-			cd $(PRINTF) && $(MAKE)
-			mv $(PRINTFEXEC) $(MOV)
-			$(CC) $(FLAGS) $(LEAKS) $(OBJ) -I$(HEADER) libft.a libftprintf.a -o $(NAME)
+			@cd $(LIBFT) && $(MAKE) && $(MAKE) bonus
+			@mv $(LIBFTEXEC) $(MOV)
+			@cd $(PRINTF) && $(MAKE)
+			@mv $(PRINTFEXEC) $(MOV)
+			@$(CC) $(FLAGS) $(LEAKS) $(OBJ) -I$(HEADER) libft.a libftprintf.a -o $(NAME)
+			@echo $(NAME) created
 
 clean:
 			@/bin/rm -f  $(OBJ)
 			@(cd $(LIBFT) && $(MAKE) clean)
 			@(cd $(PRINTF) && $(MAKE) clean)
-			/bin/rm -f libft.a libftprintf.a
+			@/bin/rm -f libft.a libftprintf.a
+			@echo object and libraries cleaned
 
 fclean: 	clean
-			/bin/rm -f $(NAME)
+			@/bin/rm -f $(NAME)
+			@echo $(NAME) deleted
 
 re: 		fclean all
 
