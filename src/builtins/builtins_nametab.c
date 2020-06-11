@@ -32,7 +32,7 @@ int		ft_checkbuiltins(char **s, t_parse *parse)
 	if (good == 1)
 	{
 		if (builtins_func[i](s) == -1)
-			return(0);
+			return(-1);
 		return(1);
 	}
 	else

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/06/11 18:58:29 by cmeunier          #+#    #+#             */
+/*   Updated: 2020/06/11 18:58:30 by cmeunier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
 int     update_pwd(void)
@@ -8,9 +20,9 @@ int     update_pwd(void)
     dir = NULL;
     old_dir = NULL;
     if (!(old_dir = get_var(g_env, "PWD=")))
-		ft_error("hey", NULL);
+        return(ft_strerror(NULL, NULL, NULL, NULL));
 	if (!(dir = getcwd(dir, 0)))
-		ft_error("hey", NULL);
+        return(ft_strerror(old_dir, NULL, NULL, NULL));
     set_var(g_env, "PWD=", dir);
 	set_var(g_export, "PWD=", dir);
 	set_var(g_env, "OLDPWD=", old_dir);
@@ -27,10 +39,9 @@ int 	builtin_cd(char **arg)
 	if (arg_len(arg) == 1)
 	{
 		if (!(new_dir = get_var(g_env, "HOME=")))
-            ft_error("hey", NULL);
-        //printf("this is the home path: %s", new_dir);
+            return (ft_error("cd: HOME not set\n", NULL, NULL, NULL));
         if (chdir(new_dir) == -1)
-            ft_error("hey", NULL);
+            return (ft_strerror(new_dir, NULL, new_dir, NULL));
         free(new_dir);
 	}
     else
@@ -39,7 +50,7 @@ int 	builtin_cd(char **arg)
 			return (0);
         new_dir = arg[1];
         if (chdir(new_dir) == -1)
-            ft_error("hey", NULL);
+            return (ft_strerror(NULL, NULL, "cd", arg[1]));
     }
     return(update_pwd());
 }

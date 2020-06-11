@@ -9,16 +9,16 @@ int		launch(char *input, t_parse *parse)
 	/*if (ft_strcmp("exit",input) == 0)
 		exit(0);*/
 	if(!(arg_list = ft_split(input, ' ')))
-		return (ft_strerror());
+		return (ft_strerror(NULL, NULL, NULL, NULL));
 	process = fork();
 	if (process == -1)
-		return (ft_strerror());
+		return (ft_strerror(NULL, arg_list, NULL, NULL));
 	if (process == 0)
 	{
 		if (ft_checkbuiltins(arg_list, parse) == 0)
 		{
 			kill(process, SIGCHLD);
-			ft_error(CMD_NOT_FOUND, arg_list[0]);
+			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 		}
 		/*s = ft_strjoin("/bin/", arg_list[0]);
 		if ((execve(s, arg_list, NULL)) == -1)
