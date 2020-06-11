@@ -13,7 +13,7 @@
 # define RNO_FILE		"minishell: %s: No such file or is a directory\n"
 # define RNO_CREA		"minishell: %s: File could not be created\n"
 
-int        ft_error(char *msg, char *param);
-int        ft_strerror(void);
+int        ft_error(char *msg, char *tofree, char **tab, char *param);
+int        ft_strerror(void *tofree, char **tab, char *param, char *param2)
 
 #endif
