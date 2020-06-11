@@ -4,29 +4,48 @@ int		launch(char *input, t_parse *parse)
 {
     char    *s;
     char    **arg_list;
+	char	**arg;
     pid_t   process;
 
 	/*if (ft_strcmp("exit",input) == 0)
 		exit(0);*/
-	if(!(arg_list = ft_split(input, ' ')))
+	if(!(arg = ft_split(input, ' ')))
 		return (ft_strerror(NULL, NULL, NULL, NULL));
-	process = fork();
-	if (process == -1)
-		return (ft_strerror(NULL, arg_list, NULL, NULL));
-	if (process == 0)
+	int i;
+	int k;
+
+	i = 0;
+	while (arg[i] != NULL)
 	{
-		if (ft_checkbuiltins(arg_list, parse) == 0)
+		k = 0;
+		while(i < arg_len(arg) - 1 && ft_strcmp(arg[i], ";") != 0)
 		{
-			kill(process, SIGCHLD);
-			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+			k++;
+			i++;
 		}
-		/*s = ft_strjoin("/bin/", arg_list[0]);
-		if ((execve(s, arg_list, NULL)) == -1)
-			ft_putstr(strerror(errno));*/
+		if ((arg_list = semicolon(arg, i, k)) == NULL)
+			return (ft_strerror(NULL, NULL, NULL, NULL));
+		process = fork();
+		if (process == -1)
+			return (ft_strerror(NULL, arg_list, NULL, NULL));
+		if (process == 0)
+		{
+			if (ft_checkbuiltins(arg_list, parse) == 0)
+			{
+				kill(process, SIGCHLD);
+				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+			}
+			/*s = ft_strjoin("/bin/", arg_list[0]);
+			if ((execve(s, arg_list, NULL)) == -1)
+				ft_putstr(strerror(errno));*/
+		}
+		else
+			wait(&process);
+		i++;
+		/*if (arg_list)
+			free_tab(arg_list);*/
 	}
-	else
-		wait(&process);
-	free_tab(arg_list);
+	free_tab(arg);
 	return (0);
 }
 

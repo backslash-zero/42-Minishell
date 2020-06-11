@@ -30,5 +30,6 @@ void	prompt(void);
 int 	launch(char *input, t_parse *parse);
 void	free_tab(char **tab);
 int     arg_len(char **arg);
+char	**semicolon(char **arg, int i, int l);
 
 #endif

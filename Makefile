@@ -23,7 +23,9 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				utils/free.c 					\
 				utils/prints.c 					\
 				utils/reads.c					\
+				utils/semicolon.c				\
 				minishell.c 					\
+
 
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_NAME))
 
