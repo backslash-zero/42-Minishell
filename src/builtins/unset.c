@@ -46,8 +46,7 @@ t_list  *unset_env(t_list *lst, char *s)
             lst3 = lst3->next;
         }
         return (lst);
-    }
-    
+    } 
 }
 
 int		builtin_unset(char **arg)
