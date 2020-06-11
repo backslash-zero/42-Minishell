@@ -1,20 +1,17 @@
 #include "../../incs/minishell.h"
 
-// We need to set all env variable in chained list at the beginning
 
-char	*current_dir(void)
+int		builtin_pwd(char **arg)
 {
 	char *dir;
 
 	dir = NULL;
+	if (arg_len(arg) > 1)
+		return(ft_error("pwd: too many arguments\n", NULL, NULL, NULL));
 	if(!(dir = getcwd(dir, 0)))
-		ft_error("hey", NULL);
-	return(dir);
-}
-
-int		builtin_pwd(char **arg)
-{
-	ft_putstr(current_dir());
+		return(ft_strerror(NULL, NULL, NULL, NULL));
+	ft_putstr(dir);
 	ft_putchar('\n');
+	free(dir);
 	return(0);
 }

@@ -1,7 +1,6 @@
 #ifndef BUILTIN_H
 # define BUILTIN_H
 
-char	*current_dir(void);
 int     builtin_echo(char **arg);
 int		builtin_cd(char **arg);
 int		builtin_pwd(char **arg);
