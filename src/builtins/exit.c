@@ -2,29 +2,27 @@
 
 int		builtin_exit(char **arg)
 {
-	int i;
+	int 			i;
+	unsigned int	j;
+	int 			arg_l;
 
-	if (arg_len(arg) == 1)
-	{
-		free_tab(arg);
-		return (-1);
+	ft_putstr("exit\n");
+	if ((arg_l = arg_len(arg)) == 1)
 		exit(0);
-	}
-	if (arg_len(arg) > 2)
+	if (arg_l > 2)
+		return (ft_error(MANY_ARGS, NULL, NULL, arg[1]));
+	while (arg[1][i])
 	{
-		free_tab(arg);
-		strerror(errno);
-		exit(0);
+		if(!(ft_isdigit(arg[1][i])))
+		{
+			ft_error(EXIT_NUM, NULL, NULL, arg[1]);
+			exit(255);
+		}
+		i++;
 	}
-	i = ft_atoi(arg[1]);
-	if (i < 0)
-	{
-		free_tab(arg);
-		exit (-i);
-	}
+	if ((i = ft_atoi(arg[1])) < 0)
+		j = (unsigned int)i;
 	else
-	{
-		free_tab(arg);
-		exit (i);
-	}
+		j = i;
+	exit(j);
 }
