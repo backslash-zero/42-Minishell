@@ -6,6 +6,7 @@ int		launch(char *input, t_parse *parse)
 	char	**arg;
 	int 	i;
 	int 	k;
+	char	**test;
 
 	if(!(arg = ft_split(input, ' ')))
 		return (ft_strerror(NULL, NULL, NULL, NULL));
@@ -19,10 +20,11 @@ int		launch(char *input, t_parse *parse)
 			i++;
 		}
 		if ((arg_list = semicolon(arg, i, k)) == NULL)
-			return (ft_strerror(NULL, NULL, NULL, NULL));
-			if ((ft_checkbuiltins(arg_list, parse)) == 0)
-				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+			return (ft_strerror(NULL, arg, NULL, NULL));
+		if ((ft_checkbuiltins(arg_list, parse)) == 0)
+			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 		i++;
+		free (arg_list);
 	}
 	free_tab(arg);
 	return (0);
