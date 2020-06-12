@@ -3,11 +3,11 @@
 int         ft_strerror(void *tofree, char **tab, char *param, char *param2)
 {
 	if (!param && !param2)
-		ft_printf_fd(2, "Minishell: %s\n", strerror(errno));
+		ft_printf_fd(2, "MiniShell: %s\n", strerror(errno));
 	else if (param && !param2)
-		ft_printf_fd(2, "Minishell: %s: %s\n", param, strerror(errno));
+		ft_printf_fd(2, "MiniShell: %s: %s\n", param, strerror(errno));
 	else
-		ft_printf_fd(2, "Minishell: %s: %s: %s\n", param, param2, strerror(errno));
+		ft_printf_fd(2, "MiniShell: %s: %s: %s\n", param, param2, strerror(errno));
 	if (tofree)
 		free(tofree);
 	if (tab)
