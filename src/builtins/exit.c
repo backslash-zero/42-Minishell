@@ -11,6 +11,8 @@ int		builtin_exit(char **arg)
 		exit(0);
 	if (arg_l > 2)
 		return (ft_error(MANY_ARGS, NULL, NULL, arg[1]));
+	if (arg[1][i] == '+' || arg[1][i] == '-')
+		i++;
 	while (arg[1][i])
 	{
 		if(!(ft_isdigit(arg[1][i])))
