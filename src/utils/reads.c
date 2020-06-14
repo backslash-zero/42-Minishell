@@ -8,7 +8,7 @@ int		launch(char *input, t_parse *parse)
 	int 	k;
 	char	**test;
 
-	if(!(arg = ft_split(input, ' ')))
+	if(!(arg = ft_split2(input, ' ', ';')))
 		return (ft_strerror(NULL, NULL, NULL, NULL));
 	i = 0;
 	while (arg[i] != NULL)
