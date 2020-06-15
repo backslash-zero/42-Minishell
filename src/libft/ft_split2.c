@@ -118,8 +118,11 @@ char					**ft_split2(char const *s, char c, char c2)
 	j = 0;
 	if (!s)
 		return (NULL);
-    s2 = addspace(s, c, c2);
-	if (!(res = (char **)malloc(sizeof(char *) * (ft_calcnbwords(s2, c) + 1))))
+    if (!(s2 = addspace(s, c, c2)))
+    {
+        return (NULL);
+    }
+    if (!(res = (char **)malloc(sizeof(char *) * (ft_calcnbwords(s2, c) + 1))))
 		return (NULL);
 	while (s2[i] != '\0')
 	{
