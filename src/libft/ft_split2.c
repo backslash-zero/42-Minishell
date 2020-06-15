@@ -119,9 +119,7 @@ char					**ft_split2(char const *s, char c, char c2)
 	if (!s)
 		return (NULL);
     if (!(s2 = addspace(s, c, c2)))
-    {
         return (NULL);
-    }
     if (!(res = (char **)malloc(sizeof(char *) * (ft_calcnbwords(s2, c) + 1))))
 		return (NULL);
 	while (s2[i] != '\0')
