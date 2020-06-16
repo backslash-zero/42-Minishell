@@ -21,8 +21,13 @@ int		launch(char *input, t_parse *parse)
 		}
 		if ((arg_list = semicolon(arg, i, k)) == NULL)
 			return (ft_strerror(NULL, arg, NULL, NULL));
-		if ((ft_checkbuiltins(arg_list, parse)) == 0)
-			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+		if (!(redirection(arg, parse)))
+		{
+			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
+				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+			/*else
+				ADD EXECVE FOR OTHER BUILTINS LIKE 'ls'*/
+		}
 		i++;
 		free (arg_list);
 	}

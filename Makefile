@@ -24,6 +24,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				utils/prints.c 					\
 				utils/reads.c					\
 				utils/semicolon.c				\
+				utils/redirections.c			\
 				minishell.c 					\
 
 

@@ -192,7 +192,7 @@ int		check_export_arg(char *arg)
 	return (1);
 }
 
-int		builtin_export(char **arg)
+int		builtin_export(int fd, char **arg)
 {
 	t_list	*lst;
 	int		i;
