@@ -13,19 +13,20 @@ char	*ft_addsubstr(char const *s_copy, char *ptr, t_parsing_tool *tool)
 		len = ptr - s_copy + 1;
 	if (!(str = malloc(sizeof(char) * (len))))
 		return (NULL);
+	if (tool->quote)
+	{
+		ptr--;
+		s_copy++;
+	}
 	while (s_copy < ptr)
 	{
-		if (tool->quote)
-		{
-			s_copy++;
-			ptr--;
-		}
 		str[i] = *s_copy;
 		i++;
 		s_copy++;
 	}
 	str[i] = '\0';
 	tool->quote = '\0';
+	printf("word:	%s\n", str);
 	return (str);
 }
 
@@ -133,12 +134,14 @@ char		**parsing(char *input)
 	char			**arg;
 
 	tool.input = input;
+	tool.quote = '\0';
 	tool.open = 0;
 	if ((tool.size = size_arg_tool(&tool)) == -1)
 	{
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);
 	}
+	tool.quote = '\0';
 	tool.open = 0;
 	if(!(arg = ft_split_args(&tool)))
 		return (NULL);
