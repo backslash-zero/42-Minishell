@@ -7,6 +7,8 @@ char	*ft_addsubstr(char const *s_copy, char *ptr, t_parsing_tool *tool)
 	char	*str;
 
 	i = 0;
+	if (ptr - s_copy == 1 && tool->quote)
+		return (NULL);
 	if (tool->quote)
 		len = ptr - s_copy + 1 - 2;
 	else
@@ -26,7 +28,6 @@ char	*ft_addsubstr(char const *s_copy, char *ptr, t_parsing_tool *tool)
 	}
 	str[i] = '\0';
 	tool->quote = '\0';
-	printf("word:	%s\n", str);
 	return (str);
 }
 
@@ -42,8 +43,8 @@ int		size_arg_tool(t_parsing_tool *tool)
 	while (tool->input[i])
 	{
 		if (tool->input[i] == '\'' || tool->input[i] == '\"')
-			check_quote(tool, tool->input[i]);
-		if (tool->input[i] != ' ' && n != 0)
+			switcher_quote(tool, tool->input[i]);
+		if (tool->input[i] != ' ' && n != 0 && !tool->open)
 		{
 			count++;
 			n = 0;
@@ -57,7 +58,7 @@ int		size_arg_tool(t_parsing_tool *tool)
 	return (count);
 }
 
-void	check_quote(t_parsing_tool *tool, char c)
+void	switcher_quote(t_parsing_tool *tool, char c)
 {
 	if (!tool->open)
 	{
@@ -67,6 +68,7 @@ void	check_quote(t_parsing_tool *tool, char c)
 	else if (tool->open == 1 && c == tool->quote)
 	{
 		tool->open = 0;
+		tool->quote = '\0';
 	}
 }
 
@@ -91,7 +93,7 @@ char		**ft_split_args(t_parsing_tool *tool)
 		while (*ptr != ' ' && *ptr != '\0')
 		{
 			if (*ptr == '\'' || *ptr == '\"')
-				check_quote(tool, *ptr);
+				switcher_quote(tool, *ptr);
 			ptr++;
 		}
 		if (ptr - s_copy > 0 && !tool->open)
@@ -106,44 +108,118 @@ char		**ft_split_args(t_parsing_tool *tool)
 		if (*ptr++ != '\0' && !tool->open)
 			s_copy++;
 	}
-//	while(tool->input[i])
-// 	{
-// 		if (tool->input[i] == ' ' && !tool->open && i)
-// 		{
-// 			if (!(arg[n++] = ft_addsubstr(tool->input, &tool->input[i])))
-// 			{
-// 				ft_strerror(NULL, arg, NULL, NULL);
-// 				return (NULL);
-// 			}
-// 			tool->input = &tool->input[i];
-// 			i = 0;
-// 		}
-// 		if (tool->input[i] == '\'' || tool->input[i] == '\"')
-// 			check_quote(tool, tool->input[i]);
-// 		if (tool->input[i])
-// 			i++;
-// 	}
 	return (arg);
 }
 
-// create each substring, removing '' ""
+int		test_empty_quote(char c, char d)
+{
+	if (c == d)
+	{
+		if (c == '\"' || c == '\'')
+			return (1);
+	}
+	return (0);
+}
 
-char		**parsing(char *input)
+int		test_quote(char c)
+{
+	if (c == '\'' || c == '\"')
+		return (1);
+	else
+		return (0);
+}
+
+int		new_input_len(char *str, t_parsing_tool *tool)
+{
+	int len;
+	int i;
+
+	len = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (test_empty_quote(str[i], str[i + 1]) && !tool->open)
+			i+=2;
+		else
+		{
+			if ((!test_empty_quote(str[i], str[i + 1]) && test_quote(str[i]))
+				|| (tool->open && str[i] == tool->quote))
+				switcher_quote(tool, str[i]);
+			i++;
+			len++;
+		}
+	}
+	if (tool->open)
+		return (-1);
+	return (len);
+}
+
+void 	ft_copy_new_input(char *str, char *output, t_parsing_tool *tool)
+{
+	int i;
+	int k;
+
+	i = 0;
+	k = 0;
+	while (str[i])
+	{
+		if (test_empty_quote(str[i], str[i + 1]) && !tool->open)
+			i+=2;
+		else
+		{
+			if ((!test_empty_quote(str[i], str[i + 1]) && test_quote(str[i]))
+				|| (tool->open && str[i] == tool->quote))
+				switcher_quote(tool, str[i]);
+			output[k] = str[i];
+			k++;
+			i++;
+		}
+	}
+}
+
+char	*ft_clean_input(char *str, t_parsing_tool *tool)
+{
+	char *output;
+	int len;
+
+	if ((len = new_input_len(str, tool)) == -1)
+	{
+		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
+		return (NULL);
+	}
+	if (!(output = malloc(sizeof(char) * len + 1)))
+	{
+		ft_strerror(NULL, NULL, NULL, NULL);	
+		return (NULL);
+	}
+	output[len] = '\0';
+	ft_copy_new_input(str, output, tool);
+	return(output);
+}
+
+void	init_tool(t_parsing_tool *tool)
+{
+	tool->quote = '\0';
+	tool->open = 0;
+}
+
+char	**parsing(char *input)
 {
 	t_parsing_tool	tool;
 	char			**arg;
 
-	tool.input = input;
-	tool.quote = '\0';
-	tool.open = 0;
+	init_tool(&tool);
+	if (!(tool.input = ft_clean_input(input, &tool)))
+		return (NULL);
+	init_tool(&tool);
 	if ((tool.size = size_arg_tool(&tool)) == -1)
 	{
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);
 	}
-	tool.quote = '\0';
-	tool.open = 0;
+	init_tool(&tool);
 	if(!(arg = ft_split_args(&tool)))
 		return (NULL);
+	free(tool.input);
 	return (arg);
 }

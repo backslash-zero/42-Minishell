@@ -3,3 +3,4 @@ settings.json
 minishell
 Minishell
 *.a
+test.c
