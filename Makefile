@@ -19,6 +19,8 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				builtins/pwd.c 					\
 				builtins/unset.c				\
 				parsing/parsing.c				\
+				parsing/parsing_cleanup.c		\
+				parsing/parsing_utils.c		\
 				utils/arg.c 					\
 				utils/error.c 					\
 				utils/free.c 					\
