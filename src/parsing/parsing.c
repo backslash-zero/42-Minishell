@@ -5,13 +5,11 @@ char	*ft_addsubstr(int i, int j, t_parsing_tool *tool)
 	int len;
 	char *str;
 
-	printf("SUBstr: i: %d	-- j: %d		--	tool-open: %d -- tool-size %d\n", i, j, tool->open, tool->size);
 	if (isquote(tool->input[i]))
 	{
 		i++;
 		j--;
 	}
-	printf("substr: i: %d	-- j: %d		--	tool-open: %d -- tool-size %d\n", i, j, tool->open, tool->size);
 	len = j - i + 1;
 	if (!(str = malloc(sizeof(char) * (len))))
 		return (NULL);
