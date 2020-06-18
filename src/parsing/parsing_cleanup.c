@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:06:03 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/17 19:07:32 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/06/18 17:23:47 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		new_input_len(char *str, t_parsing_tool *tool)
 	while (str[i])
 	{
 		if (test_empty_quote(str[i], str[i + 1]) && !tool->open)
-			i+=2;
+			i += 2;
 		else
 		{
 			if ((!test_empty_quote(str[i], str[i + 1]) && isquote(str[i]))
@@ -37,7 +37,7 @@ int		new_input_len(char *str, t_parsing_tool *tool)
 	return (len);
 }
 
-void 	ft_copy_new_input(char *str, char *output, t_parsing_tool *tool)
+void	ft_copy_new_input(char *str, char *output, t_parsing_tool *tool)
 {
 	int i;
 	int k;
@@ -47,7 +47,7 @@ void 	ft_copy_new_input(char *str, char *output, t_parsing_tool *tool)
 	while (str[i])
 	{
 		if (test_empty_quote(str[i], str[i + 1]) && !tool->open)
-			i+=2;
+			i += 2;
 		else
 		{
 			if ((!test_empty_quote(str[i], str[i + 1]) && isquote(str[i]))
@@ -62,8 +62,8 @@ void 	ft_copy_new_input(char *str, char *output, t_parsing_tool *tool)
 
 char	*ft_clean_input(char *str, t_parsing_tool *tool)
 {
-	char *output;
-	int len;
+	char	*output;
+	int		len;
 
 	if ((len = new_input_len(str, tool)) == -1)
 	{
@@ -72,10 +72,10 @@ char	*ft_clean_input(char *str, t_parsing_tool *tool)
 	}
 	if (!(output = malloc(sizeof(char) * len + 1)))
 	{
-		ft_strerror(NULL, NULL, NULL, NULL);	
+		ft_strerror(NULL, NULL, NULL, NULL);
 		return (NULL);
 	}
 	output[len] = '\0';
 	ft_copy_new_input(str, output, tool);
-	return(output);
+	return (output);
 }

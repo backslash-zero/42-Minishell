@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/17 19:08:06 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/06/18 17:24:00 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int		isquote(char c)
 	else
 		return (0);
 }
-
 
 void	switcher_quote(t_parsing_tool *tool, char c)
 {

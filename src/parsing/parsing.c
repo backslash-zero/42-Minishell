@@ -1,28 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
+/*   Updated: 2020/06/18 18:11:17 by cmeunier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
-
-char	*ft_addsubstr(int i, int j, t_parsing_tool *tool)
-{
-	int len;
-	char *str;
-
-	if (isquote(tool->input[i]))
-	{
-		i++;
-		j--;
-	}
-	len = j - i + 1;
-	if (!(str = malloc(sizeof(char) * (len))))
-		return (NULL);
-	len = 0;
-	while (i < j)
-	{
-		str[len] = tool->input[i]; 
-		i++;
-		len++;
-	}
-	str[len] = '\0';
-	return(str);
-}
 
 int		size_arg_tool(t_parsing_tool *tool)
 {
@@ -51,19 +39,12 @@ int		size_arg_tool(t_parsing_tool *tool)
 	return (count);
 }
 
-char		**ft_split_args(t_parsing_tool *tool)
+int		ft_split_args(t_parsing_tool *tool)
 {
-	char	**arg;
 	int		n;
 	int		i;
 	int		j;
 
-	if (!(arg = malloc(sizeof(char *) * (tool->size + 1))))
-	{
-		ft_strerror(NULL, NULL, NULL, NULL);
-		return (NULL);
-	}
-	arg[tool->size] = NULL;
 	n = 0;
 	i = 0;
 	j = 0;
@@ -76,22 +57,25 @@ char		**ft_split_args(t_parsing_tool *tool)
 				switcher_quote(tool, tool->input[j]);
 			j++;
 		}
-		if (j - i > 0)
-		{
-			if (!(arg[n++] = ft_addsubstr(i, j, tool)))
-			{
- 				ft_strerror(NULL, NULL, NULL, NULL);
- 				return (NULL);
- 			}
-			i = j;
-		}
-		if (j != '\0')
-		{
+		if (!append_string_to_arg(&i, &j, &n, tool))
+			return (0);
+		if (j++ != '\0')
 			i++;
-			j++;
-		}
 	}
-	return(arg);
+	return (1);
+}
+
+char	**malloc_arg(t_parsing_tool *tool)
+{
+	char **arg;
+
+	if (!(arg = malloc(sizeof(char *) * (tool->size + 1))))
+	{
+		ft_strerror(NULL, NULL, NULL, NULL);
+		return (NULL);
+	}
+	arg[tool->size] = NULL;
+	return (arg);
 }
 
 char	**parsing(char *input)
@@ -107,8 +91,10 @@ char	**parsing(char *input)
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);
 	}
+	if (!(tool.arg = malloc_arg(&tool)))
+		return (NULL);
 	init_tool(&tool);
-	if(!(tool.arg = ft_split_args(&tool)))
+	if (!(ft_split_args(&tool)))
 		return (NULL);
 	free(tool.input);
 	return (tool.arg);
