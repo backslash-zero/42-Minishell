@@ -16,7 +16,7 @@ char	**parsing(char *input);
 char	**ft_split_args(t_parsing_tool *tool);
 int		size_arg_tool(t_parsing_tool *tool);
 void	switcher_quote(t_parsing_tool *tool, char c);
-char	*ft_addsubstr(char const *s_copy, char *ptr, t_parsing_tool *tool);
+char	*ft_addsubstr(int i, int j, t_parsing_tool *tool);
 char	*ft_clean_input(char *str, t_parsing_tool *tool);
 void	switcher_quote(t_parsing_tool *tool, char c);
 int		test_empty_quote(char c, char d);
