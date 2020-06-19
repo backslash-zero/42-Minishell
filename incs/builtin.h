@@ -1,6 +1,7 @@
 #ifndef BUILTIN_H
 # define BUILTIN_H
 
+void	echo_print(char **arg, int i);
 int     builtin_echo(char **arg);
 int		builtin_cd(char **arg);
 int		builtin_pwd(char **arg);
