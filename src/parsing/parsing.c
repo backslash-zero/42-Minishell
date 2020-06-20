@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/18 18:11:17 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/06/20 00:19:14 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@ int		size_arg_tool(t_parsing_tool *tool)
 	while (tool->input[i])
 	{
 		if (isquote(tool->input[i]))
+		{	
 			switcher_quote(tool, tool->input[i]);
-		if (tool->input[i] != ' ' && n != 0 && !tool->open)
+			if (!tool->open)
+				n = 0;
+		}
+		if (tool->input[i] != ' ' && n != 0)
 		{
 			count++;
 			n = 0;
@@ -48,7 +52,7 @@ int		ft_split_args(t_parsing_tool *tool)
 	n = 0;
 	i = 0;
 	j = 0;
-	while (tool->input[i])
+	while (tool->input[i] && n < tool->size)
 	{
 		while ((tool->input[j] != ' ' && tool->input[j] != '\0')
 				|| (tool->open))
@@ -82,9 +86,7 @@ char	**parsing(char *input)
 {
 	t_parsing_tool	tool;
 
-	init_tool(&tool);
-	if (!(tool.input = ft_clean_input(input, &tool)))
-		return (NULL);
+	tool.input = input;
 	init_tool(&tool);
 	if ((tool.size = size_arg_tool(&tool)) == -1)
 	{
@@ -96,6 +98,5 @@ char	**parsing(char *input)
 	init_tool(&tool);
 	if (!(ft_split_args(&tool)))
 		return (NULL);
-	free(tool.input);
 	return (tool.arg);
 }
