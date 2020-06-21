@@ -130,7 +130,7 @@ void	sort_export(t_list *lst)
 	}
 }
 
-int        print_export(void)
+int        print_export(int fd)
 {
 	t_list *tmp;
 	int		i;
@@ -141,20 +141,20 @@ int        print_export(void)
 	while(tmp != NULL)
     {
 		i = 0;
-		ft_putstr("declare -x ");
+		ft_putstr_fd(fd, "declare -x ");
         if (ft_strchr(tmp->content, '='))
 		{
 			while (tmp->content[i] != '=')
-				ft_putchar(tmp->content[i++]);
-			ft_putchar(tmp->content[i++]);
-			ft_putstr("\"");
+				ft_putchar_fd(fd, tmp->content[i++]);
+			ft_putchar_fd(fd, tmp->content[i++]);
+			ft_putstr_fd(fd, "\"");
 			while (tmp->content[i])
-				ft_putchar(tmp->content[i++]);
-			ft_putstr("\"");
+				ft_putchar_fd(fd, tmp->content[i++]);
+			ft_putstr_fd(fd, "\"");
 		}
 		else
-			ft_putstr(tmp->content);
-        ft_putstr("\n");
+			ft_putstr_fd(fd, tmp->content);
+        ft_putstr_fd(fd, "\n");
         tmp = tmp->next;
     }
     return(0);
@@ -202,7 +202,7 @@ int		builtin_export(int fd, char **arg)
 
 	if (arg_len(arg) == 1)
 	{
-		print_export();
+		print_export(fd);
 		return (1);
 	}
 	while (arg[i] && (j = check_export_arg(arg[i])))

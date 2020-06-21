@@ -33,6 +33,7 @@ void	prompt(void);
 int 	launch(char *input, t_parse *parse);
 void	free_tab(char **tab);
 int     arg_len(char **arg);
+int		ft_exec(char **arg_list);
 int     redirection(char **arg, t_parse *parse);
 char	**semicolon(char **arg, int i, int l);
 

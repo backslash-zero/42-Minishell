@@ -42,10 +42,14 @@ int     r_anglebracket(char **arg, t_parse *parse)
             if ((arg_list = deletebracket(arg)) == NULL)
             {
                 close (fd);
+                free_tab (arg_list);
                 ft_strerror (NULL, arg, NULL, NULL);
             }
-            ft_checkbuiltins(arg_list, parse, fd);
+            if ((ft_checkbuiltins(arg_list, parse, fd)) == 0)
+				ft_exec(arg_list);
         }
+        close (fd);
+        free_tab (arg_list);
         return (1);
 }
 
@@ -66,11 +70,14 @@ int     r_dbanglebracket(char **arg, t_parse *parse)
                 ft_strerror(NULL, arg, NULL, NULL);
             if ((arg_list = deletebracket(arg)) == NULL)
             {
+                free_tab(arg_list);
                 close (fd);
                 ft_strerror (NULL, arg, NULL, NULL);
             }
-            ft_checkbuiltins(arg_list, parse, fd);
+            if ((ft_checkbuiltins(arg_list, parse, fd)) == 0)
+                ft_exec(arg_list);
         }
+        free_tab(arg_list);
         return (1);
 }
 

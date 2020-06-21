@@ -33,19 +33,30 @@ int		ft_exec(char **arg_list)
 	if (!(tab_env = tablst(g_env)))
 		return (-1);
 	if ((proc = fork()) == -1)
+	{
+		free_tab(tab_env);
 		return (-1);
+	}
 	if (proc == 0)
 	{
 		s = ft_strjoin("/bin/", arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
-			ft_putstr(strerror(errno));
+		{
+			free_tab(tab_env);
+			return (-2);
+		}
 		free (s);
 	}
 	else if (proc > 0)
 	{
 		if (wait(&status) == -1)
+		{
+			free_tab(tab_env);	
 			return (-1);
+		}
 	}
+	if (s)
+		free (s);
 	free_tab(tab_env);
 	return (0);
 }
@@ -70,19 +81,32 @@ int		launch(char *input, t_parse *parse)
 			i++;
 		}
 		if ((arg_list = semicolon(arg, i, k)) == NULL)
+		{
+			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
+		}
+		/*if (ft_strcmp(arg_list[0],"exit" ) == 0)
+		{
+			printf("inside exit\n");
+			free_tab (arg_list);
+		}*/
+		/*int j = 0;
+		while (arg_list[j])
+		{
+			printf("arg_list[%d] = %s\n",j, arg_list[j]);
+			j++;
+		}*/
 		if (!(redirection(arg, parse)))
 		{
 			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
 			{
-				ft_exec(arg_list);
-				//	ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+				if (ft_exec(arg_list) == -2)
+					ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 			}			
-				/*else
-				ADD EXECVE FOR OTHER BUILTINS LIKE 'ls' */
 		}
 		i++;
-		free (arg_list);
+		/*if (arg_list)
+			free (arg_list);*/
 	}
 	free_tab(arg);
 	return (0);

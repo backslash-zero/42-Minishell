@@ -69,8 +69,8 @@ int        builtin_env(int fd, char **arg)
     tmp = g_env;
     while(tmp)
     {
-        ft_putstr(tmp->content);
-        ft_putstr("\n");
+        ft_putstr_fd(fd, tmp->content);
+        ft_putstr_fd(fd, "\n");
         tmp = tmp->next;
     }
     return(0);

@@ -26,5 +26,6 @@ int		builtin_exit(int fd, char **arg)
 		j = (unsigned int)i;
 	else
 		j = i;
+	free_tab(arg);
 	exit(j);
 }
