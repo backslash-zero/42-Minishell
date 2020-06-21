@@ -1,5 +1,55 @@
 #include "../../incs/minishell.h"
 
+char	**tablst(t_list *lst)
+{
+	char	**ret;
+	t_list	*tmp;
+	int		i;
+
+	ret = NULL;
+	tmp = NULL;
+	if (!(ret = malloc((ft_lstsize(lst) + 1) * sizeof(*ret))))
+		return (NULL);
+	i = 0;
+	tmp = lst;
+	while (tmp)
+	{
+		if (!(ret[i] = ft_strdup(tmp->content)))
+			return (NULL);
+		tmp = tmp->next;
+		i++;
+	}
+	ret[i] = NULL;
+	return (ret);
+}
+
+int		ft_exec(char **arg_list)
+{
+	pid_t		proc;
+	int		status;
+	char	*s;
+	char	**tab_env;
+
+	if (!(tab_env = tablst(g_env)))
+		return (-1);
+	if ((proc = fork()) == -1)
+		return (-1);
+	if (proc == 0)
+	{
+		s = ft_strjoin("/bin/", arg_list[0]);
+		if ((execve(s, arg_list, tab_env)) == -1)
+			ft_putstr(strerror(errno));
+		free (s);
+	}
+	else if (proc > 0)
+	{
+		if (wait(&status) == -1)
+			return (-1);
+	}
+	free_tab(tab_env);
+	return (0);
+}
+
 int		launch(char *input, t_parse *parse)
 {
     char    **arg_list;
@@ -24,9 +74,12 @@ int		launch(char *input, t_parse *parse)
 		if (!(redirection(arg, parse)))
 		{
 			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
-				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-			/*else
-				ADD EXECVE FOR OTHER BUILTINS LIKE 'ls'*/
+			{
+				ft_exec(arg_list);
+				//	ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+			}			
+				/*else
+				ADD EXECVE FOR OTHER BUILTINS LIKE 'ls' */
 		}
 		i++;
 		free (arg_list);

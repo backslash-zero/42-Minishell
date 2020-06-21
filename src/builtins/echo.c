@@ -7,7 +7,7 @@ int		builtin_echo(int fd, char **arg)
 	
 	if (arg_len(arg) == 1)
 	{
-		ft_putchar_fd(1, '\n');
+		ft_putchar_fd(fd, '\n');
 		return (1);
 	}
 	if (ft_strcmp(arg[1], "-n") == 0)
@@ -16,8 +16,8 @@ int		builtin_echo(int fd, char **arg)
 		while (arg[i])
 		{
 			s2 = ft_strtrim_char(arg[i],'"');
-			ft_putstr_fd(1, s2);
-			ft_putchar_fd(1, ' ');
+			ft_putstr_fd(fd, s2);
+			ft_putchar_fd(fd, ' ');
 			i++;
 		}
 	}
@@ -27,11 +27,11 @@ int		builtin_echo(int fd, char **arg)
 		while (arg[i])
 		{
 			s2 = ft_strtrim_char(arg[i],'"');
-			ft_putstr_fd(1, s2);
-			ft_putchar_fd(1, ' ');
+			ft_putstr_fd(fd, s2);
+			ft_putchar_fd(fd, ' ');
 			i++;
 		}
-		ft_putchar_fd(1, '\n');
+		ft_putchar_fd(fd, '\n');
 	}
 	free(s2);
 	return(0);
