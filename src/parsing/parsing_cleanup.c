@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:06:03 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/18 17:23:47 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/06/23 17:38:43 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		new_input_len(char *str, t_parsing_tool *tool)
 			i += 2;
 		else
 		{
-			if ((!test_empty_quote(str[i], str[i + 1]) && isquote(str[i]))
+			if ((!test_empty_quote(str[i], str[i + 1]) && is_quote(str[i]))
 				|| (tool->open && str[i] == tool->quote))
 				switcher_quote(tool, str[i]);
 			i++;
@@ -50,7 +50,7 @@ void	ft_copy_new_input(char *str, char *output, t_parsing_tool *tool)
 			i += 2;
 		else
 		{
-			if ((!test_empty_quote(str[i], str[i + 1]) && isquote(str[i]))
+			if ((!test_empty_quote(str[i], str[i + 1]) && is_quote(str[i]))
 				|| (tool->open && str[i] == tool->quote))
 				switcher_quote(tool, str[i]);
 			output[k] = str[i];

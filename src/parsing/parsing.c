@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/20 00:19:14 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/06/23 17:58:50 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		size_arg_tool(t_parsing_tool *tool)
 	count = 0;
 	while (tool->input[i])
 	{
-		if (isquote(tool->input[i]))
+		if (is_quote(tool->input[i]))
 		{	
 			switcher_quote(tool, tool->input[i]);
 			if (!tool->open)
@@ -34,8 +34,17 @@ int		size_arg_tool(t_parsing_tool *tool)
 			count++;
 			n = 0;
 		}
-		if (tool->input[i] == ' ' && !tool->open)
+		if (is_space(tool->input[i]) && !tool->open)
 			n++;
+		if (is_semic(tool->input[i]))
+		{
+			n++;
+			if (i > 0)
+			{
+				if (is_semic(tool->input[i - 1]))
+					return (-1);
+			}
+		}
 		i++;
 	}
 	if (tool->open)
@@ -54,10 +63,12 @@ int		ft_split_args(t_parsing_tool *tool)
 	j = 0;
 	while (tool->input[i] && n < tool->size)
 	{
-		while ((tool->input[j] != ' ' && tool->input[j] != '\0')
+		if (!append_semicolon(&i, j, &n, tool))
+			return (0);
+		while ((!is_space(tool->input[j]) && !is_semic(tool->input[j]) && tool->input[j] != '\0')
 				|| (tool->open))
 		{
-			if (isquote(tool->input[j]))
+			if (is_quote(tool->input[j]))
 				switcher_quote(tool, tool->input[j]);
 			j++;
 		}
