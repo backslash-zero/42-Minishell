@@ -6,10 +6,9 @@ int		launch(char *input, t_parse *parse)
 	char	**arg;
 	int 	i;
 	int 	k;
-	char	**test;
 
-	if(!(arg = ft_split2(input, ' ', ';')))
-		return (ft_strerror(NULL, NULL, NULL, NULL));
+	if(!(arg = parsing(input)))
+		return (0);
 	i = 0;
 	while (arg[i] != NULL)
 	{
