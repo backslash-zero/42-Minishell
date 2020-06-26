@@ -69,9 +69,6 @@ int     r_dbanglebracket(char **arg, t_parse *parse)
             i++;
             if ((fd = open(arg[i], O_CREAT | O_WRONLY | O_APPEND)) == -1)
                 ft_strerror(NULL, arg, NULL, NULL);
-            printf("before dup\n");
-            dup2(fd, 1);
-            printf("after dup\n");
             if ((arg_list = deletebracket(arg)) == NULL)
             {
                 close (fd);
