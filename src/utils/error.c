@@ -17,6 +17,9 @@ int         ft_strerror(void *tofree, char **tab, char *param, char *param2)
 
 int        ft_error(char *msg, char *tofree, char **tab, char *param)
 {
+	int i;
+
+	i = 0;
 	if(param)
 		ft_printf_fd(2, msg, param);
 	else
