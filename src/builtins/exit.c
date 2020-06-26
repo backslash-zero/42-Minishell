@@ -8,7 +8,12 @@ int		builtin_exit(int fd, char **arg)
 
 	ft_putstr("exit\n");
 	if ((arg_l = arg_len(arg)) == 1)
+	{
+		printf("exit lol\n");
+		//free_tab(arg);
+		free(arg);
 		exit(0);
+	}
 	if (arg_l > 2)
 		return (ft_error(MANY_ARGS, NULL, NULL, arg[1]));
 	if (arg[1][i] == '+' || arg[1][i] == '-')
@@ -26,6 +31,6 @@ int		builtin_exit(int fd, char **arg)
 		j = (unsigned int)i;
 	else
 		j = i;
-	free_tab(arg);
+	//free_tab(arg);
 	exit(j);
 }

@@ -85,18 +85,8 @@ int		launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		/*if (ft_strcmp(arg_list[0],"exit" ) == 0)
-		{
-			printf("inside exit\n");
-			free_tab (arg_list);
-		}*/
-		/*int j = 0;
-		while (arg_list[j])
-		{
-			printf("arg_list[%d] = %s\n",j, arg_list[j]);
-			j++;
-		}*/
-		if (!(redirection(arg, parse)))
+		printf("after\n");
+		if (!(redirection(arg_list, parse)))
 		{
 			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
 			{
@@ -104,11 +94,13 @@ int		launch(char *input, t_parse *parse)
 					ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 			}			
 		}
+		//free (arg_list);
+		//free_tab(arg_list);
 		i++;
-		/*if (arg_list)
-			free (arg_list);*/
 	}
-	free_tab(arg);
+
+	//free (arg_list);
+//	free_tab(arg);
 	return (0);
 }
 
