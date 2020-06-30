@@ -1,38 +1,32 @@
 #include "../../incs/minishell.h"
 
+void		echo_print(char **arg, int i, int fd)
+{
+	while (arg[i])
+	{
+		ft_printf_fd(fd ,"%s", arg[i]);
+		//ft_putstr_fd(fd, arg[i]);
+		i++;
+		if(arg[i])
+			ft_putchar_fd(fd, ' ');
+	}
+}
+
 int		builtin_echo(char **arg)
 {
-	int		i;
-	char	*s2;
-	
+	int fd = 1;
+
 	if (arg_len(arg) == 1)
 	{
 		ft_putchar('\n');
 		return (1);
 	}
 	if (ft_strcmp(arg[1], "-n") == 0)
-	{
-		i = 2;
-		while (arg[i])
-		{
-			s2 = ft_strtrim_char(arg[i],'"');
-			ft_putstr(s2);
-			ft_putchar(' ');
-			i++;
-		}
-	}
+		echo_print(arg, 2, fd);
 	else
 	{
-		i = 1;
-		while (arg[i])
-		{
-			s2 = ft_strtrim_char(arg[i],'"');
-			ft_putstr(s2);
-			ft_putchar(' ');
-			i++;
-		}
+		echo_print(arg, 1, fd);
 		ft_putchar('\n');
 	}
-	free(s2);
 	return(0);
 }
