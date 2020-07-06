@@ -1,6 +1,6 @@
 #include "../../incs/minishell.h"
 
-int		builtin_exit(int fd, char **arg, char **s)
+int		builtin_exit(int fd, char **arg)
 {
 	int 			i;
 	unsigned int	j;
@@ -29,6 +29,5 @@ int		builtin_exit(int fd, char **arg, char **s)
 		j = (unsigned int)i;
 	else
 		j = i;
-	free(s);
 	exit(j);
 }

@@ -49,7 +49,7 @@ t_list  *unset_env(t_list *lst, char *s)
     } 
 }
 
-int		builtin_unset(int fd, char **arg, char **s)
+int		builtin_unset(int fd, char **arg)
 {
     int     i;
     

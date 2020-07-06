@@ -85,9 +85,9 @@ int		launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		if (!(redirection(arg, arg_list, parse)))
+		if (!(redirection(arg_list, parse)))
 		{
-			if ((ft_checkbuiltins(arg, arg_list, parse, 1)) == 0)
+			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
 			{
 				if (ft_exec(arg_list) == -2)
 					ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);

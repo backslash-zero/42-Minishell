@@ -1,7 +1,7 @@
 #include "../../incs/minishell.h"
 
 
-int		builtin_pwd(int fd, char **arg, char **s)
+int		builtin_pwd(int fd, char **arg)
 {
 	char *dir;
 
