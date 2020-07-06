@@ -85,21 +85,23 @@ int		launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		printf("after\n");
-		if (!(redirection(arg_list, parse)))
+		if (!(redirection(arg, arg_list, parse)))
 		{
-			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
+			if ((ft_checkbuiltins(arg, arg_list, parse, 1)) == 0)
 			{
 				if (ft_exec(arg_list) == -2)
 					ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-			}			
-		}
-		//free (arg_list);
-		//free_tab(arg_list);
+			}
+			else
+				free(arg[i]);
+		} 
+		//free (arg_list[i]);
+		// free_tab(arg_list);
 		i++;
 	}
+	//free_tab(arg_list);
+	//free_tab(arg);
 
-	//free (arg_list);
 //	free_tab(arg);
 	return (0);
 }

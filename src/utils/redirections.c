@@ -24,7 +24,7 @@ char    **deletebracket(char **arg)
     return (s);
 }
 
-int     r_anglebracket(char **arg, t_parse *parse)
+int     r_anglebracket(char **s, char **arg, t_parse *parse)
 {
         int i;
         int fd;
@@ -45,16 +45,15 @@ int     r_anglebracket(char **arg, t_parse *parse)
                 free_tab (arg_list);
                 ft_strerror (NULL, arg, NULL, NULL);
             }
-            if ((ft_checkbuiltins(arg_list, parse, fd)) == 0)
+            if ((ft_checkbuiltins(s, arg_list, parse, fd)) == 0)
             	ft_exec(arg_list);
         }
         close (fd);
         free (arg_list);
-       // free_tab (arg_list);
         return (1);
 }
 
-int     r_dbanglebracket(char **arg, t_parse *parse)
+int     r_dbanglebracket(char **s, char **arg, t_parse *parse)
 {
         int i;
         int fd;
@@ -75,16 +74,15 @@ int     r_dbanglebracket(char **arg, t_parse *parse)
                 free_tab(arg_list);
                 ft_strerror (NULL, arg, NULL, NULL);
             }
-            if ((ft_checkbuiltins(arg_list, parse, fd)) == 0)
+            if ((ft_checkbuiltins(s, arg_list, parse, fd)) == 0)
                 ft_exec(arg_list);
         }
         close (fd);
         free (arg_list);
-       // free_tab(arg_list);
         return (1);
 }
 
-int     redirection(char **arg, t_parse *parse)
+int     redirection(char **s, char **arg, t_parse *parse)
 {
     int i;
 
@@ -92,9 +90,9 @@ int     redirection(char **arg, t_parse *parse)
     while (arg[i])
     {
         if (ft_strcmp(arg[i], ">") == 0)
-            return (r_anglebracket(arg, parse));
+            return (r_anglebracket(s, arg, parse));
         else if (ft_strcmp(arg[i], ">>") == 0)
-            return (r_dbanglebracket(arg, parse));
+            return (r_dbanglebracket(s, arg, parse));
         i++;
     }
     return (0);

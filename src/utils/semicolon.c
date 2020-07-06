@@ -29,7 +29,6 @@ char	**semicolon(char **arg, int i, int l)
 			return (NULL);*/
 		k = i - l;
 		i++;
-		printf("arg_list[0] = %s\n", arg_list[0]);
 		while (arg[k] && ft_strcmp(arg[k], ";") != 0)
 		{
 			arg_list[j] = arg[k];
@@ -38,13 +37,6 @@ char	**semicolon(char **arg, int i, int l)
 			i++;
 		}
 		arg_list[j] = NULL;
-		/*printf("l + 1 = %d j = %d\n", l + 1, j);
-		int d = 0;
-		while (d <= j)
-		{
-			printf("arg_list[%d] = %s\n", d, arg_list[d]);
-			d++;
-		}*/
 		return (arg_list);
 	}
 }

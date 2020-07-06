@@ -1,6 +1,6 @@
 #include "../../incs/minishell.h"
 
-int		builtin_echo(int fd, char **arg)
+int		builtin_echo(int fd, char **arg, char **s)
 {
 	int		i;
 	char	*s2;

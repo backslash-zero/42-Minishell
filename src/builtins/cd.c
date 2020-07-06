@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:58:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/16 23:05:02 by marvin           ###   ########.fr       */
+/*   Updated: 2020/07/06 19:46:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int     update_pwd(void)
     return (0);
 }
 
-int 	builtin_cd(int fd, char **arg)
+int 	builtin_cd(int fd, char **arg, char **s)
 {
 	char *new_dir;
 

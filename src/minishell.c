@@ -1,7 +1,5 @@
 #include "../incs/minishell.h"
 
-// set_var(g_env, "PWD=", current_dir());
-
 int		main(int ac, char **av, char **envp)
 {
 	(void)ac;
