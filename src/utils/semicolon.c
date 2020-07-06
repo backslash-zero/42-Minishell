@@ -25,13 +25,13 @@ char	**semicolon(char **arg, int i, int l)
 	}
 	else
 	{
-		if (!(arg_list = (char **)malloc(sizeof(char *) * (l + 1))))
-			return (NULL);
+		/*if (!(arg_list = (char **)malloc(sizeof(char *) * (l + 1))))
+			return (NULL);*/
 		k = i - l;
 		i++;
 		while (arg[k] && ft_strcmp(arg[k], ";") != 0)
 		{
-			arg_list[j] = ft_strdup(arg[k]);
+			arg_list[j] = arg[k];
 			j++;
 			k++;
 			i++;

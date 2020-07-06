@@ -15,7 +15,7 @@ builtfunc_addr	builtins_func[] = {
 	&builtin_echo, &builtin_cd, &builtin_pwd, &builtin_export, &builtin_unset, &builtin_env, &builtin_exit
 };
 
-int		ft_checkbuiltins(char **s, t_parse *parse)
+int		ft_checkbuiltins(char **s, t_parse *parse, int fd)
 {
 	int i;
 	int	good;
@@ -31,8 +31,8 @@ int		ft_checkbuiltins(char **s, t_parse *parse)
 	}
 	if (good == 1)
 	{
-		if (builtins_func[i](s) == -1)
-			return(-1);
+		if (builtins_func[i](fd, s) == -1)
+				return (-1);
 		return(1);
 	}
 	else
