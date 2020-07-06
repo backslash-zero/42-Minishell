@@ -60,7 +60,7 @@ clean:
 			@(cd $(LIBFT) && $(MAKE) clean)
 			@(cd $(PRINTF) && $(MAKE) clean)
 			@/bin/rm -f libft.a libftprintf.a
-			@echo object and libraries cleaned
+			@echo Objects and libraries cleaned
 
 fclean: 	clean
 			@/bin/rm -f $(NAME)
