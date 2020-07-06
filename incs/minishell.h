@@ -18,6 +18,7 @@
 #include "env.h"
 #include "builtin.h"
 #include "ft_printf.h"
+#include "parsing.h"
 
 typedef int			(*builtfunc_addr)(int fd, char **s);
 
