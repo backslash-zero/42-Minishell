@@ -18,6 +18,10 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				builtins/export.c 				\
 				builtins/pwd.c 					\
 				builtins/unset.c				\
+				parsing/parsing.c				\
+				parsing/parsing_clean.c			\
+				parsing/parsing_substring.c		\
+				parsing/parsing_utils.c			\
 				utils/arg.c 					\
 				utils/error.c 					\
 				utils/free.c 					\
@@ -57,7 +61,7 @@ clean:
 			@(cd $(LIBFT) && $(MAKE) clean)
 			@(cd $(PRINTF) && $(MAKE) clean)
 			@/bin/rm -f libft.a libftprintf.a
-			@echo object and libraries cleaned
+			@echo Objects and libraries cleaned
 
 fclean: 	clean
 			@/bin/rm -f $(NAME)

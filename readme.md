@@ -38,3 +38,4 @@ We can also add _param_ and _param2_ to give more information about the error, l
 [Création d'un minisystème](https://chrtophe.developpez.com/tutoriels/minisysteme/#L11)
 [Exit Codes](https://tldp.org/LDP/abs/html/exitcodes.html)
 [Write a shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)
+[Single quote vs Double quotes](https://stackoverflow.com/questions/6697753/difference-between-single-and-double-quotes-in-bash)
