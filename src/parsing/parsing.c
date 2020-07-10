@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/23 17:58:50 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/09 19:54:44 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,14 @@ char	**parsing(char *input)
 {
 	t_parsing_tool	tool;
 
-	tool.input = input;
+	tool.input = ft_strdup(input);
+	// free input in case of error
+	init_tool(&tool);
+	if (expand_env(&tool) == -1)
+	{
+		ft_strerror(NULL, NULL, NULL, NULL);
+		return (NULL);
+	}
 	init_tool(&tool);
 	if ((tool.size = size_arg_tool(&tool)) == -1)
 	{
@@ -109,5 +116,6 @@ char	**parsing(char *input)
 	init_tool(&tool);
 	if (!(ft_split_args(&tool)))
 		return (NULL);
+	free(tool.input);
 	return (tool.arg);
 }

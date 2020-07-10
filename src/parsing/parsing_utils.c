@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/23 17:39:12 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:24:33 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ int		test_empty_quote(char c, char d)
 int		is_quote(char c)
 {
 	if (c == '\'' || c == '\"')
+		return (1);
+	else
+		return (0);
+}
+
+int		is_dollar(char c)
+{
+	if (c == '$')
 		return (1);
 	else
 		return (0);
