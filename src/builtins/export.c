@@ -49,7 +49,7 @@ int	set_value(t_list *lst, char *s1, char *s2)
 		i = 0;
 		while (lst->content[i] != '=' && lst->content[i])
 			i++;
-		s3 = ft_substr(s1, 0, i + 1);
+		s3 = ft_substr(lst->content, 0, i + 1);		
 		if (ft_strcmp(s3, s2) == 0)
 		{
 			tmp = lst->content;
@@ -220,9 +220,6 @@ int		builtin_export(char **arg)
 		i++;
 	}
 	if (j == 0)
-	{
-		ft_putstr("Arg error\n");
-		builtin_exit(arg);
-	}
+		return(ft_error(INVALID_ID_X, NULL, NULL, arg[1]));
 	return(0);
 }
