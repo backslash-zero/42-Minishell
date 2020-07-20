@@ -21,6 +21,8 @@ typedef struct 	s_parsing_tool
 
 }				t_parsing_tool;
 
+
+
 char	**parsing(char *input);
 int		ft_split_args(t_parsing_tool *tool);
 int		size_arg_tool(t_parsing_tool *tool);
@@ -39,6 +41,7 @@ int		is_quote(char c);
 int		is_space(char c);
 int		is_semic(char c);
 int		is_dollar(char c);
+int		is_equal(char c);
 int		expand_env(t_parsing_tool *tool);
 int		replace_var(t_parsing_tool *tool, int i, char *var, char *env_name);
 int		insert_env_var(t_parsing_tool *tool, int i);

@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/09 18:24:33 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/13 16:01:44 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,14 @@ int		is_dollar(char c)
 int		is_space(char c)
 {
 	if (c == ' ')
+		return (1);
+	else
+		return (0);
+}
+
+int		is_equal(char c)
+{
+	if (c == '=')
 		return (1);
 	else
 		return (0);
