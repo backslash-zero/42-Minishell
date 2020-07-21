@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 14:39:28 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/06 19:43:43 by marvin           ###   ########.fr       */
+/*   Updated: 2020/07/21 12:33:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ size_t			ft_strlcpy(char *dest, const char *src, size_t n);
 size_t			ft_strlcat(char *dest, char *src, size_t size);
 void			*ft_calloc(size_t count, size_t size);
 char			*ft_strdup(const char *s1);
+char			*ft_strldup(const char *s1, int start, int end);
 char			*ft_substr(char const *s, unsigned int start, int len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s1, char const *set);
