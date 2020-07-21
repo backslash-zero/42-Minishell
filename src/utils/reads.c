@@ -23,6 +23,7 @@ char	**tablst(t_list *lst)
 	return (ret);
 }
 
+
 int		ft_exec(char **arg_list)
 {
 	pid_t		proc;
@@ -39,7 +40,7 @@ int		ft_exec(char **arg_list)
 	}
 	if (proc == 0)
 	{
-		s = ft_strjoin("/bin/", arg_list[0]);
+		s = find_path_env(tab_env, arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
 			free_tab(tab_env);
@@ -84,8 +85,7 @@ int		launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		int z;
-		if (!(z = redirection(arg_list, parse)))
+		if (!(redirection(arg_list, parse)))
 		{
 			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
 			{

@@ -27,6 +27,9 @@ typedef struct      s_parse
     char      *builtnb[NB_BUILINS];
 }                   t_parse;
 
+typedef int			t_ret;
+t_ret				g_ret;
+
 void	ft_builtinstab(t_parse *parse);
 int		ft_checkbuiltins(char **s, t_parse *parse, int fd);
 void    print_prompt_prefix(void);
@@ -37,5 +40,6 @@ int     arg_len(char **arg);
 int		ft_exec(char **arg_list);
 int     redirection(char **arg, t_parse *parse);
 char	**semicolon(char **arg, int i, int l);
+char    *find_path_env(char **env, char *arg);
 
 #endif
