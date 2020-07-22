@@ -4,8 +4,8 @@ void		echo_print(char **arg, int i, int fd)
 {
 	while (arg[i])
 	{
-		ft_printf_fd(fd ,"%s", arg[i]);
-		//ft_putstr_fd(fd, arg[i]);
+		if (arg[i][0] != '\0')
+			ft_printf_fd(fd ,"%s", arg[i]);
 		i++;
 		if(arg[i])
 			ft_putchar_fd(fd, ' ');
