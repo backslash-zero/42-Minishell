@@ -3,6 +3,8 @@
 
 # define MAX_INPUT_SIZE 131072
 # define NB_BUILINS 7
+# define TRUE  1
+# define FALSE 0
 
 #include <sys/types.h>
 #include <sys/wait.h>

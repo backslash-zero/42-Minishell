@@ -1,8 +1,6 @@
 #include "../incs/minishell.h"
 
-<<<<<<< HEAD
 t_ret	g_ret = 0;
-=======
 int		is_forking(int val)
 {
 	static int is_forking = 0;
@@ -28,7 +26,6 @@ void	signal_handler(int n)
 		g_ret = 131;
 	}
 }
->>>>>>> ff0bc3d07e6996aba9aa0b744897aaa9c16b2826
 
 int		main(int ac, char **av, char **envp)
 {

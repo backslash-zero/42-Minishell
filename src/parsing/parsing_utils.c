@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/22 13:34:32 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/22 17:06:40 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,18 @@ int		semic_checker(t_parsing_tool *tool, int i, int *n)
 	return (0);
 }
 
+int		envvar_authorized_character(char c, int first_char)
+{
+	if (first_char == TRUE)
+		if (c == '_' || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+			return (TRUE);
+	if (first_char == FALSE)
+		if (c == '_' || (c > 64 && c < 91) || (c > 96 && c < 123) ||
+			(c > 47 && c < 58))
+			return (TRUE);
+	return (FALSE);
+}
+
 char	*get_var_name(t_parsing_tool *tool, int i)
 {
 	int		j;
@@ -47,9 +59,12 @@ char	*get_var_name(t_parsing_tool *tool, int i)
 	i++;
 	j = i;
 	k = 0;
-	while (tool->input[j] && !is_space(tool->input[j])
-		&& !is_quote(tool->input[j]) && !is_dollar(tool->input[j])
-		&& !is_equal(tool->input[j]))
+	if (envvar_authorized_character(tool->input[j], TRUE))
+	{
+		j++;
+		k++;
+	}
+	while (envvar_authorized_character(tool->input[j], FALSE))
 	{
 		j++;
 		k++;

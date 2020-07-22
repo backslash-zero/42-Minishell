@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/22 13:22:36 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/22 13:42:03 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,18 @@ char	**parsing(char *input)
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);
 	}
-	printf("arg len: %d\n", tool.size);
+	// printf("arg len: %d\n", tool.size);
 	if (!(tool.arg = malloc_arg(&tool)))
 		return (NULL);
 	init_tool(&tool);
 	if (!(ft_split_args(&tool)))
 		return (NULL);
 	free(tool.input);
-	int i = 0;
-	while (tool.arg[i])
-	{
-		printf("arg %d:	%s\n", i, tool.arg[i]);
-		i++;
-	}	
+	// int i = 0;
+	// while (tool.arg[i])
+	// {
+	// 	printf("arg %d:	%s\n", i, tool.arg[i]);
+	// 	i++;
+	// }	
 	return (tool.arg);
 }
