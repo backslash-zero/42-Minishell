@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/22 11:35:12 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/22 13:22:36 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ int		size_arg_tool(t_parsing_tool *tool)
 	while (tool->input[i])
 	{
 		quote_checker(tool, i, &n);
+		if (semic_checker(tool, i, &n))
+			return (-1);
 		if (tool->input[i] != ' ' && n != 0)
 		{
 			count++;
 			n = 0;
 		}
 		if (is_space(tool->input[i]) && !tool->open)
-			n++;
-		if (semic_checker(tool, i, &n))
-			return (-1);
+			n = 1;
 		i++;
 	}
 	if (tool->open)
@@ -51,8 +51,6 @@ int		ft_split_args(t_parsing_tool *tool)
 	j = 0;
 	while (tool->input[i] && n < tool->size)
 	{
-		if (!append_semicolon(&i, j, &n, tool))
-			return (0);
 		while ((!is_space(tool->input[j])
 			&& !is_semic(tool->input[j]) && tool->input[j] != '\0')
 			|| (tool->open))
@@ -62,6 +60,8 @@ int		ft_split_args(t_parsing_tool *tool)
 			j++;
 		}
 		if (!append_string_to_arg(&i, &j, &n, tool))
+			return (0);
+		if (!append_semicolon(&i, &j, &n, tool))
 			return (0);
 		if (j++ != '\0')
 			i++;
@@ -100,13 +100,13 @@ char	**parsing(char *input)
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);
 	}
+	printf("arg len: %d\n", tool.size);
 	if (!(tool.arg = malloc_arg(&tool)))
 		return (NULL);
 	init_tool(&tool);
 	if (!(ft_split_args(&tool)))
 		return (NULL);
 	free(tool.input);
-	
 	int i = 0;
 	while (tool.arg[i])
 	{

@@ -33,7 +33,7 @@ int		test_empty_quote(char c, char d);
 char	*clean_substring(char *str);
 void	init_tool(t_parsing_tool *tool);
 int		append_string_to_arg(int *i, int *j, int *n, t_parsing_tool *tool);
-int		append_semicolon(int *i, int j, int *n, t_parsing_tool *tool);
+int		append_semicolon(int *i, int *j, int *n, t_parsing_tool *tool);
 int		is_quote(char c);
 int		is_space(char c);
 int		is_semic(char c);

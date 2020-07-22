@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/21 19:13:50 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/22 13:34:32 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,16 @@ void	quote_checker(t_parsing_tool *tool, int i, int *n)
 
 int		semic_checker(t_parsing_tool *tool, int i, int *n)
 {
-	if (is_semic(tool->input[i]))
+	if (is_semic(tool->input[i]) && !tool->open)
 	{
-		*n += 1;
+		*n = 1;
 		if (i > 0)
 		{
-			if (is_semic(tool->input[i - 1]))
+			if (is_semic(tool->input[i - 1]) && !tool->open)
 				return (-1);
 		}
+		if (i == 0)
+			return (-1);
 	}
 	return (0);
 }

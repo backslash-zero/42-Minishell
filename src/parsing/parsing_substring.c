@@ -6,23 +6,23 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:08:32 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/23 17:58:10 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/22 13:21:05 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		append_semicolon(int *i, int j, int *n, t_parsing_tool *tool)
+int		append_semicolon(int *i, int *j, int *n, t_parsing_tool *tool)
 {
 	char *newstr;
 
-	if (is_semic(tool->input[j]))
+	if (is_semic(tool->input[*i]))
 	{
 		if (!(tool->arg[*n] = malloc(sizeof(char) * 2)))
 			return (0);
 		tool->arg[*n][0] = ';';
 		tool->arg[*n][1] = '\0';
-		*i = j;
+		*i = *j;
 		*n += 1;
 	}
 	return (1);
