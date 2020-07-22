@@ -19,6 +19,8 @@
 #include "parsing.h"
 
 typedef int			(*builtfunc_addr)(char **s);
+typedef int			t_ret;
+t_ret   g_ret;
 typedef struct      s_parse
 {
     char      *builtnb[NB_BUILINS];
@@ -30,6 +32,8 @@ void    print_prompt_prefix(void);
 void	prompt(void);
 int 	launch(char *input, t_parse *parse);
 void	free_tab(char **tab);
+void	assign_and_free(char **newstr, char **oldstr);
+void	ft_strncpy(char *dest, char *src, int len);
 int     arg_len(char **arg);
 char	**semicolon(char **arg, int i, int l);
 

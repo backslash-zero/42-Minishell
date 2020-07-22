@@ -6,11 +6,39 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/20 14:21:56 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/21 18:20:21 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+int		insert_ret(t_parsing_tool *tool, int i)
+{
+	char	*newstr;
+	int		j;
+	int		k;
+	char	*ret;
+
+	k = i;
+	j = 0;
+	ret = ft_itoa(g_ret);
+	if (!(newstr = malloc(sizeof(char) *
+		(i + ft_strlen(ret) - (ft_strlen(tool->input) - i - 2) + 1))))
+		return (0);
+	ft_strncpy(newstr, tool->input, i);
+	ft_strncpy(&newstr[i], ret, ft_strlen(ret));
+	i = i + ft_strlen(ret);
+	j = k + 2;
+	while (tool->input[j])
+	{
+		newstr[i] = tool->input[j];
+		j++;
+		i++;
+	}
+	newstr[i] = '\0';
+	assign_and_free(&newstr, &tool->input);
+	return (1);
+}
 
 int		expand_env(t_parsing_tool *tool)
 {
@@ -19,55 +47,63 @@ int		expand_env(t_parsing_tool *tool)
 	i = 0;
 	while (tool->input[i])
 	{
-		if (is_dollar(tool->input[i]) && !(tool->open && tool->quote == '\''))
+		if (is_quote(tool->input[i]))
+			switcher_quote(tool, tool->input[i]);
+		if (tool->input[i + 1] == '?')
+		{
+			if (!insert_ret(tool, i))
+				return (-1);
+		}
+		else if (is_dollar(tool->input[i])
+			&& !(tool->open && tool->quote == '\'')
+			&& !test_lone_dollar(tool->input, i))
 		{
 			if (!insert_env_var(tool, i))
 				return (-1);
-			if (is_quote(tool->input[i]))
-				switcher_quote(tool, tool->input[i]);
 		}
 		i++;
 	}
 	return (0);
 }
 
-/* int		replace_var(t_parsing_tool *tool, int i, char *var, char *env_name)
+int		remove_var(t_parsing_tool *tool, int i, char *env_name)
 {
-	char *newstr;
+	char	*newstr;
+	int		len_newstr;
+	int		j;
 
-	int len_newstr;
-	len_newstr = i + ft_strlen(var) + (ft_strlen(tool->input) - i - 1 - ft_strlen(env_name));
+	tool->empty_var = 0;
+	j = 0;
+	len_newstr = ft_strlen(tool->input) - (ft_strlen(env_name) + 1);
 	if (!(newstr = malloc(sizeof(char) * (len_newstr + 1))))
 		return (0);
-	
-} */
+	ft_strncpy(newstr, tool->input, i);
+	j = i + 1 + ft_strlen(env_name);
+	while (tool->input[j])
+	{
+		newstr[i] = tool->input[j];
+		j++;
+		i++;
+	}
+	newstr[i] = '\0';
+	assign_and_free(&newstr, &tool->input);
+	return (1);
+}
 
 int		replace_var(t_parsing_tool *tool, int i, char *var, char *env_name)
 {
-	char *newstr;
-	char *tmp;
-	int len_newstr;
-	int j;
-	int k;
+	char	*newstr;
+	int		j;
+	int		k;
 
 	k = i;
 	j = 0;
-	len_newstr = i + ft_strlen(var) + (ft_strlen(tool->input) - i - 1 - ft_strlen(env_name));
-	if (!(newstr = malloc(sizeof(char) * (len_newstr + 1))))
+	if (!(newstr = malloc(sizeof(char) *
+		(calc_len_newstr(var, tool->input, env_name, i) + 1))))
 		return (0);
-	while (j < i)
-	{
-		newstr[j] = tool->input[j];
-		j++;
-	}
-	j = 0;
-	while (var[j])
-	{
-		newstr[i] = var[j];
-		i++;
-		j++;
-	}
-	// copier la fin de string après la var
+	ft_strncpy(newstr, tool->input, i);
+	ft_strncpy(&newstr[i], var, ft_strlen(var));
+	i = i + ft_strlen(var);
 	j = k + ft_strlen(env_name) + 1;
 	while (tool->input[j])
 	{
@@ -76,9 +112,7 @@ int		replace_var(t_parsing_tool *tool, int i, char *var, char *env_name)
 		i++;
 	}
 	newstr[i] = '\0';
-	tmp = tool->input;
-	tool->input = newstr;
-	free(tmp);
+	assign_and_free(&newstr, &tool->input);
 	return (1);
 }
 
@@ -89,58 +123,13 @@ int		insert_env_var(t_parsing_tool *tool, int i)
 
 	if (!(env_name = get_var_name(tool, i)))
 		return (0);
-	if (!(var = parsing_variable(env_name)))
+	if (!(var = parsing_variable(tool, env_name)))
 		return (0);
-	replace_var(tool, i, var, env_name);
+	if (tool->empty_var)
+		remove_var(tool, i, env_name);
+	else
+		replace_var(tool, i, var, env_name);
 	free(env_name);
 	free(var);
-	return(1);
-}
-
-char *get_var_name(t_parsing_tool *tool, int i)
-{
-	int j;
-	int k;
-	char *env_name;
-
-	i++;
-	j = i;
-	k = 0;
-	while (tool->input[j] && !is_quote(tool->input[j]) && !is_space(tool->input[j]) && !is_quote(tool->input[j]) && !is_dollar(tool->input[i]) && !is_equal(tool->input[i]))
-	{
-		j++;
-		k++;
-	}
-	if (!(env_name = malloc(sizeof(char) * (k + 1))))
-		return (NULL);
-	k = 0;
-	while (i < j)
-	{
-		env_name[k] = tool->input[i];
-		i++;
-		k++;
-	}
-	env_name[k] = '\0';
-	return(env_name);
-}
-
-char	*parsing_variable(char *str)
-{
-	t_list	*tmp;
-	char	*output;
-	int len;
-
-	len = ft_strlen(str);
-	printf("len: %d\n", len);
-	tmp = g_env;
-	// account for case if env name is not found : cannot be \0
-	while (tmp)
-	{
-		if (!ft_strncmp(str, tmp->content, len))
-		{
-			return (ft_strdup(&(tmp->content[len + 1])));
-		}
-		tmp = tmp->next;
-	}
-	return(ft_strdup(""));
+	return (1);
 }

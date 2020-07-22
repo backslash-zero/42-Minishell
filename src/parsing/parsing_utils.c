@@ -6,78 +6,81 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/13 16:01:44 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/21 19:13:50 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	init_tool(t_parsing_tool *tool)
+void	quote_checker(t_parsing_tool *tool, int i, int *n)
 {
-	tool->quote = '\0';
-	tool->open = 0;
+	if (is_quote(tool->input[i]))
+	{
+		switcher_quote(tool, tool->input[i]);
+		if (!tool->open)
+			*n = 0;
+	}
 }
 
-int		test_empty_quote(char c, char d)
+int		semic_checker(t_parsing_tool *tool, int i, int *n)
 {
-	if (c == d)
+	if (is_semic(tool->input[i]))
 	{
-		if (c == '\"' || c == '\'')
-			return (1);
+		*n += 1;
+		if (i > 0)
+		{
+			if (is_semic(tool->input[i - 1]))
+				return (-1);
+		}
 	}
 	return (0);
 }
 
-int		is_quote(char c)
+char	*get_var_name(t_parsing_tool *tool, int i)
 {
-	if (c == '\'' || c == '\"')
-		return (1);
-	else
-		return (0);
-}
+	int		j;
+	int		k;
+	char	*env_name;
 
-int		is_dollar(char c)
-{
-	if (c == '$')
-		return (1);
-	else
-		return (0);
-}
-
-int		is_space(char c)
-{
-	if (c == ' ')
-		return (1);
-	else
-		return (0);
-}
-
-int		is_equal(char c)
-{
-	if (c == '=')
-		return (1);
-	else
-		return (0);
-}
-
-int		is_semic(char c)
-{
-	if (c == ';')
-		return (1);
-	else
-		return (0);
-}
-
-void	switcher_quote(t_parsing_tool *tool, char c)
-{
-	if (!tool->open)
+	i++;
+	j = i;
+	k = 0;
+	while (tool->input[j] && !is_space(tool->input[j])
+		&& !is_quote(tool->input[j]) && !is_dollar(tool->input[j])
+		&& !is_equal(tool->input[j]))
 	{
-		tool->open = 1;
-		tool->quote = c;
+		j++;
+		k++;
 	}
-	else if (tool->open == 1 && c == tool->quote)
+	if (!(env_name = malloc(sizeof(char) * (k + 1))))
+		return (NULL);
+	k = 0;
+	while (i < j)
 	{
-		tool->open = 0;
-		tool->quote = '\0';
+		env_name[k] = tool->input[i];
+		i++;
+		k++;
 	}
+	env_name[k] = '\0';
+	return (env_name);
+}
+
+char	*parsing_variable(t_parsing_tool *tool, char *str)
+{
+	t_list	*tmp;
+	char	*output;
+	int		len;
+
+	len = ft_strlen(str);
+	tmp = g_env;
+	while (tmp)
+	{
+		if (!ft_strncmp(str, tmp->content, len))
+		{
+			return (ft_strdup(&(tmp->content[len + 1])));
+		}
+		tmp = tmp->next;
+	}
+	tool->empty_var = 1;
+	return (ft_strdup(""));
 }
