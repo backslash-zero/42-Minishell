@@ -50,5 +50,6 @@ int		calc_len_newstr(char *var, char *input, char *env_name, int i);
 void	quote_checker(t_parsing_tool *tool, int i, int *n);
 int		semic_checker(t_parsing_tool *tool, int i, int *n);
 int		envvar_authorized_character(char c, int first_char);
+void	skipspaces(t_parsing_tool *tool, int *i, int *j);
 
 #endif

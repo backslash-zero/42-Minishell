@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/22 13:42:03 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/22 17:53:55 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,15 @@ int		size_arg_tool(t_parsing_tool *tool)
 	return (count);
 }
 
+void	skipspaces(t_parsing_tool *tool, int *i, int *j)
+{
+	while (is_space(tool->input[*i]))
+	{
+		*i += 1;
+		*j += 1;
+	}
+}
+
 int		ft_split_args(t_parsing_tool *tool)
 {
 	int		n;
@@ -49,6 +58,7 @@ int		ft_split_args(t_parsing_tool *tool)
 	n = 0;
 	i = 0;
 	j = 0;
+	skipspaces(tool, &i, &j);
 	while (tool->input[i] && n < tool->size)
 	{
 		while ((!is_space(tool->input[j])
