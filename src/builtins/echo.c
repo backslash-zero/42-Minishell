@@ -12,13 +12,11 @@ void		echo_print(char **arg, int i, int fd)
 	}
 }
 
-int		builtin_echo(char **arg)
+int		builtin_echo(int fd, char **arg)
 {
-	int fd = 1;
-
 	if (arg_len(arg) == 1)
 	{
-		ft_putchar('\n');
+		ft_putchar_fd(fd, '\n');
 		return (1);
 	}
 	if (ft_strcmp(arg[1], "-n") == 0)
@@ -26,7 +24,7 @@ int		builtin_echo(char **arg)
 	else
 	{
 		echo_print(arg, 1, fd);
-		ft_putchar('\n');
+		ft_putchar_fd(fd, '\n');
 	}
 	return(0);
 }
