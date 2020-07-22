@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_substring.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:08:32 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/09 17:59:48 by marvin           ###   ########.fr       */
+/*   Updated: 2020/07/22 13:37:52 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		append_semicolon(int *i, int j, int *n, t_parsing_tool *tool)
+int		append_semicolon(int *i, int *j, int *n, t_parsing_tool *tool)
 {
 	char *newstr;
 
-	if (is_semic(tool->input[j]))
+	if (is_semic(tool->input[*i]))
 	{
 		if (!(tool->arg[*n] = malloc(sizeof(char) * 2)))
 			return (0);
 		tool->arg[*n][0] = ';';
 		tool->arg[*n][1] = '\0';
-		*i = j;
+		*i = *j;
 		*n += 1;
 	}
 	return (1);

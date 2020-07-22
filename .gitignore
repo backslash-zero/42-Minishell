@@ -5,3 +5,4 @@ Minishell
 *.a
 test.c
 a.out
+minishell

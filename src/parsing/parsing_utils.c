@@ -6,62 +6,98 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/23 17:39:12 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/22 17:06:40 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	init_tool(t_parsing_tool *tool)
+void	quote_checker(t_parsing_tool *tool, int i, int *n)
 {
-	tool->quote = '\0';
-	tool->open = 0;
+	if (is_quote(tool->input[i]))
+	{
+		switcher_quote(tool, tool->input[i]);
+		if (!tool->open)
+			*n = 0;
+	}
 }
 
-int		test_empty_quote(char c, char d)
+int		semic_checker(t_parsing_tool *tool, int i, int *n)
 {
-	if (c == d)
+	if (is_semic(tool->input[i]) && !tool->open)
 	{
-		if (c == '\"' || c == '\'')
-			return (1);
+		*n = 1;
+		if (i > 0)
+		{
+			if (is_semic(tool->input[i - 1]) && !tool->open)
+				return (-1);
+		}
+		if (i == 0)
+			return (-1);
 	}
 	return (0);
 }
 
-int		is_quote(char c)
+int		envvar_authorized_character(char c, int first_char)
 {
-	if (c == '\'' || c == '\"')
-		return (1);
-	else
-		return (0);
+	if (first_char == TRUE)
+		if (c == '_' || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+			return (TRUE);
+	if (first_char == FALSE)
+		if (c == '_' || (c > 64 && c < 91) || (c > 96 && c < 123) ||
+			(c > 47 && c < 58))
+			return (TRUE);
+	return (FALSE);
 }
 
-int		is_space(char c)
+char	*get_var_name(t_parsing_tool *tool, int i)
 {
-	if (c == ' ')
-		return (1);
-	else
-		return (0);
-}
+	int		j;
+	int		k;
+	char	*env_name;
 
-int		is_semic(char c)
-{
-	if (c == ';')
-		return (1);
-	else
-		return (0);
-}
-
-void	switcher_quote(t_parsing_tool *tool, char c)
-{
-	if (!tool->open)
+	i++;
+	j = i;
+	k = 0;
+	if (envvar_authorized_character(tool->input[j], TRUE))
 	{
-		tool->open = 1;
-		tool->quote = c;
+		j++;
+		k++;
 	}
-	else if (tool->open == 1 && c == tool->quote)
+	while (envvar_authorized_character(tool->input[j], FALSE))
 	{
-		tool->open = 0;
-		tool->quote = '\0';
+		j++;
+		k++;
 	}
+	if (!(env_name = malloc(sizeof(char) * (k + 1))))
+		return (NULL);
+	k = 0;
+	while (i < j)
+	{
+		env_name[k] = tool->input[i];
+		i++;
+		k++;
+	}
+	env_name[k] = '\0';
+	return (env_name);
+}
+
+char	*parsing_variable(t_parsing_tool *tool, char *str)
+{
+	t_list	*tmp;
+	char	*output;
+	int		len;
+
+	len = ft_strlen(str);
+	tmp = g_env;
+	while (tmp)
+	{
+		if (!ft_strncmp(str, tmp->content, len))
+		{
+			return (ft_strdup(&(tmp->content[len + 1])));
+		}
+		tmp = tmp->next;
+	}
+	tool->empty_var = 1;
+	return (ft_strdup(""));
 }

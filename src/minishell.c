@@ -1,5 +1,6 @@
 #include "../incs/minishell.h"
 
+t_ret	g_ret = 0;
 int		is_forking(int val)
 {
 	static int is_forking = 0;
