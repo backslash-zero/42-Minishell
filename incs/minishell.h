@@ -3,6 +3,8 @@
 
 # define MAX_INPUT_SIZE 131072
 # define NB_BUILINS 7
+# define TRUE  1
+# define FALSE 0
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -20,6 +22,8 @@
 #include "ft_printf.h"
 #include "parsing.h"
 
+typedef int			t_ret;
+t_ret   g_ret;
 typedef int			(*builtfunc_addr)(int fd, char **s);
 
 typedef struct      s_parse
@@ -36,6 +40,8 @@ void    print_prompt_prefix(void);
 void	prompt(void);
 int 	launch(char *input, t_parse *parse);
 void	free_tab(char **tab);
+void	assign_and_free(char **newstr, char **oldstr);
+void	ft_strncpy(char *dest, char *src, int len);
 int     arg_len(char **arg);
 int		ft_exec(char **arg_list);
 int     redirection(char **arg, t_parse *parse);

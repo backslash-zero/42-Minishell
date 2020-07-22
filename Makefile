@@ -22,9 +22,13 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				parsing/parsing_clean.c			\
 				parsing/parsing_substring.c		\
 				parsing/parsing_utils.c			\
+				parsing/parsing_utils_2.c		\
+				parsing/parsing_utils_3.c		\
+				parsing/parsing_variable.c		\
 				utils/arg.c 					\
 				utils/error.c 					\
 				utils/free.c 					\
+				utils/ft_strncpy.c 				\
 				utils/prints.c 					\
 				utils/reads.c					\
 				utils/semicolon.c				\

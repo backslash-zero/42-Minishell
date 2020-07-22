@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/21 11:21:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/21 11:21:40 by cmeunier         ###   ########.fr       */
+/*   Created: 2020/07/21 11:18:58 by cmeunier          #+#    #+#             */
+/*   Updated: 2020/07/21 11:19:28 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	free_tab(char **tab)
+void	ft_strncpy(char *dest, char *src, int len)
 {
-	int i;
+	int j;
 
-	i = 0;
-	while (tab[i])
+	j = 0;
+	while (j < len && src[j])
 	{
-		free(tab[i]);
-		i++;
+		dest[j] = src[j];
+		j++;
 	}
-	free(tab);
-}
-
-void	assign_and_free(char **newstr, char **oldstr)
-{
-	char	*tmp;
-
-	tmp = *oldstr;
-	*oldstr = *newstr;
-	free(tmp);
 }
