@@ -19,6 +19,7 @@ void	signal_handler(int n)
 	}
 	else if (n == SIGQUIT)
 	{
+		printf("lolqzdzqd\n");
 		ft_putstr("\033[1C");
 		ft_putstr("\b\b \b\b \b\b");
 		ft_putstr("\033[1C");
