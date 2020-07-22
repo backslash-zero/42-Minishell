@@ -1,6 +1,6 @@
 #include "../../incs/minishell.h"
 
-int		builtin_exit(char **arg)
+int		builtin_exit(int fd, char **arg)
 {
 	int 			i;
 	unsigned int	j;
@@ -8,7 +8,10 @@ int		builtin_exit(char **arg)
 
 	ft_putstr("exit\n");
 	if ((arg_l = arg_len(arg)) == 1)
+	{
+		free(arg);
 		exit(0);
+	}
 	if (arg_l > 2)
 		return (ft_error(MANY_ARGS, NULL, NULL, arg[1]));
 	if (arg[1][i] == '+' || arg[1][i] == '-')

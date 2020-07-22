@@ -32,6 +32,8 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				utils/prints.c 					\
 				utils/reads.c					\
 				utils/semicolon.c				\
+				utils/redirections.c			\
+				utils/path.c					\
 				minishell.c 					\
 
 
@@ -64,7 +66,7 @@ clean:
 			@(cd $(LIBFT) && $(MAKE) clean)
 			@(cd $(PRINTF) && $(MAKE) clean)
 			@/bin/rm -f libft.a libftprintf.a
-			@echo object and libraries cleaned
+			@echo Objects and libraries cleaned
 
 fclean: 	clean
 			@/bin/rm -f $(NAME)
