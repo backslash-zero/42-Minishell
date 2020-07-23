@@ -85,6 +85,8 @@ int		launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
+		if (!cleanup_quotes(arg_list))
+			return (ft_strerror(NULL, arg, NULL, NULL));
 		if (!(redirection(arg_list, parse)))
 		{
 			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)

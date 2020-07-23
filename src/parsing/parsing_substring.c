@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:08:32 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/22 13:37:52 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/23 13:43:05 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ char	*ft_addsubstr(int i, int j, t_parsing_tool *tool)
 		len++;
 	}
 	str[len] = '\0';
-	return (clean_substring(str));
+	return (str);
 }

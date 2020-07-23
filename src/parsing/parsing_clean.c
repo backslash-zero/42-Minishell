@@ -6,11 +6,28 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 15:04:09 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/06/23 17:38:40 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/23 14:55:16 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+int		cleanup_quotes(char **arg_list)
+{
+	int i;
+
+	i = 0;
+	while (arg_list[i])
+	{
+		if ((arg_list[i] = (clean_substring(arg_list[i]))) == NULL)
+		{
+			free(arg_list);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
 
 int		find_nextquote(int *i, t_newstr *output)
 {
@@ -80,18 +97,9 @@ char	*clean_substring(char *str)
 
 	output.str = str;
 	output.len = ft_strlen(str);
-	/* init_newstr(&output, str);
-	 if (!expand_env(&output))
-	{
-		ft_strerror(NULL, NULL, NULL, NULL);
-		return (NULL);
-	} */
 	init_newstr(&output, str);
 	if (!clear_quotes(&output))
-	{
-		ft_strerror(NULL, NULL, NULL, NULL);
 		return (NULL);
-	}	
-	output.len = ft_strlen(output.str);
+	// output.len = ft_strlen(output.str);
 	return(output.str);
 }

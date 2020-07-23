@@ -30,6 +30,7 @@ void	switcher_quote(t_parsing_tool *tool, char c);
 char	*ft_addsubstr(int i, int j, t_parsing_tool *tool);
 void	switcher_quote(t_parsing_tool *tool, char c);
 int		test_empty_quote(char c, char d);
+int		cleanup_quotes(char **arg_list);
 char	*clean_substring(char *str);
 void	init_tool(t_parsing_tool *tool);
 int		append_string_to_arg(int *i, int *j, int *n, t_parsing_tool *tool);
