@@ -31,7 +31,7 @@ char	**semicolon(char **arg, int i, int l)
 		i++;
 		while (arg[k] && ft_strcmp(arg[k], ";") != 0)
 		{
-			arg_list[j] = arg[k];
+			arg_list[j] = ft_strdup(arg[k]);
 			j++;
 			k++;
 			i++;
