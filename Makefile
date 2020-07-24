@@ -20,6 +20,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				builtins/unset.c				\
 				parsing/parsing.c				\
 				parsing/parsing_clean.c			\
+				parsing/parsing_clean_2.c		\
 				parsing/parsing_substring.c		\
 				parsing/parsing_utils.c			\
 				parsing/parsing_utils_2.c		\

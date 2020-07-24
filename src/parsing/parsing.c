@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/22 17:53:55 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/24 18:23:23 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ int		ft_split_args(t_parsing_tool *tool)
 	skipspaces(tool, &i, &j);
 	while (tool->input[i] && n < tool->size)
 	{
-		while ((!is_space(tool->input[j])
-			&& !is_semic(tool->input[j]) && tool->input[j] != '\0')
-			|| (tool->open))
+		while ((!is_space(tool->input[j]) && !is_semic(tool->input[j])
+				&& tool->input[j] != '\0') || (tool->open))
 		{
 			if (is_quote(tool->input[j]))
 				switcher_quote(tool, tool->input[j]);
@@ -110,18 +109,11 @@ char	**parsing(char *input)
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);
 	}
-	// printf("arg len: %d\n", tool.size);
 	if (!(tool.arg = malloc_arg(&tool)))
 		return (NULL);
 	init_tool(&tool);
 	if (!(ft_split_args(&tool)))
 		return (NULL);
 	free(tool.input);
-	// int i = 0;
-	// while (tool.arg[i])
-	// {
-	// 	printf("arg %d:	%s\n", i, tool.arg[i]);
-	// 	i++;
-	// }	
 	return (tool.arg);
 }

@@ -52,5 +52,7 @@ void	quote_checker(t_parsing_tool *tool, int i, int *n);
 int		semic_checker(t_parsing_tool *tool, int i, int *n);
 int		envvar_authorized_character(char c, int first_char);
 void	skipspaces(t_parsing_tool *tool, int *i, int *j);
+int		checkifquotes(char *str);
+int		removequotes(char **arg_list, int i);
 
 #endif
