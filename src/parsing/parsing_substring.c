@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:08:32 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/23 13:43:05 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/24 18:43:18 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int		append_semicolon(int *i, int *j, int *n, t_parsing_tool *tool)
 	}
 	return (1);
 }
-
 
 int		append_string_to_arg(int *i, int *j, int *n, t_parsing_tool *tool)
 {

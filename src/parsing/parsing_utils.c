@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/22 17:06:40 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/24 18:41:03 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,12 @@ char	*get_var_name(t_parsing_tool *tool, int i)
 
 	i++;
 	j = i;
-	k = 0;
 	if (envvar_authorized_character(tool->input[j], TRUE))
 	{
-		j++;
-		k++;
+		while (envvar_authorized_character(tool->input[j], FALSE))
+			j++;
 	}
-	while (envvar_authorized_character(tool->input[j], FALSE))
-	{
-		j++;
-		k++;
-	}
-	if (!(env_name = malloc(sizeof(char) * (k + 1))))
+	if (!(env_name = malloc(sizeof(char) * (j - i + 1))))
 		return (NULL);
 	k = 0;
 	while (i < j)
