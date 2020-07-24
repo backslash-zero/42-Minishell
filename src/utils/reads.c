@@ -1,5 +1,15 @@
 #include "../../incs/minishell.h"
 
+static void	printtab(char **tab)
+{
+	int i = 0;
+	while (tab[i])
+	{
+		printf("str-%d: %s\n", i, tab[i]);
+		i++;
+	}
+}
+
 char	**tablst(t_list *lst)
 {
 	char	**ret;
@@ -75,7 +85,9 @@ int		launch(char *input, t_parse *parse)
 	while (arg[i] != NULL)
 	{
 		k = 0;
-		while(i < arg_len(arg) - 1 && ft_strcmp(arg[i], ";") != 0)
+		if (i != 0)
+			free_tab(arg_list);
+		while (i < arg_len(arg) - 1 && ft_strcmp(arg[i], ";") != 0)
 		{
 			k++;
 			i++;
@@ -85,6 +97,10 @@ int		launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
+		printtab(arg_list);
+		if (!cleanup_quotes(arg_list))
+			return (ft_strerror(NULL, arg, NULL, NULL));
+		printtab(arg_list);
 		if (!(redirection(arg_list, parse)))
 		{
 			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
@@ -92,9 +108,8 @@ int		launch(char *input, t_parse *parse)
 				if (ft_exec(arg_list) == -2)
 					ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 			}
-			else
-				free(arg[i]);
 		}
+		// free_tab(arg_list);
 		//free (arg_list[i]);
 		// free_tab(arg_list);
 		i++;
