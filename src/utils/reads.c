@@ -97,16 +97,22 @@ int		launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
+		free (arg[i]);
 		printtab(arg_list);
 		if (!cleanup_quotes(arg_list))
+		{
+			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
-		printtab(arg_list);
+		}
 		if (!(redirection(arg_list, parse)))
 		{
 			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
 			{
 				if (ft_exec(arg_list) == -2)
-					ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+				{
+					free_tab(arg_list);
+					ft_error(CMD_NOT_FOUND, NULL, arg, arg_list[0]);
+				}
 			}
 		}
 		// free_tab(arg_list);
@@ -115,8 +121,7 @@ int		launch(char *input, t_parse *parse)
 		i++;
 	}
 	//free_tab(arg_list);
-	//free_tab(arg);
-
+	free(arg);
 //	free_tab(arg);
 	return (0);
 }
