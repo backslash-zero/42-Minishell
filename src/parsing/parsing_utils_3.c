@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 19:08:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/24 18:44:13 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/07/25 12:34:28 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,7 @@ void	switcher_quote(t_parsing_tool *tool, char c)
 
 int		test_lone_dollar(char *str, int i)
 {
-	if (str[i + 1] == '\0'
-		|| is_dollar(str[i + 1])
-		|| is_space(str[i + 1])
-		|| is_semic(str[i + 1])
-		|| is_equal(str[i + 1]))
+	if (!envvar_authorized_character(str[i + 1], TRUE))
 	{
 		return (1);
 	}
