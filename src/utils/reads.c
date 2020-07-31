@@ -3,6 +3,7 @@
 static void	printtab(char **tab)
 {
 	int i = 0;
+	printf("len tab: %d\n", arg_len(tab));
 	while (tab[i])
 	{
 		printf("str-%d: %s\n", i, tab[i]);
@@ -77,27 +78,26 @@ int		launch(char *input, t_parse *parse)
     char    **arg_list;
 	char	**arg;
 	int 	i;
-	int 	k;
+	int 	len_new_arg_list;
 
 	if(!(arg = parsing(input)))
 		return (0);
 	i = 0;
 	while (arg[i] != NULL)
 	{
-		k = 0;
+		len_new_arg_list = 0;
 		if (i != 0)
 			free_tab(arg_list);
-		while (i < arg_len(arg) - 1 && ft_strcmp(arg[i], ";") != 0)
+		while (i < arg_len(arg) && ft_strcmp(arg[i], ";") != 0)
 		{
-			k++;
+			len_new_arg_list++;
 			i++;
 		}
-		if ((arg_list = semicolon(arg, i, k)) == NULL)
+		if ((arg_list = semicolon(arg, i, len_new_arg_list)) == NULL)
 		{
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		free (arg[i]);
 		printtab(arg_list);
 		if (!cleanup_quotes(arg_list))
 		{
@@ -116,13 +116,15 @@ int		launch(char *input, t_parse *parse)
 			}
 		}
 		// free_tab(arg_list);
-		//free (arg_list[i]);
+		// free (arg_list[i]);
 		// free_tab(arg_list);
+		if (arg[i] == NULL)
+			break ;
 		i++;
 	}
-	//free_tab(arg_list);
+	// free_tab(arg_list);
 	free(arg);
-//	free_tab(arg);
+	// free_tab(arg);
 	return (0);
 }
 
