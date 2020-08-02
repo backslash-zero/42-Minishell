@@ -46,7 +46,7 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 		{
 			ret_exec = ft_exec(arg_list);
 			if (ret_exec == -1) // error with fork
-				return (ft_strerror(NULL, NULL, NULL, NULL));
+				return (ft_strerror(NULL, NULL, "fork", NULL));
 			else if (ret_exec == -2)
 				return (ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]));
 		}
@@ -76,10 +76,8 @@ int		ft_exec(char **arg_list)
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
 			free(s);
-			free_tab(tab_env);
 			return (-2);
 		}
-		free(s);
 	}
 	else if (proc > 0)
 	{
@@ -89,9 +87,6 @@ int		ft_exec(char **arg_list)
 			return (-1);
 		}
 	}
-	if (s)
-		free(s);
-	free_tab(tab_env);
 	return (0);
 }
 
