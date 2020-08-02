@@ -34,6 +34,27 @@ char	**tablst(t_list *lst)
 	return (ret);
 }
 
+int		launch_exec(char **arg, t_parse *parse, char **arg_list)
+{
+	int	ret_red;
+	int	ret_exec;
+	
+	ret_red = redirection(arg_list, parse);
+	if (!ret_red)
+	{
+		if (!ft_checkbuiltins(arg_list, parse, 1))
+		{
+			ret_exec = ft_exec(arg_list);
+			if (ret_exec == -1) // error with fork
+				return (ft_strerror(NULL, NULL, NULL, NULL));
+			else if (ret_exec == -2)
+				return (ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]));
+		}
+		return (1);
+	}
+	// else if (ret_red == -1) already done inside of redirection func
+	return (0);
+}
 
 int		ft_exec(char **arg_list)
 {
@@ -54,10 +75,11 @@ int		ft_exec(char **arg_list)
 		s = find_path_env(tab_env, arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
+			free(s);
 			free_tab(tab_env);
 			return (-2);
 		}
-		free (s);
+		free(s);
 	}
 	else if (proc > 0)
 	{
@@ -68,7 +90,7 @@ int		ft_exec(char **arg_list)
 		}
 	}
 	if (s)
-		free (s);
+		free(s);
 	free_tab(tab_env);
 	return (0);
 }
@@ -86,8 +108,6 @@ int		launch(char *input, t_parse *parse)
 	while (arg[i] != NULL)
 	{
 		len_new_arg_list = 0;
-		if (i != 0)
-			free_tab(arg_list);
 		while (i < arg_len(arg) && ft_strcmp(arg[i], ";") != 0)
 		{
 			len_new_arg_list++;
@@ -98,32 +118,23 @@ int		launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		printtab(arg_list);
 		if (!cleanup_quotes(arg_list))
 		{
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		if (!(redirection(arg_list, parse)))
-		{
-			if ((ft_checkbuiltins(arg_list, parse, 1)) == 0)
-			{
-				if (ft_exec(arg_list) == -2)
-				{
-					free_tab(arg_list);
-					ft_error(CMD_NOT_FOUND, NULL, arg, arg_list[0]);
-				}
-			}
-		}
-		// free_tab(arg_list);
-		// free (arg_list[i]);
-		// free_tab(arg_list);
+		// printtab(arg_list);
+		launch_exec(arg, parse, arg_list);
 		if (arg[i] == NULL)
+		{
+			free_tab(arg_list);
 			break ;
+		}	
+		free_tab(arg_list);
 		i++;
 	}
 	// free_tab(arg_list);
-	free(arg);
+	free_tab(arg);
 	// free_tab(arg);
 	return (0);
 }
