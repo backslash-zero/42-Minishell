@@ -31,11 +31,20 @@ char	*find_correct_path(char	*s, char *arg)
 				i++;
 			l = i - 1;
 			if ((test = ft_strldup(s, j, l)) == NULL)
-                return (NULL);
+			{
+				free (test);
+			    return (NULL);
+			}
 			if ((dup = ft_strjoin(test, arg)) == NULL)
-                return (NULL);
+			{
+				free (test);
+				free (dup);
+			    return (NULL);
+			}
+			free (test);
 			if (try_path(dup) == 0)
 				return (dup);
+			free (dup);
 			j = i + 1;
 		}
 		i++;
@@ -61,7 +70,12 @@ char	*find_path_env(char **env, char *arg)
 			j++;
 			s = ft_substr(env[i], j, ft_strlen(env[i]) - j);
 			if ((path = find_correct_path(s, arg)) != NULL)
+			{
+				free (s);
 				return (path);
+			}
+			free (s);
+			free (path);
 		}
 		i++;
 	}

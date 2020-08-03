@@ -79,6 +79,7 @@ int		ft_exec(char **arg_list)
 			free_tab(tab_env);
 			return (-2);
 		}
+		free (s);
 	}
 	else if (proc > 0)
 	{
