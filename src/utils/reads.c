@@ -76,6 +76,7 @@ int		ft_exec(char **arg_list)
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
 			free(s);
+			free_tab(tab_env);
 			return (-2);
 		}
 	}
@@ -83,10 +84,11 @@ int		ft_exec(char **arg_list)
 	{
 		if (wait(&status) == -1)
 		{
-			free_tab(tab_env);	
+			free_tab(tab_env);
 			return (-1);
 		}
 	}
+	free_tab(tab_env);
 	return (0);
 }
 
