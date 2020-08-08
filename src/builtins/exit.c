@@ -9,7 +9,6 @@ int		builtin_exit(int fd, char **arg)
 	ft_putstr("exit\n");
 	if ((arg_l = arg_len(arg)) == 1)
 	{
-		printf("exiting\n");
 		free_tab(arg);
 		exit(0);
 	}
