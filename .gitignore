@@ -6,3 +6,6 @@ Minishell
 test.c
 a.out
 minishell
+*.json
+*.txt
+.vscode/*

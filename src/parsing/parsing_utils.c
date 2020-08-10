@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/24 18:41:03 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/09 20:13:43 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*parsing_variable(t_parsing_tool *tool, char *str)
 	tmp = g_env;
 	while (tmp)
 	{
-		if (!ft_strncmp(str, tmp->content, len))
+		if (!ft_strncmp(str, tmp->content, len) && tmp->content[len] == '=')
 		{
 			return (ft_strdup(&(tmp->content[len + 1])));
 		}

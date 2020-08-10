@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 19:08:27 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/21 19:09:19 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/09 20:55:42 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_tool(t_parsing_tool *tool)
 {
 	tool->quote = '\0';
 	tool->open = 0;
+	tool->empty_var = 0;
 }
 
 int		test_empty_quote(char c, char d)

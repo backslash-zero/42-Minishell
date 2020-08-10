@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/21 18:20:21 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/09 21:11:51 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		expand_env(t_parsing_tool *tool)
 	{
 		if (is_quote(tool->input[i]))
 			switcher_quote(tool, tool->input[i]);
-		if (tool->input[i + 1] == '?')
+		if (is_dollar(tool->input[i]) && tool->input[i + 1] == '?')
 		{
 			if (!insert_ret(tool, i))
 				return (-1);
@@ -60,6 +60,7 @@ int		expand_env(t_parsing_tool *tool)
 		{
 			if (!insert_env_var(tool, i))
 				return (-1);
+			i--;
 		}
 		i++;
 	}
@@ -126,7 +127,10 @@ int		insert_env_var(t_parsing_tool *tool, int i)
 	if (!(var = parsing_variable(tool, env_name)))
 		return (0);
 	if (tool->empty_var)
+	{
 		remove_var(tool, i, env_name);
+		tool->empty_var = 0;
+	}
 	else
 		replace_var(tool, i, var, env_name);
 	free(env_name);
