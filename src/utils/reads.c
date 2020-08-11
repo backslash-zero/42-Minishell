@@ -102,6 +102,7 @@ int		launch(char *input, t_parse *parse)
 
 	if(!(arg = parsing(input)))
 		return (0);
+	printtab(arg);
 	i = 0;
 	while (arg[i] != NULL)
 	{
