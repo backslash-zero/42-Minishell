@@ -55,7 +55,6 @@ int     r_anglebracket(char **arg, t_parse *parse)
             return (-1);
         }
         dup2 (fd, 1);
-        //close (fd);
         if (!(arg_list = deletebracket(arg)))
         {
             close (fd);
