@@ -6,9 +6,20 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 22:25:35 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/11 17:00:31 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/11 22:22:04 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+static int	pipe_main(char **arg, t_parse *parse)
+{
+	int i;
+
+	i = 1;
+	while (arg[i])
+	{
+		i++;
+	}
+	return (0);
+}

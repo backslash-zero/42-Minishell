@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/09 20:13:43 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/11 23:44:16 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,68 @@ void	quote_checker(t_parsing_tool *tool, int i, int *n)
 	}
 }
 
+int		redir_r_checker(t_parsing_tool *tool, int i, int *n)
+{
+	if (is_redir_r(tool->input[i]) && !tool->open)
+	{
+		*n = 2;
+		if (i == 0)
+			return (-1);
+		if (is_redir_r(tool->input[i + 1]))
+			i++;
+		while (is_space(tool->input[i +1]))
+			i++;
+		if (is_redir_or_pipe(tool->input[i + 1]))
+			return (-1);
+	}
+	return (0);
+}
+
+int		redir_l_checker(t_parsing_tool *tool, int i, int *n)
+{
+	if (is_redir_l(tool->input[i]) && !tool->open)
+	{
+		*n = 2;
+		if (i == 0)
+			return (-1);
+		while (is_space(tool->input[i +1]))
+			i++;
+		if (is_redir_or_pipe(tool->input[i + 1]))
+			return (-1);
+	}
+	return (0);
+}
+int		pipe_checker(t_parsing_tool *tool, int i, int *n)
+{
+	if (is_pipe(tool->input[i]) && !tool->open)
+	{
+		*n = 2;
+		if (i == 0)
+			return (-1);
+		while (is_space(tool->input[i +1]))
+			i++;
+		if (is_redir_or_pipe(tool->input[i + 1]))
+			return (-1);
+	}
+	return (0);
+}
+
+int		redir_pipe_checker(t_parsing_tool *tool, int i, int *n)
+{
+	if (redir_r_checker(tool, i, n)	||
+		pipe_checker(tool, i, n)	||
+		redir_l_checker(tool, i, n))
+	{
+		return (-1);
+	}
+	return (0);
+}
+
 int		semic_checker(t_parsing_tool *tool, int i, int *n)
 {
 	if (is_semic(tool->input[i]) && !tool->open)
 	{
-		*n = 1;
+		*n = 2;
 		if (i > 0)
 		{
 			if (is_semic(tool->input[i - 1]) && !tool->open)

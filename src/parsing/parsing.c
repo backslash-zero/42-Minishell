@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/24 18:23:23 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/11 23:05:57 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int		size_arg_tool(t_parsing_tool *tool)
 	while (tool->input[i])
 	{
 		quote_checker(tool, i, &n);
-		if (semic_checker(tool, i, &n))
+		if (semic_checker(tool, i, &n) || redir_pipe_checker(tool, i, &n))
 			return (-1);
 		if (tool->input[i] != ' ' && n != 0)
 		{
 			count++;
-			n = 0;
+			n--;
 		}
 		if (is_space(tool->input[i]) && !tool->open)
 			n = 1;
@@ -62,6 +62,7 @@ int		ft_split_args(t_parsing_tool *tool)
 	while (tool->input[i] && n < tool->size)
 	{
 		while ((!is_space(tool->input[j]) && !is_semic(tool->input[j])
+				&& !is_redir_or_pipe(tool->input[j])
 				&& tool->input[j] != '\0') || (tool->open))
 		{
 			if (is_quote(tool->input[j]))
@@ -71,6 +72,8 @@ int		ft_split_args(t_parsing_tool *tool)
 		if (!append_string_to_arg(&i, &j, &n, tool))
 			return (0);
 		if (!append_semicolon(&i, &j, &n, tool))
+			return (0);
+		if (!append_redir_pipe(&i, &j, &n, tool))
 			return (0);
 		if (j++ != '\0')
 			i++;
