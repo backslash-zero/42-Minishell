@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:08:32 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/24 18:43:18 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/11 23:19:24 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,31 @@ int		append_semicolon(int *i, int *j, int *n, t_parsing_tool *tool)
 			return (0);
 		tool->arg[*n][0] = ';';
 		tool->arg[*n][1] = '\0';
+		*i = *j;
+		*n += 1;
+	}
+	return (1);
+}
+
+int		append_redir_pipe(int *i, int *j, int *n, t_parsing_tool *tool)
+{
+	char	*newstr;
+	int		len;
+
+	// printf("** append_redir_pipe called\n");
+	len = 1;
+	if (is_redir_or_pipe(tool->input[*i]))
+	{
+		if (is_redir_r(tool->input[*i + 1]))
+		{
+			len++;
+			*j += 1;
+		}
+		if (!(tool->arg[*n] = malloc(sizeof(char) * len + 1)))
+			return (0);
+		tool->arg[*n][0] = tool->input[*i];
+		tool->arg[*n][1] = tool->input[*i + 1];
+		tool->arg[*n][len] = '\0';
 		*i = *j;
 		*n += 1;
 	}
