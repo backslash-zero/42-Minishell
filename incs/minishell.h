@@ -42,10 +42,12 @@ int 	launch(char *input, t_parse *parse);
 void	free_tab(char **tab);
 void	assign_and_free(char **newstr, char **oldstr);
 void	ft_strncpy(char *dest, char *src, int len);
+void	fd_dup(int i);
 int     arg_len(char **arg);
 int		ft_exec(char **arg_list);
 int     redirection(char **arg, t_parse *parse);
 char	**semicolon(char **arg, int i, int len_new_arg_list);
 char    *find_path_env(char **env, char *arg);
 
+char	**tablst(t_list *lst);
 #endif
