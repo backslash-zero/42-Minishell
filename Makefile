@@ -30,10 +30,11 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				utils/error.c 					\
 				utils/free.c 					\
 				utils/ft_strncpy.c 				\
+				utils/pipe.c 					\
 				utils/prints.c 					\
 				utils/reads.c					\
-				utils/semicolon.c				\
 				utils/redirections.c			\
+				utils/semicolon.c				\
 				utils/path.c					\
 				minishell.c 					\
 
