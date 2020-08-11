@@ -62,15 +62,15 @@ t_list    *init_env(t_list **lst, char **tab)
 	return (*lst);
 }
 
-int        builtin_env(int fd, char **arg)
+int        builtin_env(char **arg)
 {
     t_list *tmp;
     
     tmp = g_env;
     while(tmp)
     {
-        ft_putstr_fd(fd, tmp->content);
-        ft_putstr_fd(fd, "\n");
+        ft_putstr_fd(1, tmp->content);
+        ft_putstr_fd(1, "\n");
         tmp = tmp->next;
     }
     return(0);

@@ -130,7 +130,7 @@ void	sort_export(t_list *lst)
 	}
 }
 
-int        print_export(int fd)
+int        print_export(void)
 {
 	t_list *tmp;
 	int		i;
@@ -141,20 +141,20 @@ int        print_export(int fd)
 	while(tmp != NULL)
     {
 		i = 0;
-		ft_putstr_fd(fd, "declare -x ");
+		ft_putstr_fd(1, "declare -x ");
         if (ft_strchr(tmp->content, '='))
 		{
 			while (tmp->content[i] != '=')
-				ft_putchar_fd(fd, tmp->content[i++]);
-			ft_putchar_fd(fd, tmp->content[i++]);
-			ft_putstr_fd(fd, "\"");
+				ft_putchar_fd(1, tmp->content[i++]);
+			ft_putchar_fd(1, tmp->content[i++]);
+			ft_putstr_fd(1, "\"");
 			while (tmp->content[i])
-				ft_putchar_fd(fd, tmp->content[i++]);
-			ft_putstr_fd(fd, "\"");
+				ft_putchar_fd(1, tmp->content[i++]);
+			ft_putstr_fd(1, "\"");
 		}
 		else
-			ft_putstr_fd(fd, tmp->content);
-        ft_putstr_fd(fd, "\n");
+			ft_putstr_fd(1, tmp->content);
+        ft_putstr_fd(1, "\n");
         tmp = tmp->next;
     }
     return(0);
@@ -192,7 +192,7 @@ int		check_export_arg(char *arg)
 	return (1);
 }
 
-int		builtin_export(int fd, char **arg)
+int		builtin_export(char **arg)
 {
 	t_list	*lst;
 	int		i;
@@ -202,7 +202,7 @@ int		builtin_export(int fd, char **arg)
 
 	if (arg_len(arg) == 1)
 	{
-		print_export(fd);
+		print_export();
 		return (1);
 	}
 	while (arg[i] && (j = check_export_arg(arg[i])))

@@ -24,7 +24,7 @@
 
 typedef int			t_ret;
 t_ret   g_ret;
-typedef int			(*builtfunc_addr)(int fd, char **s);
+typedef int			(*builtfunc_addr)(char **s);
 
 typedef struct      s_parse
 {
@@ -35,7 +35,7 @@ typedef int			t_ret;
 t_ret				g_ret;
 
 void	ft_builtinstab(t_parse *parse);
-int		ft_checkbuiltins(char **s, t_parse *parse, int fd);
+int		ft_checkbuiltins(char **s, t_parse *parse);
 void    print_prompt_prefix(void);
 void	prompt(void);
 int 	launch(char *input, t_parse *parse);

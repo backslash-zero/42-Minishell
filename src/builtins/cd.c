@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:58:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/07 00:00:28 by marvin           ###   ########.fr       */
+/*   Updated: 2020/08/11 14:16:24 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int     update_pwd(void)
     return (0);
 }
 
-int 	builtin_cd(int fd, char **arg)
+int 	builtin_cd(char **arg)
 {
 	char *new_dir;
 
