@@ -69,7 +69,7 @@ int     r_anglebracket(char **arg, t_parse *parse)
 	    else if (ret_exec == -2)
         {
             ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-			exit(0);
+			exit(127);
         }
     }
     close (fd);
@@ -111,7 +111,7 @@ int     r_dbanglebracket(char **arg, t_parse *parse)
 	    else if (ret_exec == -2)
         {
             ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-			exit(0);
+			exit(127);
         }
     }
     close (fd);
@@ -150,7 +150,7 @@ int     l_anglebracket(char **arg, t_parse *parse)
     else if (ret_exec == -2)
     {
         ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-        exit(0);
+        exit(127);
     }
     close (fd);
     //free (arg_list);

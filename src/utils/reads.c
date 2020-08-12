@@ -68,7 +68,8 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 			else if (ret_exec == -2)
 			{
 				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-				exit(0);
+				g_ret = 127;
+				exit (127);
 			}
 		}
 		return (1);
@@ -99,6 +100,7 @@ int		ft_exec(char **arg_list)
 		{
 			free(s);
 			free_tab(tab_env);
+			g_ret = 127;
 			return (-2);
 		}
 		//free(s);
@@ -150,7 +152,7 @@ int		launch(char *input, t_parse *parse)
 		{
 			free_tab(arg_list);
 			break ;
-		}	
+		}
 		free_tab(arg_list);
 		i++;
 	}
