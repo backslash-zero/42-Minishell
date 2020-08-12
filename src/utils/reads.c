@@ -60,7 +60,7 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 	ret_red = redirection(arg_list, parse);
 	if (!ret_red)
 	{
-		if (!ft_checkbuiltins(arg_list, parse, 1))
+		if (!ft_checkbuiltins(arg_list, parse))
 		{
 			ret_exec = ft_exec(arg_list);
 			if (ret_exec == -1)  //error with fork

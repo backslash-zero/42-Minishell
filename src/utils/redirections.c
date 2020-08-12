@@ -62,7 +62,7 @@ int     r_anglebracket(char **arg, t_parse *parse)
             ft_strerror (NULL, arg, NULL, NULL);
             return (-1);
         }
-        if ((!ft_checkbuiltins(arg_list, parse, fd)))
+        if ((!ft_checkbuiltins(arg_list, parse)))
             ret_exec = ft_exec(arg_list);
         if (ret_exec == -1)
 		    return (ft_strerror(NULL, NULL, "fork", NULL));
@@ -101,7 +101,7 @@ int     r_dbanglebracket(char **arg, t_parse *parse)
             ft_strerror (NULL, arg, NULL, NULL);
             return (-1);
         }
-        if ((!ft_checkbuiltins(arg_list, parse, fd)))
+        if ((!ft_checkbuiltins(arg_list, parse)))
             ret_exec = ft_exec(arg_list);
         if (ret_exec == -1)
 		return (ft_strerror(NULL, NULL, "fork", NULL));
@@ -137,7 +137,7 @@ int     l_anglebracket(char **arg, t_parse *parse)
         ft_strerror (NULL, arg, NULL, NULL);
         return (-1);
     }
-    if (!(ft_checkbuiltins(arg_list, parse, fd)))
+    if (!(ft_checkbuiltins(arg_list, parse)))
             ret_exec = ft_exec(arg_list);
     if (ret_exec == -1)
 		return (ft_strerror(NULL, NULL, "fork", NULL));
