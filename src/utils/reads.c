@@ -66,7 +66,10 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 			if (ret_exec == -1)  //error with fork
 				return (ft_strerror(NULL, NULL, "fork", NULL));
 			else if (ret_exec == -2)
-				return (ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]));
+			{
+				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+				exit(0);
+			}
 		}
 		return (1);
 	}
