@@ -34,43 +34,24 @@ char	**tablst(t_list *lst)
 	return (ret);
 }
 
-void	fd_dup(int i)
-{
-	static int input;
-	static int output;
-
-	if (i == 0)
-	{
-		input = dup(0);
-		output = dup(1);
-	}
-	else if (i == 1)
-	{
-		dup2(input, 0);
-		dup2(output, 1);
-	}
-}
-
 int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 {
 	int	ret_red;
 	int	ret_exec;
 	
-	fd_dup(0);
 	ret_red = redirection(arg_list, parse);
 	if (!ret_red)
 	{
 		if (!ft_checkbuiltins(arg_list, parse, 1))
 		{
 			ret_exec = ft_exec(arg_list);
-			if (ret_exec == -1)  //error with fork
+			if (ret_exec == -1) // error with fork
 				return (ft_strerror(NULL, NULL, "fork", NULL));
 			else if (ret_exec == -2)
 				return (ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]));
 		}
 		return (1);
 	}
-	fd_dup(1);
 	// else if (ret_red == -1) already done inside of redirection func
 	return (0);
 }
@@ -98,7 +79,7 @@ int		ft_exec(char **arg_list)
 			free_tab(tab_env);
 			return (-2);
 		}
-		//free(s);
+		free (s);
 	}
 	else if (proc > 0)
 	{
