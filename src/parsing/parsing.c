@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/11 23:05:57 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/12 11:58:24 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		size_arg_tool(t_parsing_tool *tool)
 	while (tool->input[i])
 	{
 		quote_checker(tool, i, &n);
-		if (semic_checker(tool, i, &n) || redir_pipe_checker(tool, i, &n))
+		if (semic_checker(tool, i, &n) || redir_pipe_checker(tool, &i, &n))
 			return (-1);
 		if (tool->input[i] != ' ' && n != 0)
 		{
