@@ -63,13 +63,17 @@ int     r_anglebracket(char **arg, t_parse *parse)
             return (-1);
         }
         if ((!ft_checkbuiltins(arg_list, parse)))
-            ret_exec = ft_exec(arg_list);
-        if (ret_exec == -1)
-		    ft_strerror(NULL, NULL, "fork", NULL);
-	    else if (ret_exec == -2)
         {
-            ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-			exit(0);
+            ret_exec = ft_exec(arg_list);
+            if (ret_exec == -1)
+                ft_strerror(NULL, NULL, "fork", NULL);
+            else if (ret_exec == -2)
+            {
+                ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+                g_ret = 127;
+                close (fd);
+                exit(127);
+            }
         }
     }
     close (fd);
@@ -105,13 +109,17 @@ int     r_dbanglebracket(char **arg, t_parse *parse)
             return (-1);
         }
         if ((!ft_checkbuiltins(arg_list, parse)))
-            ret_exec = ft_exec(arg_list);
-        if (ret_exec == -1)
-		    ft_strerror(NULL, NULL, "fork", NULL);
-	    else if (ret_exec == -2)
         {
-            ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-			exit(0);
+            ret_exec = ft_exec(arg_list);
+            if (ret_exec == -1)
+                ft_strerror(NULL, NULL, "fork", NULL);
+            else if (ret_exec == -2)
+            {
+                ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+                g_ret = 127;
+                close (fd);
+                exit(127);
+            }
         }
     }
     close (fd);
@@ -144,13 +152,17 @@ int     l_anglebracket(char **arg, t_parse *parse)
         return (-1);
     }
     if (!(ft_checkbuiltins(arg_list, parse)))
-            ret_exec = ft_exec(arg_list);
-    if (ret_exec == -1)
-		ft_strerror(NULL, NULL, "fork", NULL);
-    else if (ret_exec == -2)
-    {
-        ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-        exit(0);
+    { 
+        ret_exec = ft_exec(arg_list);
+        if (ret_exec == -1)
+            ft_strerror(NULL, NULL, "fork", NULL);
+        else if (ret_exec == -2)
+        {
+            ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+            g_ret = 127;
+            close (fd);
+            exit(127);
+        }
     }
     close (fd);
     //free (arg_list);
