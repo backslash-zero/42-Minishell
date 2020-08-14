@@ -101,17 +101,7 @@ int		ft_exec(char **arg_list)
 		free_tab(tab_env);
 		return (-1);
 	}
-	if (proc > 0)
-	{
-		if (wait(&status) == -1)
-		{
-			free_tab(tab_env);
-			ft_strerror(NULL, NULL, "wait", NULL);
-			return (-1);
-		}
-		check_signal(status);
-	}
-	else if (proc == 0)
+	if (proc == 0)
 	{
 		s = find_path_env(tab_env, arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
@@ -121,6 +111,16 @@ int		ft_exec(char **arg_list)
 			return (-2);
 		}
 		//free(s);
+	}
+	else if (proc > 0)
+	{
+		if (wait(&status) == -1)
+		{
+			free_tab(tab_env);
+			ft_strerror(NULL, NULL, "wait", NULL);
+			return (-1);
+		}
+		check_signal(status);
 	}
 	free_tab(tab_env);
 	return (0);
