@@ -69,7 +69,6 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 			else if (ret_exec == -2)
 			{
 				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-				g_ret = 127;
 				return (-2);
 			}
 		}
