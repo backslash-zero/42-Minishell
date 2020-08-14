@@ -57,6 +57,7 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 	int	ret_exec;
 
 	fd_dup(0);
+	g_ret = 0;
 	ret_red = redirection(arg_list, parse);
 	if (!ret_red)
 	{

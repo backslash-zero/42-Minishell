@@ -186,3 +186,5 @@ int     redirection(char **arg, t_parse *parse)
     }
     return (0);
 }
+
+
