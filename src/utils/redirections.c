@@ -35,15 +35,57 @@ char    **deletebracket(char **arg)
     return (s);
 }
 
+int permission_check(int fd)
+{
+    struct stat buff;
+
+    if ((fstat(fd, &buff) == -1))
+        return (-1);
+    printf("S_IFMT	 = %d\n", S_IFMT);
+    printf("S_IFSOCK = %d\n", S_IFSOCK);
+    printf("S_IFLNK = %d\n", S_IFLNK);
+    printf("S_IFREG	 = %d\n", S_IFREG);
+    printf("S_IFBLK	 = %d\n", S_IFBLK);
+    printf("S_IFDIR  = %d\n", S_IFDIR);
+    printf("S_IFCHR	 = %d\n", S_IFCHR);
+    printf("S_IFIFO  = %d\n", S_IFIFO);
+    printf("S_ISUID	 = %d\n", S_ISUID);
+    printf("S_ISGID	 = %d\n", S_ISGID);
+    printf("S_ISVTX	 = %d\n", S_ISVTX);
+
+    printf("\nS_IRWXU	 = %d\n", S_IRWXU);
+    printf("S_IRUSR = %d\n", S_IRUSR);
+    printf("S_IWUSR = %d\n", S_IWUSR);
+    printf("S_IXUSR = %d\n", S_IXUSR);
+    
+    printf("\nS_IRWXG = %d\n", S_IRWXG);
+    printf("S_IRGRP = %d\n", S_IRGRP);
+    printf("S_IWGRP = %d\n", S_IWGRP);
+    printf("S_IXGRP = %d\n", S_IXGRP);
+
+    printf("\nS_IRWXO= %d\n", S_IRWXO);
+    printf("S_IROTH = %d\n", S_IROTH);
+    printf("S_IWOTH = %d\n", S_IWOTH);
+    printf("S_IXOTH = %d\n", S_IXOTH);
+
+    printf("\nst_mode = %d\n", buff.st_mode);
+    if (buff.st_mode >= 32896)
+        return (1);
+    return (0);
+}
+
+
 int     r_anglebracket(char **arg, t_parse *parse)
 {
     int i;
     int fd;
     int ret_exec;
+    int checkfile;
     char **arg_list;
 
     fd = 1;
     i = 0;
+    checkfile = 0;
     while (arg[i] && (ft_strcmp(arg[i], ">")) != 0)
         i++;
     if (arg[i] && (ft_strcmp(arg[i], ">") == 0))
@@ -62,17 +104,27 @@ int     r_anglebracket(char **arg, t_parse *parse)
             ft_strerror (NULL, arg, NULL, NULL);
             return (-1);
         }
-        if ((!ft_checkbuiltins(arg_list, parse)))
+        checkfile = permission_check(fd);
+        if (checkfile != 0)
         {
-            ret_exec = ft_exec(arg_list);
-            if (ret_exec == -1)
-                ft_strerror(NULL, NULL, "fork", NULL);
-            else if (ret_exec == -2)
+            if (!ft_checkbuiltins(arg_list, parse))
             {
-                ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-                close (fd);
-                exit(127);
+                ret_exec = ft_exec(arg_list);
+                if (ret_exec == -1)
+                    ft_strerror(NULL, NULL, "fork", NULL);
+                else if (ret_exec == -2)
+                {
+                    ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+                    close (fd);
+                    exit(127);
+                }
             }
+        }
+        else
+        {
+            close (fd);
+            ft_strerror(NULL, NULL, "bad file", NULL);
+            return (1);
         }
     }
     close (fd);
