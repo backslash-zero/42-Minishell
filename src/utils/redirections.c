@@ -80,17 +80,16 @@ int     r_anglebracket(char **arg, t_parse *parse)
     int i;
     int fd;
     int ret_exec;
-    int checkfile;
     char **arg_list;
 
     fd = 1;
     i = 0;
-    checkfile = 0;
     while (arg[i] && (ft_strcmp(arg[i], ">")) != 0)
         i++;
     if (arg[i] && (ft_strcmp(arg[i], ">") == 0))
     {
         i++;
+        ft_putstr_fd(3, "mode00\n");
         if ((fd = open(arg[i], O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
         {
             ft_strerror(NULL, arg, NULL, NULL);
@@ -104,8 +103,7 @@ int     r_anglebracket(char **arg, t_parse *parse)
             ft_strerror (NULL, arg, NULL, NULL);
             return (-1);
         }
-        checkfile = permission_check(fd);
-        if (checkfile != 0)
+        if (permission_check(fd) != 0)
         {
             if (!ft_checkbuiltins(arg_list, parse))
             {
@@ -159,17 +157,26 @@ int     r_dbanglebracket(char **arg, t_parse *parse)
             ft_strerror (NULL, arg, NULL, NULL);
             return (-1);
         }
-        if ((!ft_checkbuiltins(arg_list, parse)))
+        if (permission_check(fd) != 0)
         {
-            ret_exec = ft_exec(arg_list);
-            if (ret_exec == -1)
-                ft_strerror(NULL, NULL, "fork", NULL);
-            else if (ret_exec == -2)
+            if (!ft_checkbuiltins(arg_list, parse))
             {
-                ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-                close (fd);
-                exit(127);
+                ret_exec = ft_exec(arg_list);
+                if (ret_exec == -1)
+                    ft_strerror(NULL, NULL, "fork", NULL);
+                else if (ret_exec == -2)
+                {
+                    ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+                    close (fd);
+                    exit(127);
+                }
             }
+        }
+        else
+        {
+            close (fd);
+            ft_strerror(NULL, NULL, "bad file", NULL);
+            return (1);
         }
     }
     close (fd);
@@ -201,17 +208,26 @@ int     l_anglebracket(char **arg, t_parse *parse)
         ft_strerror (NULL, arg, NULL, NULL);
         return (-1);
     }
-    if (!(ft_checkbuiltins(arg_list, parse)))
-    { 
-        ret_exec = ft_exec(arg_list);
-        if (ret_exec == -1)
-            ft_strerror(NULL, NULL, "fork", NULL);
-        else if (ret_exec == -2)
+    if (permission_check(fd) != 0)
+    {
+        if (!ft_checkbuiltins(arg_list, parse))
         {
-            ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-            close (fd);
-            exit(127);
+            ret_exec = ft_exec(arg_list);
+            if (ret_exec == -1)
+                ft_strerror(NULL, NULL, "fork", NULL);
+            else if (ret_exec == -2)
+            {
+                ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+                close (fd);
+                exit(127);
+            }
         }
+    }
+    else
+    {
+        close (fd);
+        ft_strerror(NULL, NULL, "bad file", NULL);
+        return (1);
     }
     close (fd);
     //free (arg_list);
