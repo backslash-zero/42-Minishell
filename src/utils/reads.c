@@ -74,6 +74,8 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 		}
 		return (1);
 	}
+	if (ret_red == -1)
+		return (-1);
 	fd_dup(1);
 	// else if (ret_red == -1) already done inside of redirection func
 	return (0);
