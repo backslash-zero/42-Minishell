@@ -14,17 +14,12 @@ void	signal_handler(int n)
 {
 	if (n == SIGINT)
 	{
-		ft_putstr("\n");
+		ft_putchar('\n');
 		print_prompt_prefix();
 		g_ret = 130;
 	}
 	else if (n == SIGQUIT)
-	{
-		ft_putstr("\033[1C");
-		ft_putstr("\b\b \b\b \b\b");
-		ft_putstr("\033[1C");
 		g_ret = 131;
-	}
 }
 
 int		main(int ac, char **av, char **envp)
@@ -40,6 +35,9 @@ int		main(int ac, char **av, char **envp)
 	}
 	if (signal(SIGQUIT, signal_handler) == SIG_ERR)
 	{
+		ft_putstr("\033[1C");
+		ft_putstr("\b\b \b\b \b\b");
+		ft_putstr("\033[1C");
 		ft_strerror(NULL, NULL, "signal", NULL);
 		exit(1);
 	}

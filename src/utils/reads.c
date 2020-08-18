@@ -83,6 +83,8 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 
 void	check_signal(int status)
 {
+	if (WTERMSIG(status) == 3)
+		ft_putstr("Quit\n");
 	if (WIFEXITED(status))
 		g_ret = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
@@ -185,6 +187,7 @@ void	prompt(void)
 	ft_builtinstab(&parse);
 	while (1)
 	{
+		ret = 0;
 		print_prompt_prefix();
 		ret = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
 		if (ret == -1)
