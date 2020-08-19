@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strldup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 15:21:33 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/06 21:26:48 by marvin           ###   ########.fr       */
+/*   Updated: 2020/08/19 14:22:16 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strldup(const char *s1, int start, int end)
 {
 	char	*s2;
-    int		j;
+	int		j;
 
 	j = 0;
 	if (!(s2 = (char *)malloc(sizeof(char) * ((end - start) + 3))))
@@ -24,9 +24,9 @@ char	*ft_strldup(const char *s1, int start, int end)
 	{
 		s2[j] = s1[start];
 		start++;
-        j++;
+		j++;
 	}
-    s2[j++] = '/';
+	s2[j++] = '/';
 	s2[j] = '\0';
 	return (s2);
 }

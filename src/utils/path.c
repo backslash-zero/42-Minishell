@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/19 13:55:07 by rzafari           #+#    #+#             */
+/*   Updated: 2020/08/19 13:58:47 by rzafari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
-int try_path(char *s)
+int		try_path(char *s)
 {
 	struct stat buff;
 
@@ -11,13 +23,13 @@ int try_path(char *s)
 	return (0);
 }
 
-char	*find_correct_path(char	*s, char *arg)
+char	*find_correct_path(char *s, char *arg)
 {
-	int i;
-	int j;
-	int l;
-	char *test;
-	char *dup;
+	int		i;
+	int		j;
+	int		l;
+	char	*test;
+	char	*dup;
 
 	i = 0;
 	j = 0;
@@ -32,19 +44,19 @@ char	*find_correct_path(char	*s, char *arg)
 			l = i - 1;
 			if ((test = ft_strldup(s, j, l)) == NULL)
 			{
-				free (test);
-			    return (NULL);
+				free(test);
+				return (NULL);
 			}
 			if ((dup = ft_strjoin(test, arg)) == NULL)
 			{
-				free (test);
-				free (dup);
-			    return (NULL);
+				free(test);
+				free(dup);
+				return (NULL);
 			}
-			free (test);
+			free(test);
 			if (try_path(dup) == 0)
 				return (dup);
-			free (dup);
+			free(dup);
 			j = i + 1;
 		}
 		i++;
@@ -71,11 +83,11 @@ char	*find_path_env(char **env, char *arg)
 			s = ft_substr(env[i], j, ft_strlen(env[i]) - j);
 			if ((path = find_correct_path(s, arg)) != NULL)
 			{
-				free (s);
+				free(s);
 				return (path);
 			}
-			free (s);
-			free (path);
+			free(s);
+			free(path);
 		}
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/12 11:56:42 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/19 14:24:40 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ int		redir_l_checker(t_parsing_tool *tool, int i, int *n)
 		*n = 2;
 		if (i == 0)
 			return (-1);
-		while (is_space(tool->input[i +1]))
+		while (is_space(tool->input[i + 1]))
 			i++;
 		if (is_redir_or_pipe(tool->input[i + 1]))
 			return (-1);
 	}
 	return (0);
 }
+
 int		pipe_checker(t_parsing_tool *tool, int i, int *n)
 {
 	if (is_pipe(tool->input[i]) && !tool->open)
@@ -64,7 +65,7 @@ int		pipe_checker(t_parsing_tool *tool, int i, int *n)
 		*n = 2;
 		if (i == 0)
 			return (-1);
-		while (is_space(tool->input[i +1]))
+		while (is_space(tool->input[i + 1]))
 			i++;
 		if (is_redir_or_pipe(tool->input[i + 1]))
 			return (-1);
@@ -74,9 +75,8 @@ int		pipe_checker(t_parsing_tool *tool, int i, int *n)
 
 int		redir_pipe_checker(t_parsing_tool *tool, int *i, int *n)
 {
-	if (redir_r_checker(tool, i, n)	||
-		pipe_checker(tool, *i, n)	||
-		redir_l_checker(tool, *i, n))
+	if (redir_r_checker(tool, i, n) || pipe_checker(tool, *i, n)
+	|| redir_l_checker(tool, *i, n))
 	{
 		return (-1);
 	}

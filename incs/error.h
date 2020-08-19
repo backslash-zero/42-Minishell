@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/19 14:29:12 by rzafari           #+#    #+#             */
+/*   Updated: 2020/08/19 14:29:35 by rzafari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ERROR_H
 # define ERROR_H
 
@@ -13,7 +25,7 @@
 # define RNO_FILE		"MiniShell: %s: No such file or is a directory\n"
 # define RNO_CREA		"MiniShell: %s: File could not be created\n"
 
-int        ft_error(char *msg, char *tofree, char **tab, char *param);
-int        ft_strerror(void *tofree, char **tab, char *param, char *param2);
+int		ft_error(char *msg, char *tofree, char **tab, char *param);
+int		ft_strerror(void *tofree, char **tab, char *param, char *param2);
 
 #endif

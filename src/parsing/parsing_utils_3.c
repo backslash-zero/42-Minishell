@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 19:08:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/11 21:27:58 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/19 14:25:14 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		is_redir_or_pipe(char c)
 {
-	if (is_pipe(c)		|| 
-		is_redir_l(c)	||
+	if (is_pipe(c) ||
+		is_redir_l(c) ||
 		is_redir_r(c))
 		return (1);
 	else

@@ -1,8 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reads.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
+/*   Updated: 2020/08/19 14:10:23 by rzafari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
-static void	printtab(char **tab)
+static void		printtab(char **tab)
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	printf("len tab: %d\n", arg_len(tab));
 	while (tab[i])
 	{
@@ -11,7 +25,7 @@ static void	printtab(char **tab)
 	}
 }
 
-char	**tablst(t_list *lst)
+char			**tablst(t_list *lst)
 {
 	char	**ret;
 	t_list	*tmp;
@@ -34,7 +48,7 @@ char	**tablst(t_list *lst)
 	return (ret);
 }
 
-void	fd_dup(int i)
+void			fd_dup(int i)
 {
 	static int input;
 	static int output;
@@ -51,7 +65,7 @@ void	fd_dup(int i)
 	}
 }
 
-int		launch_exec(char **arg, t_parse *parse, char **arg_list)
+int				launch_exec(char **arg, t_parse *parse, char **arg_list)
 {
 	int	ret_red;
 	int	ret_exec;
@@ -64,7 +78,7 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 		if (!ft_checkbuiltins(arg_list, parse))
 		{
 			ret_exec = ft_exec(arg_list);
-			if (ret_exec == -1)  //error with fork
+			if (ret_exec == -1)
 				return (ft_strerror(NULL, NULL, "fork", NULL));
 			else if (ret_exec == -2)
 			{
@@ -77,11 +91,10 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 	if (ret_red == -1)
 		return (-1);
 	fd_dup(1);
-	// else if (ret_red == -1) already done inside of redirection func
 	return (0);
 }
 
-void	check_signal(int status)
+void			check_signal(int status)
 {
 	if (WTERMSIG(status) == 3)
 		ft_putstr("Quit\n");
@@ -91,9 +104,9 @@ void	check_signal(int status)
 		g_ret = 128 + WTERMSIG(status);
 }
 
-int		ft_exec(char **arg_list)
+int				ft_exec(char **arg_list)
 {
-	pid_t		proc;
+	pid_t	proc;
 	int		status;
 	char	*s;
 	char	**tab_env;
@@ -114,7 +127,6 @@ int		ft_exec(char **arg_list)
 			free_tab(tab_env);
 			return (-2);
 		}
-		//free(s);
 	}
 	else if (proc > 0)
 	{
@@ -130,17 +142,16 @@ int		ft_exec(char **arg_list)
 	return (0);
 }
 
-int		launch(char *input, t_parse *parse)
+int				launch(char *input, t_parse *parse)
 {
-    char    **arg_list;
+	char	**arg_list;
 	char	**arg;
-	int 	i;
-	int 	len_new_arg_list;
+	int		i;
+	int		len_new_arg_list;
 	int		ret_exec;
 
-	if(!(arg = parsing(input)))
+	if (!(arg = parsing(input)))
 		return (0);
-	// printtab(arg);
 	i = 0;
 	while (arg[i] != NULL)
 	{
@@ -160,10 +171,9 @@ int		launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		// printtab(arg_list);
 		ret_exec = launch_exec(arg, parse, arg_list);
 		if (ret_exec == -2)
-			exit (127);
+			exit(127);
 		if (arg[i] == NULL)
 		{
 			free_tab(arg_list);
@@ -172,13 +182,11 @@ int		launch(char *input, t_parse *parse)
 		free_tab(arg_list);
 		i++;
 	}
-	// free_tab(arg_list);
 	free_tab(arg);
-	// free_tab(arg);
 	return (0);
 }
 
-void	prompt(void)
+void			prompt(void)
 {
 	char	buffer[MAX_INPUT_SIZE];
 	int		ret;
