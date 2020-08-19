@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 16:09:23 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/19 17:05:20 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int				launch_exec(char **arg, t_parse *parse, char **arg_list)
 	if (ret_red == -1)
 		return (-1);
 	fd_dup(1);
-	printf("ret = %d\n", ret_red);
 	return (0);
 }
 
