@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 14:07:12 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/19 16:57:50 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		permission_check(int fd)
 	return (0);
 }
 
-int		r_anglebracket(char **arg, t_parse *parse)
+int		r_anglebracket(char **arg, t_parse *parse, char *name)
 {
 	int		i;
 	int		fd;
@@ -72,12 +72,13 @@ int		r_anglebracket(char **arg, t_parse *parse)
 
 	fd = 1;
 	i = 0;
-	while (arg[i] && (ft_strcmp(arg[i], ">")) != 0)
+	//while (arg[i] && (ft_strcmp(arg[i], ">")) != 0)
+//		i++;
+	//if (arg[i] && (ft_strcmp(arg[i], ">") == 0))
+	//{
 		i++;
-	if (arg[i] && (ft_strcmp(arg[i], ">") == 0))
-	{
-		i++;
-		if ((fd = open(arg[i], O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
+		ft_printf_fd(3, "fd = %s\n", name);
+		if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
 		{
 			g_ret = 1;
 			ft_strerror(NULL, NULL, NULL, NULL);
@@ -89,6 +90,12 @@ int		r_anglebracket(char **arg, t_parse *parse)
 			close(fd);
 			ft_strerror(NULL, NULL, NULL, NULL);
 			return (-1);
+		}
+		int l = 0;
+		while (arg_list[l])
+		{
+			ft_printf_fd(3, "arg_list[%d] = %s\n", l, arg_list[l]);
+			l++;
 		}
 		if (!ft_checkbuiltins(arg_list, parse))
 		{
@@ -102,7 +109,7 @@ int		r_anglebracket(char **arg, t_parse *parse)
 				exit(127);
 			}
 		}
-	}
+	//}
 	close(fd);
 	return (1);
 }
@@ -196,16 +203,36 @@ int		redirection(char **arg, t_parse *parse)
 {
 	int	i;
 
+	i = 0;
+	while (arg[i])
+	{
+		printf("arg[%d] = %s\n",i, arg[i]);
+		i++;
+	}
 	i = 1;
 	while (arg[i])
 	{
+		ft_printf_fd(3, "arg = %s\n", arg[i]);
 		if (ft_strcmp(arg[i], ">") == 0)
-			return (r_anglebracket(arg, parse));
+		{
+			if (r_anglebracket(arg, parse, arg[i + 1]) == -1)
+				return (-1);
+		}
 		else if (ft_strcmp(arg[i], ">>") == 0)
-			return (r_dbanglebracket(arg, parse));
+		{
+			if (r_dbanglebracket(arg, parse) == -1)
+				return (-1);
+		}
 		else if (ft_strcmp(arg[i], "<") == 0)
-			return (l_anglebracket(arg, parse));
+		{
+			if (l_anglebracket(arg, parse) == -1)
+				return (-1);
+		}
 		i++;
 	}
-	return (0);
+	//if (ok == 0)
+	//	return (0);
+	//else
+	ft_printf_fd(3, "back\n");
+		return (1);	
 }
