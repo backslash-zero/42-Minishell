@@ -15,7 +15,6 @@ void	signal_handler(int n)
 	if (n == SIGINT)
 	{
 		ft_putchar('\n');
-		print_prompt_prefix();
 		g_ret = 130;
 	}
 	else if (n == SIGQUIT)
