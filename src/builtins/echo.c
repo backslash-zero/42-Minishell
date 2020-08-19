@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/19 10:59:32 by rzafari           #+#    #+#             */
+/*   Updated: 2020/08/19 10:59:34 by rzafari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
-void		echo_print(char **arg, int i)
+void	echo_print(char **arg, int i)
 {
 	while (arg[i])
 	{
 		if (arg[i][0] != '\0')
 			ft_putstr(arg[i]);
 		i++;
-		if(arg[i])
+		if (arg[i])
 			ft_putchar(' ');
 	}
 }
@@ -26,5 +38,5 @@ int		builtin_echo(char **arg)
 		echo_print(arg, 1);
 		ft_putchar('\n');
 	}
-	return(0);
+	return (0);
 }

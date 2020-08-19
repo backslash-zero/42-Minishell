@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_nametab.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/19 10:59:32 by rzafari           #+#    #+#             */
+/*   Updated: 2020/08/19 12:11:41 by rzafari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
 void	ft_builtinstab(t_parse *parse)
@@ -12,7 +24,8 @@ void	ft_builtinstab(t_parse *parse)
 }
 
 builtfunc_addr	builtins_func[] = {
-	&builtin_echo, &builtin_cd, &builtin_pwd, &builtin_export, &builtin_unset, &builtin_env, &builtin_exit
+	&builtin_echo, &builtin_cd, &builtin_pwd, &builtin_export,
+	&builtin_unset, &builtin_env, &builtin_exit
 };
 
 int		ft_checkbuiltins(char **s, t_parse *parse)
@@ -33,7 +46,7 @@ int		ft_checkbuiltins(char **s, t_parse *parse)
 	{
 		if (builtins_func[i](s) == -1)
 			return (-1);
-		return(1);
+		return (1);
 	}
 	else
 		return (0);

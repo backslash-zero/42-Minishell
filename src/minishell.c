@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/19 13:42:59 by rzafari           #+#    #+#             */
+/*   Updated: 2020/08/19 13:45:56 by rzafari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incs/minishell.h"
 
 t_ret	g_ret = 0;
+
 int		is_forking(int val)
 {
 	static int is_forking = 0;
@@ -15,7 +28,6 @@ void	signal_handler(int n)
 	if (n == SIGINT)
 	{
 		ft_putchar('\n');
-		print_prompt_prefix();
 		g_ret = 130;
 	}
 	else if (n == SIGQUIT)
@@ -26,7 +38,6 @@ int		main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-
 	g_ret = 0;
 	if (signal(SIGINT, signal_handler) == SIG_ERR)
 	{
@@ -46,5 +57,5 @@ int		main(int ac, char **av, char **envp)
 	prompt();
 	ft_lstclear(&g_env, free);
 	ft_lstclear(&g_export, free);
- 	return (0);
+	return (0);
 }

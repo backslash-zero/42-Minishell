@@ -1,106 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/19 12:04:56 by rzafari           #+#    #+#             */
+/*   Updated: 2020/08/19 13:32:05 by rzafari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
-int		check_if_exist(t_list *lst, char *s)
+int		check_export_arg_next(char *arg, int i)
 {
-	t_list	*lst2;
-	char	*name;
-	char	*tmp;
-	int	i;
+	if (arg[i] == '=')
+	{
+		i++;
+		while (arg[i])
+		{
+			if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 &&
+			arg[i] <= 122) || arg[i] == 95 || (arg[i] >= 48 &&
+			arg[i] <= 57))
+				i++;
+			else
+				return (0);
+		}
+	}
+	return (1);
+}
+
+int		check_export_arg(char *arg)
+{
+	int i;
 
 	i = 0;
-	while (s[i] != '=' && s[i] != '\0')
+	if ((arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97 && arg[0] <= 122)
+	|| arg[0] == 95)
+	{
 		i++;
-	if (i > 0)
-		name = ft_substr(s, 0, i);
-	else
-		return (0);
-	while (lst)
-	{
-		i = 0;
-		lst2 = lst->next;
-		while (lst->content[i] != '=' && lst->content[i])
-			i++;
-		tmp = ft_substr(lst->content, 0, i);
-		if (ft_strcmp(name, tmp) == 0)
+		while (arg[i] && arg[i] != '=')
 		{
-			free (name);
-			free (tmp);
-			return (i);
+			if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 &&
+			arg[i] <= 122) || arg[i] == 95 || (arg[i] >= 48 &&
+			arg[i] <= 57))
+				i++;
+			else
+				return (0);
 		}
-		free (tmp);
-		lst = lst2;
+		return (check_export_arg_next(arg, i));
 	}
-	free (name);
 	return (0);
-}
-
-int	set_value(t_list *lst, char *s1, char *s2)
-{
-	t_list	*lst2;
-	char	*tmp;
-	char	*value;
-	char	*s3;
-	int		i;
-
-	if (!(value = ft_strdup(s1)))
-		return (0);
-	while (lst)
-	{
-		i = 0;
-		while (lst->content[i] != '=' && lst->content[i])
-			i++;
-		s3 = ft_substr(lst->content, 0, i + 1);		
-		if (ft_strcmp(s3, s2) == 0)
-		{
-			tmp = lst->content;
-			lst->content = value;
-			free (tmp);
-		}
-		lst = lst->next;
-		free(s3);
-	}
-	return (1);
-}
-
-int	replace_elem(char *s, int i)
-{
-	char *s1;
-
-	if (ft_strchr(s, '='))
-	{
-		s1 = ft_substr(s, 0, i + 1);
-		if (!set_value(g_export, s, s1))
-			return (0);
-		if (!set_value(g_env, s, s1))
-			return (0);
-		free(s1);
-	}
-	return (1);
-}
-
-int add_to_list(char *s, t_list **lst)
-{
-	t_list *lst1;
-
-	if (!(lst1 = malloc(sizeof(t_list))))
-		return(0);
-	if (!(lst1->content = ft_strdup(s)))
-		return (0);
-	lst1->next = NULL;
-	ft_lstadd_back(lst, lst1);
-	return (1);
-}
-
-int add_elem(char *s)
-{
-	if (!add_to_list(s, &g_export))
-		return (0); 
-	if (ft_strchr(s, '='))
-	{
-		if (!add_to_list(s, &g_env))
-			return (0);
-	}
-	return (1);
 }
 
 void	sort_export(t_list *lst)
@@ -130,19 +80,18 @@ void	sort_export(t_list *lst)
 	}
 }
 
-int        print_export(void)
+int		print_export(void)
 {
-	t_list *tmp;
+	t_list	*tmp;
 	int		i;
 
-	i = 0;
 	sort_export(g_export);
-    tmp = g_export;
-	while(tmp != NULL)
-    {
+	tmp = g_export;
+	while (tmp != NULL)
+	{
 		i = 0;
 		ft_putstr_fd(1, "declare -x ");
-        if (ft_strchr(tmp->content, '='))
+		if (ft_strchr(tmp->content, '='))
 		{
 			while (tmp->content[i] != '=')
 				ft_putchar_fd(1, tmp->content[i++]);
@@ -154,41 +103,9 @@ int        print_export(void)
 		}
 		else
 			ft_putstr_fd(1, tmp->content);
-        ft_putstr_fd(1, "\n");
-        tmp = tmp->next;
-    }
-    return(0);
-}
-
-int		check_export_arg(char *arg)
-{
-	int i;
-
-	i = 0;
-	if ((arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97 && arg[0] <= 122) || arg[0] == 95)
-	{
-		i++;
-		while (arg[i] && arg[i] != '=')
-		{
-			if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 && arg[i] <= 122) || arg[i] == 95 || (arg[i] >= 48 && arg[i] <= 57))
-				i++;
-			else
-				return (0);
-		}
-		if (arg[i] == '=')
-		{
-			i++;
-			while (arg[i])
-			{
-				if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 && arg[i] <= 122) || arg[i] == 95 || (arg[i] >= 48 && arg[i] <= 57))
-					i++;
-				else
-					return (0);
-			}
-		}
+		ft_putstr_fd(1, "\n");
+		tmp = tmp->next;
 	}
-	else
-		return (0);
 	return (1);
 }
 
@@ -198,13 +115,10 @@ int		builtin_export(char **arg)
 	int		i;
 	int		start;
 	int		j;
-	i = 1;
 
+	i = 1;
 	if (arg_len(arg) == 1)
-	{
-		print_export();
-		return (1);
-	}
+		return (print_export());
 	while (arg[i] && (j = check_export_arg(arg[i])))
 	{
 		if ((start = check_if_exist(g_export, arg[i])))
@@ -212,7 +126,7 @@ int		builtin_export(char **arg)
 			if (!replace_elem(arg[i], start))
 				return (0);
 		}
-		else 
+		else
 		{
 			if (!add_elem(arg[i]))
 				return (0);
@@ -220,6 +134,6 @@ int		builtin_export(char **arg)
 		i++;
 	}
 	if (j == 0)
-		return(ft_error(INVALID_ID_X, NULL, NULL, arg[1]));
-	return(0);
+		return (ft_error(INVALID_ID_X, NULL, NULL, arg[1]));
+	return (0);
 }
