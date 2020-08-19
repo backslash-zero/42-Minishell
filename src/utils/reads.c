@@ -57,6 +57,7 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 	int	ret_exec;
 
 	fd_dup(0);
+	g_ret = 0;
 	ret_red = redirection(arg_list, parse);
 	if (!ret_red)
 	{
@@ -68,12 +69,13 @@ int		launch_exec(char **arg, t_parse *parse, char **arg_list)
 			else if (ret_exec == -2)
 			{
 				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-				g_ret = 127;
 				return (-2);
 			}
 		}
 		return (1);
 	}
+	if (ret_red == -1)
+		return (-1);
 	fd_dup(1);
 	// else if (ret_red == -1) already done inside of redirection func
 	return (0);
@@ -101,17 +103,7 @@ int		ft_exec(char **arg_list)
 		free_tab(tab_env);
 		return (-1);
 	}
-	if (proc > 0)
-	{
-		if (wait(&status) == -1)
-		{
-			free_tab(tab_env);
-			ft_strerror(NULL, NULL, "wait", NULL);
-			return (-1);
-		}
-		check_signal(status);
-	}
-	else if (proc == 0)
+	if (proc == 0)
 	{
 		s = find_path_env(tab_env, arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
@@ -121,6 +113,16 @@ int		ft_exec(char **arg_list)
 			return (-2);
 		}
 		//free(s);
+	}
+	else if (proc > 0)
+	{
+		if (wait(&status) == -1)
+		{
+			free_tab(tab_env);
+			ft_strerror(NULL, NULL, "wait", NULL);
+			return (-1);
+		}
+		check_signal(status);
 	}
 	free_tab(tab_env);
 	return (0);
