@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 12:04:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 13:32:05 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/24 16:41:53 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int		check_export_arg_next(char *arg, int i)
 		while (arg[i])
 		{
 			if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 &&
-			arg[i] <= 122) || arg[i] == 95 || (arg[i] >= 48 &&
-			arg[i] <= 57))
+			arg[i] <= 122) || arg[i] == 95 || arg[i] == 45 || arg[i] == 32 ||
+			(arg[i] >= 48 && arg[i] <= 57))
 				i++;
 			else
 				return (0);
@@ -36,14 +36,14 @@ int		check_export_arg(char *arg)
 
 	i = 0;
 	if ((arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97 && arg[0] <= 122)
-	|| arg[0] == 95)
+	|| arg[0] == 95 || arg[i] == 45 || arg[i] == 32)
 	{
 		i++;
 		while (arg[i] && arg[i] != '=')
 		{
 			if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 &&
-			arg[i] <= 122) || arg[i] == 95 || (arg[i] >= 48 &&
-			arg[i] <= 57))
+			arg[i] <= 122) || arg[i] == 95 || arg[i] == 45 || arg[i] == 32 ||
+			(arg[i] >= 48 && arg[i] <= 57))
 				i++;
 			else
 				return (0);

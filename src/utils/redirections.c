@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 17:05:21 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/24 15:39:28 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		r_anglebracket(char **arg, t_parse *parse, char *name)
 	return (1);
 }
 
-int		r_dbanglebracket(char **arg, t_parse *parse)
+int		r_dbanglebracket(char **arg, t_parse *parse, char *name)
 {
 	int		i;
 	int		fd;
@@ -108,35 +108,29 @@ int		r_dbanglebracket(char **arg, t_parse *parse)
 
 	i = 0;
 	fd = 1;
-	while (arg[i] && (ft_strcmp(arg[i], ">>")) != 0)
-		i++;
-	if (arg[i] && (ft_strcmp(arg[i], ">>") == 0))
+	if ((fd = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
-		i++;
-		if ((fd = open(arg[i], O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
+		g_ret = 1;
+		ft_strerror(NULL, NULL, NULL, NULL);
+		return (-1);
+	}
+	dup2(fd, 1);
+	if ((arg_list = deletebracket(arg)) == NULL)
+	{
+		close(fd);
+		ft_strerror(NULL, NULL, NULL, NULL);
+		return (-1);
+	}
+	if (!ft_checkbuiltins(arg_list, parse))
+	{
+		ret_exec = ft_exec(arg_list);
+		if (ret_exec == -1)
+			ft_strerror(NULL, NULL, "fork", NULL);
+		else if (ret_exec == -2)
 		{
-			g_ret = 1;
-			ft_strerror(NULL, NULL, NULL, NULL);
-			return (-1);
-		}
-		dup2(fd, 1);
-		if ((arg_list = deletebracket(arg)) == NULL)
-		{
+			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 			close(fd);
-			ft_strerror(NULL, NULL, NULL, NULL);
-			return (-1);
-		}
-		if (!ft_checkbuiltins(arg_list, parse))
-		{
-			ret_exec = ft_exec(arg_list);
-			if (ret_exec == -1)
-				ft_strerror(NULL, NULL, "fork", NULL);
-			else if (ret_exec == -2)
-			{
-				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-				close(fd);
-				exit(127);
-			}
+			exit(127);
 		}
 	}
 	close(fd);
@@ -144,7 +138,7 @@ int		r_dbanglebracket(char **arg, t_parse *parse)
 	return (1);
 }
 
-int		l_anglebracket(char **arg, t_parse *parse)
+int		l_anglebracket(char **arg, t_parse *parse, char *name)
 {
 	int		i;
 	int		fd;
@@ -152,10 +146,20 @@ int		l_anglebracket(char **arg, t_parse *parse)
 	char	**arg_list;
 
 	i = 0;
-	while (arg[i] && (ft_strcmp(arg[i], "<")) != 0)
-		i++;
-	i++;
-	if ((fd = open(arg[i], O_RDONLY)) == -1)
+	int l = 0;
+	while (arg[l])
+	{
+		if (ft_strcmp(arg[l], ">") == 0 || ft_strcmp(arg[l], ">>") == 0)
+		{
+			printf("arg = %s\n", arg[l]);
+			l++;
+			name = arg[l];
+			break ;
+		}
+		l++;
+	}
+	printf("name = %s\n", name);
+	if ((fd = open(name, O_CREAT | O_RDONLY, 0644)) == -1)
 	{
 		g_ret = 1;
 		ft_strerror(NULL, NULL, NULL, NULL);
@@ -201,13 +205,13 @@ int		redirection(char **arg, t_parse *parse)
 		else if (ft_strcmp(arg[i], ">>") == 0)
 		{
 			ok = 1;
-			if (r_dbanglebracket(arg, parse) == -1)
+			if (r_dbanglebracket(arg, parse, arg[i + 1]) == -1)
 				return (-1);
 		}
 		else if (ft_strcmp(arg[i], "<") == 0)
 		{
 			ok = 1;
-			if (l_anglebracket(arg, parse) == -1)
+			if (l_anglebracket(arg, parse, arg[i + 1]) == -1)
 				return (-1);
 		}
 		i++;

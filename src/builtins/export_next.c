@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:10:10 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 13:17:15 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/24 17:09:33 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,24 @@ int		set_value(t_list *lst, char *s1, char *s2)
 
 	if (!(value = ft_strdup(s1)))
 		return (0);
+	printf("value = %s\n", value);
 	while (lst)
 	{
 		i = 0;
 		while (lst->content[i] != '=' && lst->content[i])
 			i++;
-		s3 = ft_substr(lst->content, 0, i + 1);
+		s3 = ft_substr(lst->content, 0, i);
 		if (ft_strcmp(s3, s2) == 0)
 		{
 			tmp = lst->content;
 			lst->content = value;
 			free(tmp);
+			return (1);
 		}
 		lst = lst->next;
 		free(s3);
 	}
-	return (1);
+	return (0);
 }
 
 int		add_elem(char *s)
@@ -69,14 +71,26 @@ int		replace_elem(char *s, int i)
 {
 	char *s1;
 
+	printf("s = %s\n", s);
 	if (ft_strchr(s, '='))
 	{
-		s1 = ft_substr(s, 0, i + 1);
-		if (!set_value(g_export, s, s1))
+		s1 = ft_substr(s, 0, i);
+		printf("s1 = |%s|\n", s1);
+		if (set_value(g_export, s, s1))
+		{
+				printf("null\n");
+			if (!set_value(g_env, s, s1))
+			{
+				add_elem(s);
+				return (0);
+			}
+			free (s1);
+		}
+		else
+		{
+			free(s1);
 			return (0);
-		if (!set_value(g_env, s, s1))
-			return (0);
-		free(s1);
+		}
 	}
 	return (1);
 }
