@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/24 15:39:28 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/25 16:58:55 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,24 +142,25 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 {
 	int		i;
 	int		fd;
+	int		l;
 	int		ret_exec;
 	char	**arg_list;
 
 	i = 0;
-	int l = 0;
+	l = 0;
+	fd = 1;
 	while (arg[l])
 	{
 		if (ft_strcmp(arg[l], ">") == 0 || ft_strcmp(arg[l], ">>") == 0)
 		{
-			printf("arg = %s\n", arg[l]);
 			l++;
 			name = arg[l];
 			break ;
 		}
 		l++;
 	}
-	printf("name = %s\n", name);
-	if ((fd = open(name, O_CREAT | O_RDONLY, 0644)) == -1)
+	printf("fd = %s\n", name);
+	if ((fd = open(name, O_RDONLY, 0644)) == -1)
 	{
 		g_ret = 1;
 		ft_strerror(NULL, NULL, NULL, NULL);
@@ -172,6 +173,12 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
+	int j = 0;
+	while (arg_list[j])
+	{
+		ft_printf_fd(3, "arg_list[%d] = %s\n", j, arg_list[j]);
+		j++;
+	}
 	if (!ft_checkbuiltins(arg_list, parse))
 	{
 		ret_exec = ft_exec(arg_list);
@@ -183,6 +190,7 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 			close(fd);
 			exit(127);
 		}
+		close (fd);
 	}
 	close(fd);
 	return (1);

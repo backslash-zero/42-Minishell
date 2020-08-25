@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:10:10 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/24 17:09:33 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/25 10:03:26 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int		set_value(t_list *lst, char *s1, char *s2)
 
 	if (!(value = ft_strdup(s1)))
 		return (0);
-	printf("value = %s\n", value);
 	while (lst)
 	{
 		i = 0;
@@ -71,18 +70,15 @@ int		replace_elem(char *s, int i)
 {
 	char *s1;
 
-	printf("s = %s\n", s);
 	if (ft_strchr(s, '='))
 	{
 		s1 = ft_substr(s, 0, i);
-		printf("s1 = |%s|\n", s1);
 		if (set_value(g_export, s, s1))
 		{
-				printf("null\n");
 			if (!set_value(g_env, s, s1))
 			{
-				add_elem(s);
-				return (0);
+				if (!add_to_list(s, &g_env))
+					return (0);
 			}
 			free (s1);
 		}
