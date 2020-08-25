@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/19 14:24:40 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/25 12:55:49 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		redir_r_checker(t_parsing_tool *tool, int *i, int *n)
 		if (is_redir_r(tool->input[*i + 1]))
 			*i += 1;
 		a = *i;
-		while (is_space(tool->input[a + 1]))
+		while (ft_is_space(tool->input[a + 1]))
 			a++;
 		if (is_redir_or_pipe(tool->input[a + 1]))
 			return (-1);
@@ -50,7 +50,7 @@ int		redir_l_checker(t_parsing_tool *tool, int i, int *n)
 		*n = 2;
 		if (i == 0)
 			return (-1);
-		while (is_space(tool->input[i + 1]))
+		while (ft_is_space(tool->input[i + 1]))
 			i++;
 		if (is_redir_or_pipe(tool->input[i + 1]))
 			return (-1);
@@ -65,7 +65,7 @@ int		pipe_checker(t_parsing_tool *tool, int i, int *n)
 		*n = 2;
 		if (i == 0)
 			return (-1);
-		while (is_space(tool->input[i + 1]))
+		while (ft_is_space(tool->input[i + 1]))
 			i++;
 		if (is_redir_or_pipe(tool->input[i + 1]))
 			return (-1);
