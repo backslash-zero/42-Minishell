@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 14:39:28 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/21 12:33:16 by marvin           ###   ########.fr       */
+/*   Updated: 2020/08/25 12:40:32 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int				ft_isalpha(int c);
 int				ft_isascii(int c);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
+int				ft_is_space(char c);
 void			*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void			*ft_memset(void *b, int c, size_t len);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
