@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/25 16:58:55 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/26 16:59:11 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int		r_anglebracket(char **arg, t_parse *parse, char *name)
 	int		ret_exec;
 	char	**arg_list;
 
-	fd = 1;
+	fd = -1;
+	//printf("im in right\n");
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
 	{
 		g_ret = 1;
@@ -107,7 +108,7 @@ int		r_dbanglebracket(char **arg, t_parse *parse, char *name)
 	char	**arg_list;
 
 	i = 0;
-	fd = 1;
+	fd = -1;
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
 		g_ret = 1;
@@ -147,9 +148,9 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 	char	**arg_list;
 
 	i = 0;
-	l = 0;
-	fd = 1;
-	while (arg[l])
+	//l = 0;
+	//printf("im in l\n");
+	/*while (arg[l])
 	{
 		if (ft_strcmp(arg[l], ">") == 0 || ft_strcmp(arg[l], ">>") == 0)
 		{
@@ -158,8 +159,8 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 			break ;
 		}
 		l++;
-	}
-	printf("fd = %s\n", name);
+	}*/
+	//printf("name = %s\n", name);
 	if ((fd = open(name, O_RDONLY, 0644)) == -1)
 	{
 		g_ret = 1;
@@ -173,15 +174,17 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	int j = 0;
-	while (arg_list[j])
+	/*int s = 0;
+	while (arg_list[s])
 	{
-		ft_printf_fd(3, "arg_list[%d] = %s\n", j, arg_list[j]);
-		j++;
-	}
+		ft_printf_fd(3, "arg = %s\n", arg_list[s]);
+		s++;
+	}*/
 	if (!ft_checkbuiltins(arg_list, parse))
 	{
+		//printf("ok\n");
 		ret_exec = ft_exec(arg_list);
+		//printf("ret = %d\n", ret_exec);
 		if (ret_exec == -1)
 			ft_strerror(NULL, NULL, "fork", NULL);
 		else if (ret_exec == -2)
@@ -201,9 +204,10 @@ int		redirection(char **arg, t_parse *parse)
 	int	i;
 	int ok = 0;
 
-	i = 1;
+	i = 0;
 	while (arg[i])
 	{
+		//printf("redirect => arg = %s\n", arg[i]);
 		if (ft_strcmp(arg[i], ">") == 0)
 		{
 			ok = 1;
