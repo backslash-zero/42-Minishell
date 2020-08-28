@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/09 21:11:51 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/28 14:25:56 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int		insert_ret(t_parsing_tool *tool, int i)
 
 	k = i;
 	j = 0;
-	ret = ft_itoa(g_ret);
-	if (!(newstr = malloc(sizeof(char) *
-		(i + ft_strlen(ret) - (ft_strlen(tool->input) - i - 2) + 1))))
+	ret = ft_itoa(g_ret);	
+	int len_newstr = ft_strlen(ret) + (ft_strlen(tool->input) - 2) + 1;
+	if (!(newstr = malloc(sizeof(char) * (len_newstr))))
 		return (0);
 	ft_strncpy(newstr, tool->input, i);
 	ft_strncpy(&newstr[i], ret, ft_strlen(ret));
@@ -49,14 +49,10 @@ int		expand_env(t_parsing_tool *tool)
 	{
 		if (is_quote(tool->input[i]))
 			switcher_quote(tool, tool->input[i]);
-		if (is_dollar(tool->input[i]) && tool->input[i + 1] == '?')
-		{
-			if (!insert_ret(tool, i))
-				return (-1);
-		}
 		else if (is_dollar(tool->input[i])
 			&& !(tool->open && tool->quote == '\'')
-			&& !test_lone_dollar(tool->input, i))
+			&& !test_lone_dollar(tool->input, i)
+			&& (tool->input[i + 1] != '?'))
 		{
 			if (!insert_env_var(tool, i))
 				return (-1);
