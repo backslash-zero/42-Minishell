@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/26 16:59:10 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/28 13:55:14 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,14 @@ int				launch_exec(char **arg, t_parse *parse, char **arg_list)
 				return (-2);
 			}
 		}
+		fd_dup(1);
 		return (1);
 	}
 	if (ret_red == -1)
+	{
+		fd_dup(1);
 		return (-1);
+	}
 	fd_dup(1);
 	return (0);
 }
@@ -121,7 +125,6 @@ int				ft_exec(char **arg_list)
 	if (proc == 0)
 	{
 		s = find_path_env(tab_env, arg_list[0]);
-		ft_printf_fd(3, "s = %s\n", s);
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
 			free(s);
@@ -197,7 +200,10 @@ void			prompt(void)
 	while (1)
 	{
 		ret = 0;
-		print_prompt_prefix();
+		if (to_print == 0)
+			print_prompt_prefix();
+		if (to_print == 1)
+			to_print = 0;
 		ret = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
 		if (ret == -1)
 			exit(errno);
