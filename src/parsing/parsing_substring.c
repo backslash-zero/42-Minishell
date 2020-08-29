@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_substring.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:08:32 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/19 14:25:16 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/29 12:21:20 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int		append_redir_pipe(int *i, int *j, int *n, t_parsing_tool *tool)
 	char	*newstr;
 	int		len;
 
-	// printf("** append_redir_pipe called\n");
 	len = 1;
 	if (is_redir_or_pipe(tool->input[*i]))
 	{

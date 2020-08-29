@@ -6,39 +6,11 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/28 14:25:56 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/29 12:16:01 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-int		insert_ret(t_parsing_tool *tool, int i)
-{
-	char	*newstr;
-	int		j;
-	int		k;
-	char	*ret;
-
-	k = i;
-	j = 0;
-	ret = ft_itoa(g_ret);	
-	int len_newstr = ft_strlen(ret) + (ft_strlen(tool->input) - 2) + 1;
-	if (!(newstr = malloc(sizeof(char) * (len_newstr))))
-		return (0);
-	ft_strncpy(newstr, tool->input, i);
-	ft_strncpy(&newstr[i], ret, ft_strlen(ret));
-	i = i + ft_strlen(ret);
-	j = k + 2;
-	while (tool->input[j])
-	{
-		newstr[i] = tool->input[j];
-		j++;
-		i++;
-	}
-	newstr[i] = '\0';
-	assign_and_free(&newstr, &tool->input);
-	return (1);
-}
 
 int		expand_env(t_parsing_tool *tool)
 {

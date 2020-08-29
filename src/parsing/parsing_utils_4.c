@@ -1,47 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils_3.c                                  :+:      :+:    :+:   */
+/*   parsing_utils_4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/21 19:08:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/29 12:25:34 by cmeunier         ###   ########.fr       */
+/*   Created: 2020/08/29 12:24:24 by cmeunier          #+#    #+#             */
+/*   Updated: 2020/08/29 12:25:41 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		is_redir_or_pipe(char c)
+int		is_space(char c)
 {
-	if (is_pipe(c) ||
-		is_redir_l(c) ||
-		is_redir_r(c))
+	if (c == ' ')
 		return (1);
 	else
 		return (0);
 }
 
-int		is_pipe(char c)
+int		is_equal(char c)
 {
-	if (c == '|')
+	if (c == '=')
 		return (1);
 	else
 		return (0);
 }
 
-int		is_redir_l(char c)
+int		is_semic(char c)
 {
-	if (c == '<')
+	if (c == ';')
 		return (1);
 	else
 		return (0);
 }
 
-int		is_redir_r(char c)
+void	switcher_quote(t_parsing_tool *tool, char c)
 {
-	if (c == '>')
+	if (!tool->open)
+	{
+		tool->open = 1;
+		tool->quote = c;
+	}
+	else if (tool->open == 1 && c == tool->quote)
+	{
+		tool->open = 0;
+		tool->quote = '\0';
+	}
+}
+
+int		test_lone_dollar(char *str, int i)
+{
+	if (!envvar_authorized_character(str[i + 1], TRUE))
+	{
 		return (1);
-	else
-		return (0);
+	}
+	return (0);
 }

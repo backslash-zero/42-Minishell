@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/25 12:55:41 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/29 12:29:56 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,7 @@ int		ft_split_args(t_parsing_tool *tool)
 				switcher_quote(tool, tool->input[j]);
 			j++;
 		}
-		if (!append_string_to_arg(&i, &j, &n, tool))
-			return (0);
-		if (!append_semicolon(&i, &j, &n, tool))
-			return (0);
-		if (!append_redir_pipe(&i, &j, &n, tool))
+		if (!parsing_checks(&i, &j, &n, tool))
 			return (0);
 		if (j++ != '\0')
 			i++;

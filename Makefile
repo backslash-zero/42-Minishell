@@ -16,16 +16,19 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				builtins/env.c					\
 				builtins/exit.c 				\
 				builtins/export.c 				\
-				builtins/export_next.c 				\
+				builtins/export_next.c 			\
 				builtins/pwd.c 					\
 				builtins/unset.c				\
 				parsing/parsing.c				\
 				parsing/parsing_clean.c			\
 				parsing/parsing_clean_2.c		\
+				parsing/parsing_gret.c			\
+				parsing/parsing_redir.c			\
 				parsing/parsing_substring.c		\
 				parsing/parsing_utils.c			\
 				parsing/parsing_utils_2.c		\
 				parsing/parsing_utils_3.c		\
+				parsing/parsing_utils_4.c		\
 				parsing/parsing_variable.c		\
 				utils/arg.c 					\
 				utils/error.c 					\
