@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 14:44:35 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/31 18:26:00 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 typedef int		t_ret;
 t_ret			g_ret;
 
-typedef int			(*builtfunc_addr)(char **s);
+typedef int		(*t_builtfunc_addr)(char **s);
 
 typedef struct	s_parse
 {
