@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/12 11:58:24 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/08/29 12:29:56 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int		size_arg_tool(t_parsing_tool *tool)
 		quote_checker(tool, i, &n);
 		if (semic_checker(tool, i, &n) || redir_pipe_checker(tool, &i, &n))
 			return (-1);
-		if (tool->input[i] != ' ' && n != 0)
+		if (!ft_is_space(tool->input[i]) && n != 0)
 		{
 			count++;
 			n--;
 		}
-		if (is_space(tool->input[i]) && !tool->open)
+		if (ft_is_space(tool->input[i]) && !tool->open)
 			n = 1;
 		i++;
 	}
@@ -42,7 +42,7 @@ int		size_arg_tool(t_parsing_tool *tool)
 
 void	skipspaces(t_parsing_tool *tool, int *i, int *j)
 {
-	while (is_space(tool->input[*i]))
+	while (ft_is_space(tool->input[*i]))
 	{
 		*i += 1;
 		*j += 1;
@@ -61,7 +61,7 @@ int		ft_split_args(t_parsing_tool *tool)
 	skipspaces(tool, &i, &j);
 	while (tool->input[i] && n < tool->size)
 	{
-		while ((!is_space(tool->input[j]) && !is_semic(tool->input[j])
+		while ((!ft_is_space(tool->input[j]) && !is_semic(tool->input[j])
 				&& !is_redir_or_pipe(tool->input[j])
 				&& tool->input[j] != '\0') || (tool->open))
 		{
@@ -69,11 +69,7 @@ int		ft_split_args(t_parsing_tool *tool)
 				switcher_quote(tool, tool->input[j]);
 			j++;
 		}
-		if (!append_string_to_arg(&i, &j, &n, tool))
-			return (0);
-		if (!append_semicolon(&i, &j, &n, tool))
-			return (0);
-		if (!append_redir_pipe(&i, &j, &n, tool))
+		if (!parsing_checks(&i, &j, &n, tool))
 			return (0);
 		if (j++ != '\0')
 			i++;

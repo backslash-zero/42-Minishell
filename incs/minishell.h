@@ -39,7 +39,7 @@ t_ret			g_ret;
 typedef int		p_prompt;
 p_prompt		to_print;
 
-typedef int			(*builtfunc_addr)(char **s);
+typedef int		(*t_builtfunc_addr)(char **s);
 
 typedef struct	s_parse
 {

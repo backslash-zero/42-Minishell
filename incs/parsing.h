@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 14:34:50 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/08/29 12:30:33 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,10 @@ int				is_redir_or_pipe(char c);
 int				is_pipe(char c);
 int				is_redir_l(char c);
 int				is_redir_r(char c);
+int				replace_g_ret(char **arg_list, int i);
+int				check_g_ret_var(char **arg_list);
+int				is_g_ret_var(char *str);
+int				insert_ret(t_parsing_tool *tool, int i);
+int				parsing_checks(int *i, int *j, int *n, t_parsing_tool *tool);
 
 #endif
