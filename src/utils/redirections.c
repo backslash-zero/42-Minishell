@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/01 14:29:04 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/01 16:40:34 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,6 @@ char	**deletebracket(char **arg)
 	return (s);
 }
 
-int		permission_check(int fd)
-{
-	struct stat buff;
-
-	if ((fstat(fd, &buff) == -1))
-	{
-		g_ret = 126;
-		return (-1);
-	}
-	if (buff.st_mode >= 32896)
-	{
-		ft_printf_fd(3, "buff.st_mode = %d\n", buff.st_mode);
-		return (1);
-	}
-	return (0);
-}
-
 int		r_anglebracket(char **arg, t_parse *parse, char *name)
 {
 	int		fd;
@@ -76,24 +59,12 @@ int		r_anglebracket(char **arg, t_parse *parse, char *name)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	int l = 0;
-	while (arg[l])
-	{
-		printf("arg[%d] = %s\n", l, arg[l]);
-		l++;
-	}
 	dup2(fd, 1);
 	if (!(arg_list = deletebracket(arg)))
 	{
 		close(fd);
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
-	}
-	l = 0;
-	while (arg_list[l])
-	{
-		ft_printf_fd(3, "arg_list[%d] = %s\n", l, arg_list[l]);
-		l++;
 	}
 	if (!ft_checkbuiltins(arg_list, parse))
 	{
@@ -159,30 +130,23 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 	char	**arg_list;
 
 	i = 0;
-	if ((fd = open(name, O_RDONLY, 0644)) == -1)
-	{
-		g_ret = 1;
-		ft_strerror(NULL, NULL, NULL, NULL);
-		return (-1);
-	}
 	l = 0;
-	while (arg[l])
+	fd = 0;
+	if (l == arg_len(arg))
 	{
-		printf("arg[%d] = %s\n", l, arg[l]);
-		l++;
+		if ((fd = open(name, O_RDONLY, 0644)) == -1)
+		{
+			g_ret = 1;
+			ft_strerror(NULL, NULL, NULL, NULL);
+			return (-1);
+		}
+		dup2(fd, 0);
 	}
-	dup2(fd, 0);
 	if ((arg_list = deletebracket(arg)) == NULL)
 	{
 		close(fd);
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
-	}
-		l = 0;
-	while (arg_list[l])
-	{
-		ft_printf_fd(3, "arg_list[%d] = %s\n", l, arg_list[l]);
-		l++;
 	}
 	if (!ft_checkbuiltins(arg_list, parse))
 	{
