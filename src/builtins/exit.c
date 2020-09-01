@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:17:37 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 11:40:53 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/01 14:19:13 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int		builtin_exit(char **arg)
 	int				arg_l;
 
 	ft_putstr("exit\n");
+	i = 0;
 	if ((arg_l = arg_len(arg)) == 1)
 	{
 		free_tab(arg);
