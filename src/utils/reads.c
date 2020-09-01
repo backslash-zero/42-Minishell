@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/28 15:02:51 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/01 16:44:10 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,14 @@ int				launch_exec(char **arg, t_parse *parse, char **arg_list)
 				return (-2);
 			}
 		}
+		fd_dup(1);
 		return (1);
 	}
 	if (ret_red == -1)
+	{
+		fd_dup(1);
 		return (-1);
+	}
 	fd_dup(1);
 	// print_gret("launch_exec_7");
 	return (0);
@@ -224,7 +228,10 @@ void			prompt(void)
 	while (1)
 	{
 		ret = 0;
-		print_prompt_prefix();
+		if (to_print == 0)
+			print_prompt_prefix();
+		if (to_print == 1)
+			to_print = 0;
 		ret = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
 		if (ret == -1)
 			exit(errno);
