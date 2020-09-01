@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/31 17:29:13 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/01 14:29:04 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,24 @@ int		r_anglebracket(char **arg, t_parse *parse, char *name)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
+	int l = 0;
+	while (arg[l])
+	{
+		printf("arg[%d] = %s\n", l, arg[l]);
+		l++;
+	}
 	dup2(fd, 1);
 	if (!(arg_list = deletebracket(arg)))
 	{
 		close(fd);
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
+	}
+	l = 0;
+	while (arg_list[l])
+	{
+		ft_printf_fd(3, "arg_list[%d] = %s\n", l, arg_list[l]);
+		l++;
 	}
 	if (!ft_checkbuiltins(arg_list, parse))
 	{
@@ -153,12 +165,24 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
+	l = 0;
+	while (arg[l])
+	{
+		printf("arg[%d] = %s\n", l, arg[l]);
+		l++;
+	}
 	dup2(fd, 0);
 	if ((arg_list = deletebracket(arg)) == NULL)
 	{
 		close(fd);
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
+	}
+		l = 0;
+	while (arg_list[l])
+	{
+		ft_printf_fd(3, "arg_list[%d] = %s\n", l, arg_list[l]);
+		l++;
 	}
 	if (!ft_checkbuiltins(arg_list, parse))
 	{
