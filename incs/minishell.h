@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/28 11:14:46 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/02 14:25:58 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include "builtin.h"
 # include "ft_printf.h"
 # include "parsing.h"
+# include "pipe.h"
 
 typedef int		t_ret;
 t_ret			g_ret;
@@ -61,5 +62,7 @@ char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
 char			**tablst(t_list *lst);
 void			fd_dup(int i);
+
+void	printtab(char **tab);
 
 #endif
