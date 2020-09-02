@@ -6,11 +6,109 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/02 14:59:21 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/02 17:03:22 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+int		ft_count_pipe(char **arg)
+{
+	int i = 0;
+	int count = 0;
+
+	while (arg[i])
+	{
+		if (!ft_strcmp(arg[i],"|"))
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+char	**ft_splitpipe_after(char **arg, int i)
+{
+
+}
+
+char	**ft_splitpipe_before(char **arg, int i)
+{
+
+}
+
+char		**cmd_arg(char **arg, int *i)
+{
+	int cmd_arg_len = 0;
+
+	while (ft_strcmp(arg[cmd_arg_len], "|"))
+		cmd_arg_len++;
+	*i = cmd_arg_len;
+	char **cmd_arg;
+	if (!(cmd_arg = malloc(sizeof(char*) * cmd_arg_len + 1)))
+		return (NULL);
+	int j = 0;
+	while (j < cmd_arg_len)
+	{
+		cmd_arg[j] = ft_strdup(arg[j]);
+		j++;
+	}
+	cmd_arg[j] = NULL;	
+	return (cmd_arg);
+}
+
+char		**last_cmd_arg(char **arg)
+{
+	int len = 0;
+	char **cmd_arg;
+	int j = 0;
+
+	while (arg[len])
+		len++;
+	if (!(cmd_arg = malloc(sizeof(char*) * len + 1)))
+		return (NULL);
+	while (j < len)
+	{
+		cmd_arg[j] = ft_strdup(arg[j]);
+		j++;
+	}
+	cmd_arg[j] = NULL;	
+	return (cmd_arg);
+}
+
+char		***prepare_cmd(char **arg_list, int pipe_len)
+{
+	char ***cmd;
+	int i = 0;
+	int cmd_arg = 0;
+	int count = 0;
+
+	if (!(cmd = malloc(sizeof(char**) * pipe_len + 1 + 1)))
+		return (NULL);
+
+	while (count < pipe_len + 1)
+	{
+		if (ft_count_pipe(&arg_list[i]) != 0)
+		{
+			cmd[count] = cmd_arg(&arg_list[i], &i);
+			i++;
+		}
+		else
+		{
+			cmd[count] = last_arg(&arg_list[i], &i);
+			break ;
+		}
+		count++;
+	}
+	cmd[count] = NULL;
+	return (cmd);
+}
+
+void    ft_pipe_2(char **arg_list)
+{
+	// preparer arg list dans un ***cmd
+	int		pipe_len = ft_count_pipe(arg_list);
+	char	***cmd = prepare_cmd(arg_list, pipe_len);
+}
 
 void    ft_pipe(void)
 {
