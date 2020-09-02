@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/02 17:04:10 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/02 17:52:17 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int				launch(char *input, t_parse *parse)
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
 		// print_gret("launch_2.1");
-		if (arg_len(arg_list) == 1 && !ft_strcmp(arg_list[0], "pipe2"))
+		if (arg_len(arg_list) == 6 && !ft_strcmp(arg_list[1], "|"))
 			ft_pipe_2(arg_list);
 		else if (arg_len(arg_list) == 1 && !ft_strcmp(arg_list[0], "pipe"))
 			ft_pipe();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/02 17:03:22 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/02 18:00:26 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,13 @@ int		ft_count_pipe(char **arg)
 	return (count);
 }
 
-char	**ft_splitpipe_after(char **arg, int i)
-{
-
-}
-
-char	**ft_splitpipe_before(char **arg, int i)
-{
-
-}
-
-char		**cmd_arg(char **arg, int *i)
+char		**cmd_arg_get(char **arg, int *i)
 {
 	int cmd_arg_len = 0;
 
 	while (ft_strcmp(arg[cmd_arg_len], "|"))
 		cmd_arg_len++;
-	*i = cmd_arg_len;
+	*i += cmd_arg_len;
 	char **cmd_arg;
 	if (!(cmd_arg = malloc(sizeof(char*) * cmd_arg_len + 1)))
 		return (NULL);
@@ -89,13 +79,12 @@ char		***prepare_cmd(char **arg_list, int pipe_len)
 	{
 		if (ft_count_pipe(&arg_list[i]) != 0)
 		{
-			cmd[count] = cmd_arg(&arg_list[i], &i);
+			cmd[count] = cmd_arg_get(&arg_list[i], &i);
 			i++;
 		}
 		else
 		{
-			cmd[count] = last_arg(&arg_list[i], &i);
-			break ;
+			cmd[count] = last_cmd_arg(&arg_list[i]);
 		}
 		count++;
 	}
@@ -108,6 +97,12 @@ void    ft_pipe_2(char **arg_list)
 	// preparer arg list dans un ***cmd
 	int		pipe_len = ft_count_pipe(arg_list);
 	char	***cmd = prepare_cmd(arg_list, pipe_len);
+	int i = 0;
+	while (cmd[i])
+	{
+		printtab(cmd[i]);
+		i++;
+	}
 }
 
 void    ft_pipe(void)
