@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/02 17:52:17 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/03 14:30:36 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int				launch_exec(char **arg, t_parse *parse, char **arg_list)
 	int	ret_red;
 	int	ret_exec;
 
-	// print_gret("launch_exec_1");
 	fd_dup(0);
 	// print_gret("launch_exec_1.1");
 	g_ret = 0;
@@ -142,13 +141,6 @@ int				ft_exec(char **arg_list)
 	if (proc == 0)
 	{
 		s = find_path_env(tab_env, arg_list[0]);
-		printf("s = %s\n", s);
-		int d = 0;
-		while (arg_list[d])
-		{
-			printf("arg_list = %s\n", arg_list[d]);
-			d++;
-		}
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
 			free(s);
@@ -204,11 +196,8 @@ int				launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		// print_gret("launch_2.1");
-		if (arg_len(arg_list) == 6 && !ft_strcmp(arg_list[1], "|"))
+		if (ft_count_pipe(arg_list) > 0)
 			ft_pipe_2(arg_list);
-		else if (arg_len(arg_list) == 1 && !ft_strcmp(arg_list[0], "pipe"))
-			ft_pipe();
 		else
 			ret_exec = launch_exec(arg, parse, arg_list);
 		// print_gret("launch_2.2");

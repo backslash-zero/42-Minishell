@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/02 18:00:26 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/03 14:30:18 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ char		***prepare_cmd(char **arg_list, int pipe_len)
 
 	if (!(cmd = malloc(sizeof(char**) * pipe_len + 1 + 1)))
 		return (NULL);
-
 	while (count < pipe_len + 1)
 	{
 		if (ft_count_pipe(&arg_list[i]) != 0)
@@ -92,17 +91,63 @@ char		***prepare_cmd(char **arg_list, int pipe_len)
 	return (cmd);
 }
 
+int		loop_pipe(char ***cmd)
+{
+	int 	pfd[2];
+	pid_t	proc;
+	int		fd_in;
+	int		i;
+	char 	*s;
+	
+	/* recuperer tab env */
+	char	**tab_env;
+	if (!(tab_env = tablst(g_env)))
+		printf("g_env failed\n");
+	// init fd_in qui va prendre la sortie de la commande precedente
+	fd_in = 0;
+	i = 0;
+	while (cmd[i])
+	{
+		pipe(pfd);
+		if ((proc = fork()) == -1)
+		{
+			free_tab(tab_env);
+			return (-1);
+		}
+		else if (proc == 0)
+		{
+			s = find_path_env(tab_env, cmd[i][0]);
+			dup2(fd_in, 0);
+			if (cmd[i + 1] != NULL)
+				dup2(pfd[1], 1);
+			close(pfd[0]);
+			if (execve(s, cmd[i], tab_env) == -1)
+			{
+				free(s);
+				free_tab(tab_env);
+				return (-2);
+			}
+		}
+		else
+		{
+			wait(NULL);
+			close(pfd[1]);
+			fd_in = pfd[0];
+			i++;
+		}
+	}
+	free_tab(tab_env);
+	return (0);
+}
+
 void    ft_pipe_2(char **arg_list)
 {
 	// preparer arg list dans un ***cmd
 	int		pipe_len = ft_count_pipe(arg_list);
 	char	***cmd = prepare_cmd(arg_list, pipe_len);
-	int i = 0;
-	while (cmd[i])
-	{
-		printtab(cmd[i]);
-		i++;
-	}
+	// erreur loop pipe?
+	loop_pipe(cmd);
+	// free ***cmd
 }
 
 void    ft_pipe(void)
