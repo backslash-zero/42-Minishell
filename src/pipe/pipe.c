@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/03 16:54:00 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/03 17:06:02 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,30 +93,21 @@ char		***prepare_cmd(char **arg_list, int pipe_len)
 
 int		loop_pipe(t_pipe_cmd *pipe_cmd)
 {
-	printf("bonjour\n");
 	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
-		printf("while\n");
 		pipe(pipe_cmd->pfd);
-		printf("pipe\n");
 		if ((pipe_cmd->proc = fork()) == -1)
 		{
-			printf("fork FAILED\n");
 			free_tab(pipe_cmd->tab_env);
 			return (-1);
 		}
 		else if (pipe_cmd->proc == 0)
 		{
-			printf("fils\n");
 			dup2(pipe_cmd->fd_in, 0);
-			printf("post\n");
 			if (pipe_cmd->cmd[pipe_cmd->i + 1] != NULL)
 				dup2(pipe_cmd->pfd[1], 1);
-			printf("2\n");
 			close(pipe_cmd->pfd[0]);
-			printf("3\n");
 			pipe_cmd->s = find_path_env(pipe_cmd->tab_env, pipe_cmd->cmd[pipe_cmd->i][0]);
-			printf("END FILS\n");
 			if (execve(pipe_cmd->s, pipe_cmd->cmd[pipe_cmd->i], pipe_cmd->tab_env) == -1)
 			{
 				free(pipe_cmd->s);
@@ -127,7 +118,6 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd)
 		}
 		else
 		{
-			printf("daddy\n");
 			wait(NULL);
 			close(pipe_cmd->pfd[1]);
 			pipe_cmd->fd_in = pipe_cmd->pfd[0];
@@ -138,15 +128,15 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd)
 	return (0);
 }
 
-int		init_t_pipe(t_pipe_cmd pipe_cmd, char **arg_list)
+int		init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list)
 {
-	if (!(pipe_cmd.tab_env = tablst(g_env)))
+	if (!(pipe_cmd->tab_env = tablst(g_env)))
 		return (0);
-	pipe_cmd.len = ft_count_pipe(arg_list);
-	pipe_cmd.cmd = prepare_cmd(arg_list, pipe_cmd.len);
-	pipe_cmd.fd_in = 0;
-	pipe_cmd.i = 0;
-	pipe_cmd.ret_red = 0;
+	pipe_cmd->len = ft_count_pipe(arg_list);
+	pipe_cmd->cmd = prepare_cmd(arg_list, pipe_cmd->len);
+	pipe_cmd->fd_in = 0;
+	pipe_cmd->i = 0;
+	pipe_cmd->ret_red = 0;
 	return (1);
 }
 
@@ -156,7 +146,7 @@ int    ft_pipe_2(char **arg_list, t_parse *parse)
 	
 	(void)parse;
 	// init struct
-	if (!init_t_pipe(pipe_cmd, arg_list))
+	if (!init_t_pipe(&pipe_cmd, arg_list))
 		return (0);
 	loop_pipe(&pipe_cmd);
 	return (1);
