@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/03 17:06:02 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/03 18:22:34 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd)
 		}
 		else if (pipe_cmd->proc == 0)
 		{
+			// check redirection + open file + assign to struct + t_pipe_cmd_2_t_cmd
 			dup2(pipe_cmd->fd_in, 0);
 			if (pipe_cmd->cmd[pipe_cmd->i + 1] != NULL)
 				dup2(pipe_cmd->pfd[1], 1);
@@ -114,7 +115,6 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd)
 				free_tab(pipe_cmd->tab_env);
 				return (-2);
 			}
-
 		}
 		else
 		{
@@ -140,72 +140,14 @@ int		init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list)
 	return (1);
 }
 
-int    ft_pipe_2(char **arg_list, t_parse *parse)
+int    ft_pipe_2(char **arg_list)
 {
 	t_pipe_cmd	pipe_cmd;
 	
-	(void)parse;
 	// init struct
 	if (!init_t_pipe(&pipe_cmd, arg_list))
 		return (0);
 	loop_pipe(&pipe_cmd);
 	return (1);
 	// free ***cmd
-}
-
-void    ft_pipe(void)
-{
-	/* test */
-	char *ls_str;
-	char *wc_str;
-	char *wc_ptr[2];
-	char *ls_ptr[2];
-	char *s;
-
-	ls_str = "ls";
-	wc_str = "wc";
-	ls_ptr[1] = NULL;
-	wc_ptr[1] = NULL;
-	ls_ptr[0] = ls_str;
-	wc_ptr[0] = wc_str;
-
-	printtab(ls_ptr);
-	printtab(wc_ptr);
-	/* recuperer tab env */
-	char	**tab_env;
-	if (!(tab_env = tablst(g_env)))
-		printf("g_env failed\n");
-	printtab(tab_env);
-	/* create the pipe */
-   int  pfd[2];
-   if (pipe(pfd) == -1)
-		printf("pipe failed\n");
-   /* create the child */
-   int  pid;
-   if ((pid = fork()) < 0)
-		printf("fork failed\n");
-	if (pid == 0)
-	{
-		/* child */
-		s = find_path_env(tab_env, wc_str);
-		close(pfd[1]); /* close the unused write side */
-		dup2(pfd[0], 0); /* connect the read side with stdin */
-		close(pfd[0]); /* close the read side */
-		/* execute the process (wc command) */
-		execve(s, wc_ptr, tab_env);
-		// execlp("wc", "wc", (char *) 0);
-		printf("wc failed"); /* if execlp returns, it's an error */
-	}
-	else
-	{
-       /* parent */
-	   s = find_path_env(tab_env, ls_str);
-       close(pfd[0]); /* close the unused read side */
-       dup2(pfd[1], 1); /* connect the write side with stdout */
-       close(pfd[1]); /* close the write side */
-       /* execute the process (ls command) */
-	   execve(s, ls_ptr, tab_env);
-       // execlp("ls", "ls", (char *)0);
-       printf("ls failed"); /* if execlp returns, it's an error */
-	}
 }

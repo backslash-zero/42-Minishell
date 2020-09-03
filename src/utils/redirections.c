@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/03 17:03:44 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/03 19:07:03 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ char	**deletebracket(char **arg)
 	return (s);
 }
 
-int		r_anglebracket(char **arg, t_parse *parse, char *name, int pipe_checker, int *pfd_pipe)
+int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 {
 	int		fd;
 	int		ret_exec;
 	char	**arg_list;
+	t_pipe_cmd	pipe;
 
 	fd = -1;
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
@@ -66,7 +67,7 @@ int		r_anglebracket(char **arg, t_parse *parse, char *name, int pipe_checker, in
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	if (!ft_checkbuiltins(arg_list, parse))
+	if (!ft_checkbuiltins(arg_list, cmd))
 	{
 		ret_exec = ft_exec(arg_list);
 		if (ret_exec == -1)
@@ -78,10 +79,10 @@ int		r_anglebracket(char **arg, t_parse *parse, char *name, int pipe_checker, in
 			exit(127);
 		}
 	}
-	if (pipe_checker)
+	if (cmd->is_pipe)
 	{
-		dup2(pfd_pipe[1], 1);
-		if (!ft_checkbuiltins(arg_list, parse))
+		dup2(pipe.pfd[1], 1);
+		if (!ft_checkbuiltins(arg_list, cmd))
 		{
 			ret_exec = ft_exec(arg_list);
 			if (ret_exec == -1)
@@ -99,7 +100,7 @@ int		r_anglebracket(char **arg, t_parse *parse, char *name, int pipe_checker, in
 	return (1);
 }
 
-int		r_dbanglebracket(char **arg, t_parse *parse, char *name)
+int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 {
 	int		i;
 	int		fd;
@@ -121,7 +122,7 @@ int		r_dbanglebracket(char **arg, t_parse *parse, char *name)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	if (!ft_checkbuiltins(arg_list, parse))
+	if (!ft_checkbuiltins(arg_list, cmd))
 	{
 		ret_exec = ft_exec(arg_list);
 		if (ret_exec == -1)
@@ -138,7 +139,7 @@ int		r_dbanglebracket(char **arg, t_parse *parse, char *name)
 	return (1);
 }
 
-int		l_anglebracket(char **arg, t_parse *parse, char *name)
+int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 {
 	int		i;
 	int		fd;
@@ -165,7 +166,7 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	if (!ft_checkbuiltins(arg_list, parse))
+	if (!ft_checkbuiltins(arg_list, cmd))
 	{
 		ret_exec = ft_exec(arg_list);
 		if (ret_exec == -1)
@@ -182,30 +183,30 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 	return (1);
 }
 
-int		redirection(char **arg, t_parse *parse, int pipe_checker, int *pfd_pipe)
+int		redirection(t_cmd *cmd)
 {
 	int	i;
 	int ok = 0;
 
 	i = 0;
-	while (arg[i])
+	while (cmd->arg[i])
 	{
-		if (ft_strcmp(arg[i], ">") == 0)
+		if (ft_strcmp(cmd->arg[i], ">") == 0)
 		{
 			ok = 1;
-			if (r_anglebracket(arg, parse, arg[i + 1], pipe_checker, pfd_pipe) == -1)
+			if (r_anglebracket(cmd->arg, cmd, cmd->arg[i + 1]) == -1)
 				return (-1);
 		}
-		else if (ft_strcmp(arg[i], ">>") == 0)
+		else if (ft_strcmp(cmd->arg[i], ">>") == 0)
 		{
 			ok = 1;
-			if (r_dbanglebracket(arg, parse, arg[i + 1]) == -1)
+			if (r_dbanglebracket(cmd->arg, cmd, cmd->arg[i + 1]) == -1)
 				return (-1);
 		}
-		else if (ft_strcmp(arg[i], "<") == 0)
+		else if (ft_strcmp(cmd->arg[i], "<") == 0)
 		{
 			ok = 1;
-			if (l_anglebracket(arg, parse, arg[i + 1]) == -1)
+			if (l_anglebracket(cmd->arg, cmd, cmd->arg[i + 1]) == -1)
 				return (-1);
 		}
 		i++;

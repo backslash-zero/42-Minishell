@@ -6,21 +6,21 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 10:59:32 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/31 19:13:56 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/03 19:06:35 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	ft_builtinstab(t_parse *parse)
+void	ft_builtinstab(t_cmd *cmd)
 {
-	parse->builtnb[0] = "echo";
-	parse->builtnb[1] = "cd";
-	parse->builtnb[2] = "pwd";
-	parse->builtnb[3] = "export";
-	parse->builtnb[4] = "unset";
-	parse->builtnb[5] = "env";
-	parse->builtnb[6] = "exit";
+	cmd->parse.builtnb[0] = "echo";
+	cmd->parse.builtnb[1] = "cd";
+	cmd->parse.builtnb[2] = "pwd";
+	cmd->parse.builtnb[3] = "export";
+	cmd->parse.builtnb[4] = "unset";
+	cmd->parse.builtnb[5] = "env";
+	cmd->parse.builtnb[6] = "exit";
 }
 
 t_builtfunc_addr	builtins_func[] = {
@@ -28,7 +28,7 @@ t_builtfunc_addr	builtins_func[] = {
 	&builtin_unset, &builtin_env, &builtin_exit
 };
 
-int		ft_checkbuiltins(char **s, t_parse *parse)
+int		ft_checkbuiltins(char **s, t_cmd *cmd)
 {
 	int i;
 	int	good;
@@ -37,7 +37,7 @@ int		ft_checkbuiltins(char **s, t_parse *parse)
 	good = 0;
 	while (i < NB_BUILINS && good != 1)
 	{
-		if (ft_strcmp(s[0], parse->builtnb[i]) == 0)
+		if (ft_strcmp(s[0], cmd->parse.builtnb[i]) == 0)
 			good = 1;
 		if (good != 1)
 			i++;

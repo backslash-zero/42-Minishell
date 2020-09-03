@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/03 14:48:58 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/03 19:06:39 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void			fd_dup(int i)
 	}
 }
 
-int				launch_exec(char **arg, t_parse *parse, char **arg_list)
+int				launch_exec(char **arg, t_cmd *cmd)
 {
 	int	ret_red;
 	int	ret_exec;
@@ -80,15 +80,16 @@ int				launch_exec(char **arg, t_parse *parse, char **arg_list)
 	// print_gret("launch_exec_1.1");
 	g_ret = 0;
 	// print_gret("launch_exec_1.2");
-	ret_red = redirection(arg_list, parse, 0);
+	// check redirection + open file + assign to t_cmd
+	ret_red = redirection(cmd);
 	// print_gret("launch_exec_2");
 	if (!ret_red)
 	{
 		// print_gret("launch_exec_3");
-		if (!ft_checkbuiltins(arg_list, parse))
+		if (!ft_checkbuiltins(cmd->arg, cmd))
 		{
 			// print_gret("launch_exec_4");
-			ret_exec = ft_exec(arg_list);
+			ret_exec = ft_exec(cmd->arg);
 			if (ret_exec == -1)
 			{
 				// print_gret("launch_exec_5");
@@ -96,7 +97,7 @@ int				launch_exec(char **arg, t_parse *parse, char **arg_list)
 			}
 			else if (ret_exec == -2)
 			{
-				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+				ft_error(CMD_NOT_FOUND, NULL, NULL, cmd->arg[0]);
 				// print_gret("launch_exec_6");
 				return (-2);
 			}
@@ -162,9 +163,14 @@ int				ft_exec(char **arg_list)
 	return (0);
 }
 
-int				launch(char *input, t_parse *parse)
+void	cmd_init(t_cmd *cmd)
 {
-	char	**arg_list;
+	cmd->is_pipe = 0;
+	cmd->fd_redir = 0;
+}
+
+int				launch(char *input, t_cmd *cmd)
+{
 	char	**arg;
 	int		i;
 	int		len_new_arg_list;
@@ -181,36 +187,39 @@ int				launch(char *input, t_parse *parse)
 			len_new_arg_list++;
 			i++;
 		}
-		if ((arg_list = semicolon(arg, i, len_new_arg_list)) == NULL)
+		if ((cmd->arg = semicolon(arg, i, len_new_arg_list)) == NULL)
 		{
-			free_tab(arg_list);
+			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		if (!check_g_ret_var(arg_list))
+		if (!check_g_ret_var(cmd->arg))
 		{
-			free_tab(arg_list);
+			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		if (!cleanup_quotes(arg_list))
+		if (!cleanup_quotes(cmd->arg))
 		{
-			free_tab(arg_list);
+			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		if (ft_count_pipe(arg_list) > 0)
-			ft_pipe_2(arg_list, parse);
+		if (ft_count_pipe(cmd->arg) > 0)
+			ft_pipe_2(cmd->arg);
 		else
-			ret_exec = launch_exec(arg, parse, arg_list);
+		{
+			cmd_init(cmd);
+			ret_exec = launch_exec(arg, cmd);
+		}
 		// print_gret("launch_2.2");
 		if (ret_exec == -2)
 			exit(127);
 		// print_gret("launch_2.3");
 		if (arg[i] == NULL)
 		{
-			free_tab(arg_list);
+			free_tab(cmd->arg);
 			break ;
 		}
 		// print_gret("launch_2.4");
-		free_tab(arg_list);
+		free_tab(cmd->arg);
 		i++;
 		// print_gret("launch_3");
 	}
@@ -223,9 +232,9 @@ void			prompt(void)
 {
 	char	buffer[MAX_INPUT_SIZE];
 	int		ret;
-	t_parse	parse;
+	t_cmd	cmd;
 
-	ft_builtinstab(&parse);
+	ft_builtinstab(&cmd);
 	while (1)
 	{
 		ret = 0;
@@ -240,7 +249,7 @@ void			prompt(void)
 			buffer[ret - 1] = '\0';
 		else
 			ft_strlcpy(buffer, "exit", 5);
-		if (launch(buffer, &parse) == -1)
+		if (launch(buffer, &cmd) == -1)
 			return ;
 	}
 }
