@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/03 14:29:46 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/03 16:46:12 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ void			assign_and_free(char **newstr, char **oldstr);
 void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
 int				ft_exec(char **arg_list);
-int				redirection(char **arg, t_parse *parse);
+int				redirection(char **arg, t_parse *parse, int pipe_checker, int *pfd_pipe);
 char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
 char			**tablst(t_list *lst);
 void			fd_dup(int i);
+int			    ft_pipe_2(char **arg_list, t_parse *parse);
+int				loop_pipe(t_pipe_cmd *pipe_cmd);
 
 void	printtab(char **tab);
 

@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/01 16:40:34 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/03 15:21:47 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**deletebracket(char **arg)
 	return (s);
 }
 
-int		r_anglebracket(char **arg, t_parse *parse, char *name)
+int		r_anglebracket(char **arg, t_parse *parse, char *name, int pipe_checker, int *pfd_pipe)
 {
 	int		fd;
 	int		ret_exec;
@@ -78,7 +78,24 @@ int		r_anglebracket(char **arg, t_parse *parse, char *name)
 			exit(127);
 		}
 	}
+	if (pipe_checker)
+	{
+		dup2(pfd_pipe[1], 1);
+		if (!ft_checkbuiltins(arg_list, parse))
+		{
+			ret_exec = ft_exec(arg_list);
+			if (ret_exec == -1)
+				ft_strerror(NULL, NULL, "fork", NULL);
+			else if (ret_exec == -2)
+			{
+				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+				close(fd);
+				exit(127);
+			}
+		}
+	}
 	close(fd);
+	
 	return (1);
 }
 
@@ -165,7 +182,7 @@ int		l_anglebracket(char **arg, t_parse *parse, char *name)
 	return (1);
 }
 
-int		redirection(char **arg, t_parse *parse)
+int		redirection(char **arg, t_parse *parse, int pipe_checker, int *pfd_pipe)
 {
 	int	i;
 	int ok = 0;
@@ -176,7 +193,7 @@ int		redirection(char **arg, t_parse *parse)
 		if (ft_strcmp(arg[i], ">") == 0)
 		{
 			ok = 1;
-			if (r_anglebracket(arg, parse, arg[i + 1]) == -1)
+			if (r_anglebracket(arg, parse, arg[i + 1], pipe_checker, pfd_pipe) == -1)
 				return (-1);
 		}
 		else if (ft_strcmp(arg[i], ">>") == 0)
@@ -195,6 +212,5 @@ int		redirection(char **arg, t_parse *parse)
 	}
 	if (ok == 0)
 		return (0);
-	else
-		return (1);
+	return (1);
 }

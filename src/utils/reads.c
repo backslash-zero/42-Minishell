@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/03 14:30:36 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/03 14:48:58 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int				launch_exec(char **arg, t_parse *parse, char **arg_list)
 	// print_gret("launch_exec_1.1");
 	g_ret = 0;
 	// print_gret("launch_exec_1.2");
-	ret_red = redirection(arg_list, parse);
+	ret_red = redirection(arg_list, parse, 0);
 	// print_gret("launch_exec_2");
 	if (!ret_red)
 	{
@@ -197,7 +197,7 @@ int				launch(char *input, t_parse *parse)
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
 		if (ft_count_pipe(arg_list) > 0)
-			ft_pipe_2(arg_list);
+			ft_pipe_2(arg_list, parse);
 		else
 			ret_exec = launch_exec(arg, parse, arg_list);
 		// print_gret("launch_2.2");

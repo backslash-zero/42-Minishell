@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/03 14:30:18 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/03 16:54:00 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,62 +91,75 @@ char		***prepare_cmd(char **arg_list, int pipe_len)
 	return (cmd);
 }
 
-int		loop_pipe(char ***cmd)
+int		loop_pipe(t_pipe_cmd *pipe_cmd)
 {
-	int 	pfd[2];
-	pid_t	proc;
-	int		fd_in;
-	int		i;
-	char 	*s;
-	
-	/* recuperer tab env */
-	char	**tab_env;
-	if (!(tab_env = tablst(g_env)))
-		printf("g_env failed\n");
-	// init fd_in qui va prendre la sortie de la commande precedente
-	fd_in = 0;
-	i = 0;
-	while (cmd[i])
+	printf("bonjour\n");
+	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
-		pipe(pfd);
-		if ((proc = fork()) == -1)
+		printf("while\n");
+		pipe(pipe_cmd->pfd);
+		printf("pipe\n");
+		if ((pipe_cmd->proc = fork()) == -1)
 		{
-			free_tab(tab_env);
+			printf("fork FAILED\n");
+			free_tab(pipe_cmd->tab_env);
 			return (-1);
 		}
-		else if (proc == 0)
+		else if (pipe_cmd->proc == 0)
 		{
-			s = find_path_env(tab_env, cmd[i][0]);
-			dup2(fd_in, 0);
-			if (cmd[i + 1] != NULL)
-				dup2(pfd[1], 1);
-			close(pfd[0]);
-			if (execve(s, cmd[i], tab_env) == -1)
+			printf("fils\n");
+			dup2(pipe_cmd->fd_in, 0);
+			printf("post\n");
+			if (pipe_cmd->cmd[pipe_cmd->i + 1] != NULL)
+				dup2(pipe_cmd->pfd[1], 1);
+			printf("2\n");
+			close(pipe_cmd->pfd[0]);
+			printf("3\n");
+			pipe_cmd->s = find_path_env(pipe_cmd->tab_env, pipe_cmd->cmd[pipe_cmd->i][0]);
+			printf("END FILS\n");
+			if (execve(pipe_cmd->s, pipe_cmd->cmd[pipe_cmd->i], pipe_cmd->tab_env) == -1)
 			{
-				free(s);
-				free_tab(tab_env);
+				free(pipe_cmd->s);
+				free_tab(pipe_cmd->tab_env);
 				return (-2);
 			}
+
 		}
 		else
 		{
+			printf("daddy\n");
 			wait(NULL);
-			close(pfd[1]);
-			fd_in = pfd[0];
-			i++;
+			close(pipe_cmd->pfd[1]);
+			pipe_cmd->fd_in = pipe_cmd->pfd[0];
+			pipe_cmd->i++;
 		}
 	}
-	free_tab(tab_env);
+	free_tab(pipe_cmd->tab_env);
 	return (0);
 }
 
-void    ft_pipe_2(char **arg_list)
+int		init_t_pipe(t_pipe_cmd pipe_cmd, char **arg_list)
 {
-	// preparer arg list dans un ***cmd
-	int		pipe_len = ft_count_pipe(arg_list);
-	char	***cmd = prepare_cmd(arg_list, pipe_len);
-	// erreur loop pipe?
-	loop_pipe(cmd);
+	if (!(pipe_cmd.tab_env = tablst(g_env)))
+		return (0);
+	pipe_cmd.len = ft_count_pipe(arg_list);
+	pipe_cmd.cmd = prepare_cmd(arg_list, pipe_cmd.len);
+	pipe_cmd.fd_in = 0;
+	pipe_cmd.i = 0;
+	pipe_cmd.ret_red = 0;
+	return (1);
+}
+
+int    ft_pipe_2(char **arg_list, t_parse *parse)
+{
+	t_pipe_cmd	pipe_cmd;
+	
+	(void)parse;
+	// init struct
+	if (!init_t_pipe(pipe_cmd, arg_list))
+		return (0);
+	loop_pipe(&pipe_cmd);
+	return (1);
 	// free ***cmd
 }
 
