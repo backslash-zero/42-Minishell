@@ -6,7 +6,7 @@
 /*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 12:22:09 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/29 12:29:38 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:40:19 by cmeunier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int		redir_r_checker(t_parsing_tool *tool, int *i, int *n)
 		a = *i;
 		while (ft_is_space(tool->input[a + 1]))
 			a++;
-		if (is_redir_or_pipe(tool->input[a + 1]))
+		if (is_redir_or_pipe(tool->input[a + 1])
+			|| is_semic(tool->input[a + 1])
+			|| !tool->input[a + 1])
 			return (-1);
 	}
 	return (0);
@@ -42,7 +44,9 @@ int		redir_l_checker(t_parsing_tool *tool, int i, int *n)
 			return (-1);
 		while (ft_is_space(tool->input[i + 1]))
 			i++;
-		if (is_redir_or_pipe(tool->input[i + 1]))
+		if (is_redir_or_pipe(tool->input[i + 1])
+			|| is_semic(tool->input[i + 1])
+			|| !tool->input[i + 1])
 			return (-1);
 	}
 	return (0);
@@ -57,7 +61,9 @@ int		pipe_checker(t_parsing_tool *tool, int i, int *n)
 			return (-1);
 		while (ft_is_space(tool->input[i + 1]))
 			i++;
-		if (is_redir_or_pipe(tool->input[i + 1]))
+		if (is_redir_or_pipe(tool->input[i + 1])
+			|| is_semic(tool->input[i + 1])
+			|| !tool->input[i + 1])
 			return (-1);
 	}
 	return (0);
