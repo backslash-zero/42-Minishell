@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/01 16:44:10 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/06 19:42:35 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,11 @@ int				launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
+		if (!check_var(arg_list))
+		{
+			free_tab(arg_list);
+			return (ft_strerror(NULL, arg, NULL, NULL));
+		}	
 		if (!check_g_ret_var(arg_list))
 		{
 			free_tab(arg_list);
@@ -197,24 +202,18 @@ int				launch(char *input, t_parse *parse)
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		// print_gret("launch_2.1");
 		ret_exec = launch_exec(arg, parse, arg_list);
-		// print_gret("launch_2.2");
 		if (ret_exec == -2)
 			exit(127);
-		// print_gret("launch_2.3");
 		if (arg[i] == NULL)
 		{
 			free_tab(arg_list);
 			break ;
 		}
-		// print_gret("launch_2.4");
 		free_tab(arg_list);
 		i++;
-		// print_gret("launch_3");
 	}
 	free_tab(arg);
-	// print_gret("launch_4");
 	return (0);
 }
 

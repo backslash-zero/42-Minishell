@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 12:24:24 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/29 12:25:41 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/06 18:12:19 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	switcher_quote(t_parsing_tool *tool, char c)
 int		test_lone_dollar(char *str, int i)
 {
 	if (!envvar_authorized_character(str[i + 1], TRUE))
-	{
 		return (1);
-	}
 	return (0);
 }
