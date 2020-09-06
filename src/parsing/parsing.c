@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/29 12:29:56 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/06 19:44:40 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,6 @@ char	**parsing(char *input)
 	t_parsing_tool	tool;
 
 	tool.input = ft_strdup(input);
-	init_tool(&tool);
-	tool.empty_var = 0;
-	if (expand_env(&tool) == -1)
-	{
-		ft_strerror(NULL, NULL, NULL, NULL);
-		return (NULL);
-	}
 	init_tool(&tool);
 	if ((tool.size = size_arg_tool(&tool)) == -1)
 	{

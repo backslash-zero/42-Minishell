@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/29 12:30:33 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/06 19:47:19 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,7 @@ int				check_g_ret_var(char **arg_list);
 int				is_g_ret_var(char *str);
 int				insert_ret(t_parsing_tool *tool, int i);
 int				parsing_checks(int *i, int *j, int *n, t_parsing_tool *tool);
+int				check_var(char **arg_list);
+int				is_var(char *str);
 
 #endif
