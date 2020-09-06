@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/06 19:53:38 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/07 00:53:36 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int		replace_var(t_parsing_tool *tool, int i, char *var, char *env_name)
 
 int		insert_env_var(t_parsing_tool *tool, int i)
 {
-	char *env_name;
-	char *var;
+	char	*env_name;
+	char	*var;
 
 	if (!(env_name = get_var_name(tool, i)))
 		return (0);
@@ -106,10 +106,9 @@ int		insert_env_var(t_parsing_tool *tool, int i)
 	return (1);
 }
 
-
 int		check_var(char **arg_list)
 {
-	int i;
+	int				i;
 	t_parsing_tool	tool;
 
 	i = 0;
@@ -126,11 +125,4 @@ int		check_var(char **arg_list)
 		i++;
 	}
 	return (1);
-}
-
-int		is_var(char *str)
-{
-	if (ft_strnstr(str, "$", ft_strlen(str)) != NULL)
-		return (1);
-	return (0);
 }
