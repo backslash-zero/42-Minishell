@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/03 18:51:28 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/07 13:51:41 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void			fd_dup(int i);
 int			    ft_pipe_2(char **arg_list);
 int				loop_pipe(t_pipe_cmd *pipe_cmd);
 
+char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
+char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
+char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
 void	printtab(char **tab);
 
 #endif

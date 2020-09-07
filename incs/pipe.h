@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:05:54 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/03 17:29:02 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/07 13:51:36 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 int		    ft_count_pipe(char **arg);
 void        ft_pipe(void);
-char		**last_cmd_arg(char **arg);
-char		**cmd_arg_get(char **arg, int *i);
-char		***prepare_cmd(char **arg_list, int pipe_len);
+//char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
+//char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
+//char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
 
 #endif
