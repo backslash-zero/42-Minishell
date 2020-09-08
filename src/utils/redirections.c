@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/07 16:09:25 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/07 16:56:04 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 		}
 	}
 	close(fd);
-	
 	return (1);
 }
 
