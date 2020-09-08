@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/07 16:56:19 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/08 16:33:13 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ int				launch(char *input, t_cmd *cmd)
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
 		if (ft_count_pipe(cmd->arg) > 0)
-			ft_pipe_2(cmd->arg);
+			ft_pipe_2(cmd->arg, cmd);
 		else
 		{
 			cmd_init(cmd);

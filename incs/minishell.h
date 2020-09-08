@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/08 11:20:12 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/08 16:34:14 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,13 @@ void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
 int				ft_exec(char **arg_list);
 int				redirection(t_cmd *cmd);
+char			**deletebracket(char **arg);
 char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
 char			**tablst(t_list *lst);
 void			fd_dup(int i);
-int			    ft_pipe_2(char **arg_list);
-int				loop_pipe(t_pipe_cmd *pipe_cmd);
+int			    ft_pipe_2(char **arg_list, t_cmd *cmd);
+int				loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd);
 
 char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
 char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
