@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/07 16:56:04 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/08 14:30:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 			exit(127);
 		}
 	}
-	if (cmd->is_pipe)
+	/*if (cmd->is_pipe)
 	{
 		dup2(pipe.pfd[1], 1);
 		if (!ft_checkbuiltins(arg_list, cmd))
@@ -94,7 +94,7 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 				exit(127);
 			}
 		}
-	}
+	}*/
 	close(fd);
 	return (1);
 }
