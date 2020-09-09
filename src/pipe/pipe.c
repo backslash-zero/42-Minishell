@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/08 16:45:27 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/09 12:28:05 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,18 +121,60 @@ void	r_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 		close(pipe_cmd->fd_redir);
 		ft_strerror(NULL, NULL, NULL, NULL);
 	}
+	int i = 0;
+	while (arg_list[i])
+	{
+		ft_printf_fd(2,"arg_list[%d] = %s name = %s\n", i, arg_list[i], name);
+		i++;
+	}
 	if (ft_checkbuiltins(arg_list, cmd))
 		pipe_cmd->chec_redir = 1;
+	else
+	{
+		ft_exec(arg_list);
+		/*pipe_cmd->s = find_path_env(pipe_cmd->tab_env, pipe_cmd->cmd[pipe_cmd->i][0]);
+		if (execve(pipe_cmd->s, arg_list, pipe_cmd->tab_env) == -1)
+		{
+			free(pipe_cmd->s);
+			free_tab(pipe_cmd->tab_env);
+		}*/
+	}
 }
 
-void	dr_bracket(char *name, t_pipe_cmd *pipe_cmd)
+void	dr_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 {
+	char **arg_list;
+
 	if ((pipe_cmd->fd_redir = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
 		g_ret = 1;
 		ft_strerror(NULL, NULL, NULL, NULL);
 	}
 	dup2(pipe_cmd->fd_redir, 1);
+	if (!(arg_list = deletebracket(s)))
+	{
+		close(pipe_cmd->fd_redir);
+		ft_strerror(NULL, NULL, NULL, NULL);
+	}
+	int i = 0;
+	while (arg_list[i])
+	{
+		ft_printf_fd(2,"arg_list[%d] = %s name = %s\n", i, arg_list[i], name);
+		i++;
+	}
+	if (ft_checkbuiltins(arg_list, cmd))
+		pipe_cmd->chec_redir = 1;
+	else
+	{
+		ft_exec(arg_list);
+
+		/*pipe_cmd->s = find_path_env(pipe_cmd->tab_env, pipe_cmd->cmd[pipe_cmd->i][0]);
+		if (execve(pipe_cmd->s, arg_list, pipe_cmd->tab_env) == -1)
+		{
+			free(pipe_cmd->s);
+			free_tab(pipe_cmd->tab_env);
+		}*/
+	}
 }
 
 void	l_bracket(char *name, t_pipe_cmd *pipe_cmd)
@@ -153,10 +195,17 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 	pipe_cmd->chec_redir = 0;
 	while (s[i])
 	{
+		ft_printf_fd(2, "s[%d] = %s\n", i, s[i]);
 		if (ft_strcmp(s[i], ">") == 0)
+		{
 			r_bracket(s[i + 1], pipe_cmd, s, cmd);
+			pipe_cmd->chec_redir = 1;
+		}
 		else if (ft_strcmp(s[i], ">>") == 0)
-			dr_bracket(s[i + 1], pipe_cmd);
+		{
+			dr_bracket(s[i + 1], pipe_cmd, s, cmd);
+			pipe_cmd->chec_redir = 1;
+		}
 		else if (ft_strcmp(s[i], "<") == 0)
 			l_bracket(s[i + 1], pipe_cmd);
 		close(pipe_cmd->fd_redir);
@@ -181,11 +230,13 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 			if (pipe_cmd->cmd[pipe_cmd->i + 1] != NULL)
 				dup2(pipe_cmd->pfd[1], 1);
 			close(pipe_cmd->pfd[0]);
+			ft_printf_fd(2,"pipe_cmd->cmd[%d]= %s\n", pipe_cmd->i, pipe_cmd->cmd[pipe_cmd->i][0]);
 			if (check_redir(pipe_cmd->cmd[pipe_cmd->i]))
 				redir_pipe(pipe_cmd->cmd[pipe_cmd->i],pipe_cmd, cmd);
 			if (!pipe_cmd->chec_redir)
 			{
 				pipe_cmd->s = find_path_env(pipe_cmd->tab_env, pipe_cmd->cmd[pipe_cmd->i][0]);
+				ft_printf_fd(2, "s = %s\n", pipe_cmd->s);
 				if (execve(pipe_cmd->s, pipe_cmd->cmd[pipe_cmd->i], pipe_cmd->tab_env) == -1)
 				{
 					free(pipe_cmd->s);
@@ -193,6 +244,8 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 					return (-2);
 				}
 			}
+			else
+				exit (0);
 		}
 		else
 		{
