@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/10 12:26:53 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/10 16:11:36 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct  s_pipe_cmd{
     char    **tab_env;
     int     chec_redir;
     int     fd_redir;
+	int		g_ret;
     t_parse parse;
 }               t_pipe_cmd;
 
@@ -77,6 +78,7 @@ void			print_prompt_prefix(void);
 void			prompt(void);
 int				launch(char *input, t_cmd *cmd);
 void			free_tab(char **tab);
+void			free_tab_3d(char ***tab);
 void			assign_and_free(char **newstr, char **oldstr);
 void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
@@ -89,6 +91,8 @@ char			**tablst(t_list *lst);
 void			fd_dup(int i);
 int			    ft_pipe_2(char **arg_list, t_cmd *cmd);
 int				loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd);
+
+void			check_signal(int status);
 
 char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
 char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);

@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/09 16:33:54 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/10 17:05:03 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,29 @@ void			fd_dup(int i)
 
 	if (i == 0)
 	{
-		input = dup(0);
-		output = dup(1);
+		if ((input = dup(0)) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
+		if ((output = dup(1)) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
 	}
 	else if (i == 1)
 	{
-		dup2(input, 0);
-		dup2(output, 1);
+		if (dup2(input, 0) == -1) 
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
+		if (dup2(output, 1) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
 	}
 }
 
@@ -77,28 +93,20 @@ int				launch_exec(char **arg, t_cmd *cmd)
 	int	ret_exec;
 
 	fd_dup(0);
-	// print_gret("launch_exec_1.1");
 	g_ret = 0;
-	// print_gret("launch_exec_1.2");
-	// check redirection + open file + assign to t_cmd
 	ret_red = redirection(cmd);
-	// print_gret("launch_exec_2");
 	if (!ret_red)
 	{
-		// print_gret("launch_exec_3");
 		if (!ft_checkbuiltins(cmd->arg, cmd))
 		{
-			// print_gret("launch_exec_4");
 			ret_exec = ft_exec(cmd->arg);
 			if (ret_exec == -1)
 			{
-				// print_gret("launch_exec_5");
 				return (ft_strerror(NULL, NULL, "fork", NULL));
 			}
 			else if (ret_exec == -2)
 			{
 				ft_error(CMD_NOT_FOUND, NULL, NULL, cmd->arg[0]);
-				// print_gret("launch_exec_6");
 				return (-2);
 			}
 		}
@@ -111,16 +119,22 @@ int				launch_exec(char **arg, t_cmd *cmd)
 		return (-1);
 	}
 	fd_dup(1);
-	// print_gret("launch_exec_7");
 	return (0);
 }
 
 void			check_signal(int status)
 {
+	printf("TERMSIG = %d\n", WTERMSIG(status));
+	printf("WIFEXITED = %d\n", WIFEXITED(status));
+	printf("WISIGNALED = %d\n", WIFSIGNALED(status));
+	printf("WEXITSTATUS = %d\n", WEXITSTATUS(status));
 	if (WTERMSIG(status) == 3)
 		ft_putstr("Quit\n");
 	if (WIFEXITED(status))
+	{
 		g_ret = WEXITSTATUS(status);
+			printf("g_ret check signal = %d\n", g_ret);
+	}
 	if (WIFSIGNALED(status))
 		g_ret = 128 + WTERMSIG(status);
 }
@@ -157,6 +171,7 @@ int				ft_exec(char **arg_list)
 			ft_strerror(NULL, NULL, "wait", NULL);
 			return (-1);
 		}
+		printf("ft_exec\n\n");
 		check_signal(status);
 	}
 	free_tab(tab_env);
@@ -203,28 +218,28 @@ int				launch(char *input, t_cmd *cmd)
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
 		if (ft_count_pipe(cmd->arg) > 0)
-			ft_pipe_2(cmd->arg, cmd);
+		{
+			ret_exec = ft_pipe_2(cmd->arg, cmd);
+			printf("ret_execcc = %d\n", ret_exec);
+			if (ret_exec == -1)
+				g_ret = 127;
+		}
 		else
 		{
 			cmd_init(cmd);
 			ret_exec = launch_exec(arg, cmd);
 		}
-		// print_gret("launch_2.2");
 		if (ret_exec == -2)
 			exit(127);
-		// print_gret("launch_2.3");
 		if (arg[i] == NULL)
 		{
 			free_tab(cmd->arg);
 			break ;
 		}
-		// print_gret("launch_2.4");
 		free_tab(cmd->arg);
 		i++;
-		// print_gret("launch_3");
 	}
 	free_tab(arg);
-	// print_gret("launch_4");
 	return (0);
 }
 

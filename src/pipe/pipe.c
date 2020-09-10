@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/10 12:48:12 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/10 17:05:02 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@ int		ft_count_pipe(char **arg)
 char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd)
 {
 	int cmd_arg_len = 0;
+	int j;
+	char **cmd_arg;
 
+	j = 0;
 	while (ft_strcmp(arg[cmd_arg_len], "|"))
 		cmd_arg_len++;
 	*i += cmd_arg_len;
-	char **cmd_arg;
 	if (!(cmd_arg = malloc(sizeof(char*) * cmd_arg_len + 1)))
 		return (NULL);
-	int j = 0;
 	while (j < cmd_arg_len)
 	{
 		cmd_arg[j] = ft_strdup(arg[j]);
@@ -49,9 +50,10 @@ char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd)
 char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd)
 {
 	int len = 0;
+	int j;
 	char **cmd_arg;
-	int j = 0;
 
+	j = 0;
 	while (arg[len])
 		len++;
 	if (!(cmd_arg = malloc(sizeof(char*) * len + 1)))
@@ -65,7 +67,7 @@ char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd)
 	return (cmd_arg);
 }
 
-char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd) //int pipe_len)
+char		***          prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd) //int pipe_len)
 {
 	char ***cmd;
 	int i = 0;
@@ -98,7 +100,8 @@ int check_redir(char **s)
 	i = 0;
 	while (s[i])
 	{
-		if (ft_strcmp(s[i], ">") == 0 || ft_strcmp(s[i], ">>") == 0 || ft_strcmp(s[i], "<") == 0)
+		if (ft_strcmp(s[i], ">") == 0 || ft_strcmp(s[i], ">>") == 0 ||
+		ft_strcmp(s[i], "<") == 0)
 			return (1);
 		i++;
 	}
@@ -115,7 +118,11 @@ void	r_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 		g_ret = 1;
 		ft_strerror(NULL, NULL, NULL, NULL);
 	}
-	dup2(pipe_cmd->fd_redir, 1);
+	if (dup2(pipe_cmd->fd_redir, 1) == -1)
+	{
+		ft_strerror(NULL, NULL, NULL, NULL);
+		exit(errno);
+	}
 	if (cmd->apply_redir == cmd->nb_redir)
 	{
 		if (!(arg_list = deletebracket(s)))
@@ -135,6 +142,7 @@ void	r_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 				free(arg_list);
 				close(pipe_cmd->fd_redir);
+				pipe_cmd->g_ret = 127;
 				exit(127);
 			}
 		}
@@ -153,7 +161,11 @@ void	dr_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 		g_ret = 1;
 		ft_strerror(NULL, NULL, NULL, NULL);
 	}
-	dup2(pipe_cmd->fd_redir, 1);
+	if (dup2(pipe_cmd->fd_redir, 1) == -1)
+	{
+		ft_strerror(NULL, NULL, NULL, NULL);
+		exit(errno);
+	}
 	if (cmd->apply_redir == cmd->nb_redir)
 	{
 		if (!(arg_list = deletebracket(s)))
@@ -173,6 +185,7 @@ void	dr_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 				free(arg_list);
 				close(pipe_cmd->fd_redir);
+				pipe_cmd->g_ret = 127;
 				exit(127);
 			}
 		}
@@ -188,7 +201,11 @@ void	l_bracket(char *name, t_pipe_cmd *pipe_cmd)
 		g_ret = 1;
 		ft_strerror(NULL, NULL, NULL, NULL);
 	}
-	dup2(pipe_cmd->fd_redir, 0);
+	if (dup2(pipe_cmd->fd_redir, 0) == -1)
+	{
+		ft_strerror(NULL, NULL, NULL, NULL);
+		exit(errno);
+	}
 	close(pipe_cmd->fd_redir);
 }
 
@@ -242,51 +259,79 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 
 int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 {
+	int ret_exec;
+	int status;
+	
 	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
-		pipe(pipe_cmd->pfd);
+		printf("g_ret value = %d\n", pipe_cmd->g_ret);
+		if (pipe(pipe_cmd->pfd) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			return (-1);
+		}
 		if ((pipe_cmd->proc = fork()) == -1)
 		{
 			free_tab(pipe_cmd->tab_env);
+			free_tab_3d(pipe_cmd->cmd);
 			return (-1);
 		}
 		else if (pipe_cmd->proc == 0)
 		{
-			// check redirection + open file + assign to struct + t_pipe_cmd_2_t_cmd
-			dup2(pipe_cmd->fd_in, 0);
+			if (dup2(pipe_cmd->fd_in, 0) == -1)
+			{
+				ft_strerror(NULL, NULL, NULL, NULL);
+				exit(errno);
+			}
 			if (pipe_cmd->cmd[pipe_cmd->i + 1] != NULL)
-				dup2(pipe_cmd->pfd[1], 1);
+			{
+				if (dup2(pipe_cmd->pfd[1], 1) == -1)
+				{
+					ft_strerror(NULL, NULL, NULL, NULL);
+					exit(errno);
+				}
+			}
 			close(pipe_cmd->pfd[0]);
 			if (check_redir(pipe_cmd->cmd[pipe_cmd->i]))
 				redir_pipe(pipe_cmd->cmd[pipe_cmd->i],pipe_cmd, cmd);
 			if (!pipe_cmd->chec_redir)
 			{
-				//pipe_cmd->s = find_path_env(pipe_cmd->tab_env, pipe_cmd->cmd[pipe_cmd->i][0]);
-				//ft_printf_fd(2, "s = %s\n", pipe_cmd->s);
-				ft_exec(pipe_cmd->cmd[pipe_cmd->i]);
-				/*if (execve(pipe_cmd->s, pipe_cmd->cmd[pipe_cmd->i], pipe_cmd->tab_env) == -1)
+				ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i]);
+				printf("ret_exec = %d\n", ret_exec);
+				if (ret_exec == -1)
+					ft_strerror(NULL, NULL, "fork", NULL);
+				else if (ret_exec == -2)
 				{
-					free(pipe_cmd->s);
-					free_tab(pipe_cmd->tab_env);
-					return (-2);
-				}*/
+					ft_error(CMD_NOT_FOUND, NULL, NULL, pipe_cmd->cmd[pipe_cmd->i][0]);
+					pipe_cmd->g_ret = 127;
+					printf("pipe_cmd_g_Ret = %d\n", pipe_cmd->g_ret);
+					exit(127);
+				}
 			}
-			exit (0);
+			if(pipe_cmd->g_ret == 127)
+				exit(127);
+			else
+				exit (0);
 		}
 		else
 		{
-			wait(NULL);
+			if (wait(&status) == -1)
+				ft_strerror(NULL, NULL, "wait", NULL);
+			check_signal(status);
+			printf("g_ret pere = %d\n", g_ret);
 			close(pipe_cmd->pfd[1]);
 			pipe_cmd->fd_in = pipe_cmd->pfd[0];
 			pipe_cmd->i++;
 		}
 	}
 	free_tab(pipe_cmd->tab_env);
+	free_tab_3d(pipe_cmd->cmd);
 	return (0);
 }
 
 int		init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list)
 {
+	printf("red init\n");
 	if (!(pipe_cmd->tab_env = tablst(g_env)))
 		return (0);
 	pipe_cmd->chec_redir = 0;
@@ -295,6 +340,7 @@ int		init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list)
 	pipe_cmd->fd_in = 0;
 	pipe_cmd->i = 0;
 	pipe_cmd->ret_red = 0;
+	pipe_cmd->g_ret = 0;
 	return (1);
 }
 
@@ -302,10 +348,11 @@ int    ft_pipe_2(char **arg_list, t_cmd *cmd)
 {
 	t_pipe_cmd	pipe_cmd;
 	
-	// init struct
 	if (!init_t_pipe(&pipe_cmd, arg_list))
 		return (0);
 	loop_pipe(&pipe_cmd, cmd);
-	return (1);
-	// free ***cmd
+	printf("g_ret = %d\n", g_ret);
+	if (pipe_cmd.g_ret == 127)
+		return (-1);
+	return (0);
 }

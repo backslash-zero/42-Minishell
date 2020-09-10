@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/10 12:48:13 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/10 14:45:12 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	dup2(fd, 1);
+	if (dup2(fd, 1) == -1)
+	{
+		ft_strerror(NULL, NULL, NULL, NULL);
+		exit(errno);
+	}
 	if (cmd->apply_redir == cmd->nb_redir)
 	{
 		if (!(arg_list = deletebracket(arg)))
@@ -103,7 +107,11 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	dup2(fd, 1);
+	if (dup2(fd, 1) == -1)
+	{
+		ft_strerror(NULL, NULL, NULL, NULL);
+		exit(errno);
+	}
 	if (cmd->apply_redir == cmd->nb_redir)
 	{
 		if ((arg_list = deletebracket(arg)) == NULL)
@@ -150,7 +158,11 @@ int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 			ft_strerror(NULL, NULL, NULL, NULL);
 			return (-1);
 		}
-		dup2(fd, 0);
+		if (dup2(fd, 0) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
 	}
 	if ((arg_list = deletebracket(arg)) == NULL)
 	{
