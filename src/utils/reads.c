@@ -196,10 +196,10 @@ int				launch(char *input, t_cmd *cmd)
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
 		if (!check_g_ret_var(cmd->arg))
-		{
-			free_tab(cmd->arg);
+    {
+			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
-		}
+		}	
 		if (!cleanup_quotes(cmd->arg))
 		{
 			free_tab(cmd->arg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 19:08:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/29 12:25:34 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/07 00:51:07 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,11 @@ int		is_redir_r(char c)
 		return (1);
 	else
 		return (0);
+}
+
+int		is_var(char *str)
+{
+	if (ft_strnstr(str, "$", ft_strlen(str)) != NULL)
+		return (1);
+	return (0);
 }

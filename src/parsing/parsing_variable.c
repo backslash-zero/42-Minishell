@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_variable.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/29 12:16:01 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/07 00:53:36 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int		expand_env(t_parsing_tool *tool)
 			&& (tool->input[i + 1] != '?'))
 		{
 			if (!insert_env_var(tool, i))
-				return (-1);
+				return (0);
 			i--;
 		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int		remove_var(t_parsing_tool *tool, int i, char *env_name)
@@ -87,8 +87,8 @@ int		replace_var(t_parsing_tool *tool, int i, char *var, char *env_name)
 
 int		insert_env_var(t_parsing_tool *tool, int i)
 {
-	char *env_name;
-	char *var;
+	char	*env_name;
+	char	*var;
 
 	if (!(env_name = get_var_name(tool, i)))
 		return (0);
@@ -103,5 +103,26 @@ int		insert_env_var(t_parsing_tool *tool, int i)
 		replace_var(tool, i, var, env_name);
 	free(env_name);
 	free(var);
+	return (1);
+}
+
+int		check_var(char **arg_list)
+{
+	int				i;
+	t_parsing_tool	tool;
+
+	i = 0;
+	while (arg_list[i])
+	{
+		if (is_var(arg_list[i]))
+		{
+			init_tool(&tool);
+			tool.input = ft_strdup(arg_list[i]);
+			if (!(expand_env(&tool)))
+				return (0);
+			assign_and_free(&tool.input, &arg_list[i]);
+		}
+		i++;
+	}
 	return (1);
 }
