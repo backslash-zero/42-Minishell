@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 11:17:06 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 11:17:46 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct  s_pipe_cmd{
 	char 	*s;
 	int 	ret_red;
     char    **tab_env;
-    int     chec_redir;
+    int     check_redir;
     int     fd_redir;
 	int		g_ret;
     t_parse parse;

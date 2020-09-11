@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 11:15:45 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 11:18:11 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	r_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 			ft_strerror(NULL, NULL, NULL, NULL);
 		}
 		if (ft_checkbuiltins(arg_list, cmd))
-			pipe_cmd->chec_redir = 1;
+			pipe_cmd->check_redir = 1;
 		else
 		{
 			ret_exec = ft_exec(arg_list);
@@ -174,7 +174,7 @@ void	dr_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 			ft_strerror(NULL, NULL, NULL, NULL);
 		}
 		if (ft_checkbuiltins(arg_list, cmd))
-			pipe_cmd->chec_redir = 1;
+			pipe_cmd->check_redir = 1;
 		else
 		{
 			ret_exec = ft_exec(arg_list);
@@ -230,7 +230,7 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 	int i;
 
 	i = 0;
-	pipe_cmd->chec_redir = 0;
+	pipe_cmd->check_redir = 0;
 	count_redir_pipe(s, cmd);
 	while (s[i])
 	{
@@ -238,19 +238,19 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 		{
 			cmd->apply_redir++;
 			r_bracket(s[i + 1], pipe_cmd, s, cmd);
-			pipe_cmd->chec_redir = 1;
+			pipe_cmd->check_redir = 1;
 		}
 		else if (ft_strcmp(s[i], ">>") == 0)
 		{
 			cmd->apply_redir++;
 			dr_bracket(s[i + 1], pipe_cmd, s, cmd);
-			pipe_cmd->chec_redir = 1;
+			pipe_cmd->check_redir = 1;
 		}
 		else if (ft_strcmp(s[i], "<") == 0)
 		{
 			cmd->apply_redir++;
 			l_bracket(s[i + 1], pipe_cmd);
-			pipe_cmd->chec_redir = 1;
+			pipe_cmd->check_redir = 1;
 		}
 		i++;
 	}
@@ -292,7 +292,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 			close(pipe_cmd->pfd[0]);
 			if (check_redir(pipe_cmd->cmd[pipe_cmd->i]))
 				redir_pipe(pipe_cmd->cmd[pipe_cmd->i],pipe_cmd, cmd);
-			if (!pipe_cmd->chec_redir)
+			if (!pipe_cmd->check_redir)
 			{
 				ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i]);
 				if (ret_exec == -1)
@@ -330,7 +330,7 @@ int		init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list)
 {
 	if (!(pipe_cmd->tab_env = tablst(g_env)))
 		return (0);
-	pipe_cmd->chec_redir = 0;
+	pipe_cmd->check_redir = 0;
 	pipe_cmd->len = ft_count_pipe(arg_list);
 	pipe_cmd->cmd = prepare_cmd(arg_list, pipe_cmd);
 	pipe_cmd->fd_in = 0;
