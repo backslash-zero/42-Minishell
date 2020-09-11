@@ -197,7 +197,7 @@ int				launch(char *input, t_cmd *cmd)
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
 		if (!check_g_ret_var(cmd->arg))
-    {
+   		{
 			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}	
