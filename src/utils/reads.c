@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 12:07:29 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 13:43:20 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ int				launch(char *input, t_cmd *cmd)
 		}
 		if (!check_g_ret_var(cmd->arg))
     {
-			free_tab(arg_list);
+			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}	
 		if (!cleanup_quotes(cmd->arg))
