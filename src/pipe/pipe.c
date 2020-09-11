@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 11:18:11 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 11:41:08 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,7 @@ void	r_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 			close(pipe_cmd->fd_redir);
 			ft_strerror(NULL, NULL, NULL, NULL);
 		}
-		if (ft_checkbuiltins(arg_list, cmd))
-			pipe_cmd->check_redir = 1;
-		else
+		if (!ft_checkbuiltins(arg_list, cmd))
 		{
 			ret_exec = ft_exec(arg_list);
 			if (ret_exec == -1)
@@ -173,9 +171,7 @@ void	dr_bracket(char *name, t_pipe_cmd *pipe_cmd, char **s, t_cmd *cmd)
 			close(pipe_cmd->fd_redir);
 			ft_strerror(NULL, NULL, NULL, NULL);
 		}
-		if (ft_checkbuiltins(arg_list, cmd))
-			pipe_cmd->check_redir = 1;
-		else
+		if (!ft_checkbuiltins(arg_list, cmd))
 		{
 			ret_exec = ft_exec(arg_list);
 			if (ret_exec == -1)
