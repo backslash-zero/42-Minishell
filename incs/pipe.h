@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/10 22:25:35 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/07 16:56:12 by rzafari          ###   ########.fr       */
+/*   Created: 2020/09/02 14:05:54 by rzafari           #+#    #+#             */
+/*   Updated: 2020/09/07 16:56:05 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#ifndef PIPE_H
+# define PIPE_H
 
-static int	pipe_main(char **arg, t_parse *parse)
-{
-	int i;
+#include <memory.h>
 
-	i = 1;
-	while (arg[i])
-	{
-		i++;
-	}
-	return (0);
-}
+int		    ft_count_pipe(char **arg);
+void        ft_pipe(void);
+//char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
+//char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
+//char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
+
+#endif

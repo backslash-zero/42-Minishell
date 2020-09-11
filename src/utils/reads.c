@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/06 19:42:35 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/11 12:07:29 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		print_gret(char *str)
 	int hey = 1;
 }
 
-static void		printtab(char **tab)
+void		printtab(char **tab)
 {
 	int i;
 
@@ -61,44 +61,52 @@ void			fd_dup(int i)
 
 	if (i == 0)
 	{
-		input = dup(0);
-		output = dup(1);
+		if ((input = dup(0)) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
+		if ((output = dup(1)) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
 	}
 	else if (i == 1)
 	{
-		dup2(input, 0);
-		dup2(output, 1);
+		if (dup2(input, 0) == -1) 
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
+		if (dup2(output, 1) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
 	}
 }
 
-int				launch_exec(char **arg, t_parse *parse, char **arg_list)
+int				launch_exec(char **arg, t_cmd *cmd)
 {
 	int	ret_red;
 	int	ret_exec;
 
-	// print_gret("launch_exec_1");
 	fd_dup(0);
-	// print_gret("launch_exec_1.1");
 	g_ret = 0;
-	// print_gret("launch_exec_1.2");
-	ret_red = redirection(arg_list, parse);
-	// print_gret("launch_exec_2");
+	ret_red = redirection(cmd);
 	if (!ret_red)
 	{
-		// print_gret("launch_exec_3");
-		if (!ft_checkbuiltins(arg_list, parse))
+		if (!ft_checkbuiltins(cmd->arg, cmd))
 		{
-			// print_gret("launch_exec_4");
-			ret_exec = ft_exec(arg_list);
+			ret_exec = ft_exec(cmd->arg);
 			if (ret_exec == -1)
 			{
-				// print_gret("launch_exec_5");
 				return (ft_strerror(NULL, NULL, "fork", NULL));
 			}
 			else if (ret_exec == -2)
 			{
-				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-				// print_gret("launch_exec_6");
+				ft_error(CMD_NOT_FOUND, NULL, NULL, cmd->arg[0]);
 				return (-2);
 			}
 		}
@@ -111,7 +119,6 @@ int				launch_exec(char **arg, t_parse *parse, char **arg_list)
 		return (-1);
 	}
 	fd_dup(1);
-	// print_gret("launch_exec_7");
 	return (0);
 }
 
@@ -158,14 +165,15 @@ int				ft_exec(char **arg_list)
 			return (-1);
 		}
 		check_signal(status);
+		if (g_ret == 127)
+			return (127);
 	}
 	free_tab(tab_env);
 	return (0);
 }
 
-int				launch(char *input, t_parse *parse)
+int				launch(char *input, t_cmd *cmd)
 {
-	char	**arg_list;
 	char	**arg;
 	int		i;
 	int		len_new_arg_list;
@@ -182,35 +190,37 @@ int				launch(char *input, t_parse *parse)
 			len_new_arg_list++;
 			i++;
 		}
-		if ((arg_list = semicolon(arg, i, len_new_arg_list)) == NULL)
+		if ((cmd->arg = semicolon(arg, i, len_new_arg_list)) == NULL)
 		{
-			free_tab(arg_list);
+			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		if (!check_var(arg_list))
-		{
+		if (!check_g_ret_var(cmd->arg))
+    {
 			free_tab(arg_list);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}	
-		if (!check_g_ret_var(arg_list))
+		if (!cleanup_quotes(cmd->arg))
 		{
-			free_tab(arg_list);
+			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
-		if (!cleanup_quotes(arg_list))
+		if (ft_count_pipe(cmd->arg) > 0)
 		{
-			free_tab(arg_list);
-			return (ft_strerror(NULL, arg, NULL, NULL));
+			ret_exec = ft_pipe_2(cmd->arg, cmd);
+			if (ret_exec == -1)
+				g_ret = 127;
 		}
-		ret_exec = launch_exec(arg, parse, arg_list);
+		else
+			ret_exec = launch_exec(arg, cmd);
 		if (ret_exec == -2)
 			exit(127);
 		if (arg[i] == NULL)
 		{
-			free_tab(arg_list);
+			free_tab(cmd->arg);
 			break ;
 		}
-		free_tab(arg_list);
+		free_tab(cmd->arg);
 		i++;
 	}
 	free_tab(arg);
@@ -221,9 +231,9 @@ void			prompt(void)
 {
 	char	buffer[MAX_INPUT_SIZE];
 	int		ret;
-	t_parse	parse;
+	t_cmd	cmd;
 
-	ft_builtinstab(&parse);
+	ft_builtinstab(&cmd);
 	while (1)
 	{
 		ret = 0;
@@ -238,7 +248,7 @@ void			prompt(void)
 			buffer[ret - 1] = '\0';
 		else
 			ft_strlcpy(buffer, "exit", 5);
-		if (launch(buffer, &parse) == -1)
+		if (launch(buffer, &cmd) == -1)
 			return ;
 	}
 }

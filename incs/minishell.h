@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/28 11:14:46 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 13:20:23 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include "builtin.h"
 # include "ft_printf.h"
 # include "parsing.h"
+# include "pipe.h"
 
 typedef int		t_ret;
 t_ret			g_ret;
@@ -46,20 +47,55 @@ typedef struct	s_parse
 	char	*builtnb[NB_BUILINS];
 }				t_parse;
 
-void			ft_builtinstab(t_parse *parse);
-int				ft_checkbuiltins(char **s, t_parse *parse);
+typedef struct  s_pipe_cmd{
+    int     len;
+    char    ***cmd;
+    int     pfd[2];
+    pid_t	proc;
+	int		fd_in;
+	int		i;
+	char 	*s;
+	int 	ret_red;
+    char    **tab_env;
+    int     check_redir;
+    t_parse parse;
+}               t_pipe_cmd;
+
+typedef struct  s_cmd{
+	char    **arg;
+	int		nb_redir;
+	int		apply_redir;
+	t_parse parse;
+}               t_cmd;
+
+void			ft_builtinstab(t_cmd *cmd);
+int				ft_checkbuiltins(char **s, t_cmd *cmd);
 void			print_prompt_prefix(void);
 void			prompt(void);
-int				launch(char *input, t_parse *parse);
+int				launch(char *input, t_cmd *cmd);
 void			free_tab(char **tab);
+void			free_tab_3d(char ***tab);
 void			assign_and_free(char **newstr, char **oldstr);
 void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
 int				ft_exec(char **arg_list);
-int				redirection(char **arg, t_parse *parse);
+int				redirection(t_cmd *cmd);
+int				r_anglebracket(char **arg, t_cmd *cmd, char *name);
+int				r_dbanglebracket(char **arg, t_cmd *cmd, char *name);
+int				l_anglebracket(char **arg, t_cmd *cmd, char *name);
+char			**deletebracket(char **arg);
 char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
 char			**tablst(t_list *lst);
 void			fd_dup(int i);
+int			    ft_pipe_2(char **arg_list, t_cmd *cmd);
+int				loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd);
+
+void			check_signal(int status);
+
+char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
+char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
+char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
+void	printtab(char **tab);
 
 #endif
