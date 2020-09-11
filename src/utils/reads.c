@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 13:43:20 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 14:20:21 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int				ft_exec(char **arg_list)
 		s = find_path_env(tab_env, arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
+			ft_printf_fd(2, "bad fd\n");
 			free(s);
 			free_tab(tab_env);
 			return (-2);

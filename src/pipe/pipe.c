@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 13:13:08 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 14:52:48 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,10 @@ void	count_redir_pipe(char **s, t_cmd *cmd)
 void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 {
 	int i;
-
+	int ret_red;
+	
 	i = 0;
+	ret_red = 0;
 	pipe_cmd->check_redir = 0;
 	count_redir_pipe(s, cmd);
 	while (s[i])
@@ -136,20 +138,27 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 		if (ft_strcmp(s[i], ">") == 0)
 		{
 			cmd->apply_redir++;
-			r_anglebracket(s, cmd, s[i + 1]);
+			ret_red = r_anglebracket(s, cmd, s[i + 1]);
 			pipe_cmd->check_redir = 1;
+			if (ret_red == -1)
+				exit (1);
 		}
 		else if (ft_strcmp(s[i], ">>") == 0)
 		{
 			cmd->apply_redir++;
-			r_dbanglebracket(s, cmd, s[i + 1]);
+			ret_red = r_dbanglebracket(s, cmd, s[i + 1]);
 			pipe_cmd->check_redir = 1;
+			if (ret_red == -1)
+				exit (1);
 		}
 		else if (ft_strcmp(s[i], "<") == 0)
 		{
 			cmd->apply_redir++;
-			l_anglebracket(s, cmd, s[i + 1]);
+			ret_red = l_anglebracket(s, cmd, s[i + 1]);
 			pipe_cmd->check_redir = 1;
+			ft_printf_fd(2, "badd\n");
+			if (ret_red == -1)
+				exit (1);
 		}
 		i++;
 	}
