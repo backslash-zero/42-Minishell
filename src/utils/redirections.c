@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 11:51:11 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 13:22:01 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 			else if (ret_exec == -2)
 			{
 				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-				free(arg_list);
+				free_tab(arg_list);
 				close(fd);
 				exit(127);
 			}
@@ -125,12 +125,12 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 			else if (ret_exec == -2)
 			{
 				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-				free(arg_list);
+				free_tab(arg_list);
 				close(fd);
 				exit(127);
 			}
 		}
-		free(arg_list);
+		free_tab(arg_list);
 	}
 	close(fd);
 	return (1);
@@ -139,47 +139,45 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 {
 	int		fd;
-	int		l;
 	int		ret_exec;
 	char	**arg_list;
 
-	l = 0;
 	fd = 0;
-	if (l == arg_len(arg))
+	if ((fd = open(name, O_RDONLY, 0644)) == -1)
 	{
-		if ((fd = open(name, O_RDONLY, 0644)) == -1)
-		{
-			g_ret = 1;
-			ft_strerror(NULL, NULL, NULL, NULL);
-			return (-1);
-		}
-		if (dup2(fd, 0) == -1)
-		{
-			ft_strerror(NULL, NULL, NULL, NULL);
-			exit(errno);
-		}
-	}
-	if ((arg_list = deletebracket(arg)) == NULL)
-	{
-		close(fd);
+		g_ret = 1;
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	if (!ft_checkbuiltins(arg_list, cmd))
+	if (dup2(fd, 0) == -1)
 	{
-		ret_exec = ft_exec(arg_list);
-		if (ret_exec == -1)
-			ft_strerror(NULL, NULL, "fork", NULL);
-		else if (ret_exec == -2)
+		ft_strerror(NULL, NULL, NULL, NULL);
+		exit(errno);
+	}
+	if (cmd->apply_redir == cmd->nb_redir)
+	{
+		if ((arg_list = deletebracket(arg)) == NULL)
 		{
-			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 			close(fd);
-			exit(127);
+			ft_strerror(NULL, NULL, NULL, NULL);
+			return (-1);
 		}
-		close (fd);
+		if (!ft_checkbuiltins(arg_list, cmd))
+		{
+			ret_exec = ft_exec(arg_list);
+			if (ret_exec == -1)
+				ft_strerror(NULL, NULL, "fork", NULL);
+			else if (ret_exec == -2)
+			{
+				ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+				free_tab(arg_list);
+				close(fd);
+				exit(127);
+			}
+		}
+		free_tab(arg_list);
 	}
 	close(fd);
-	free_tab(arg_list);
 	return (1);
 }
 
