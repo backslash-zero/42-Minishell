@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 11:12:05 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 11:15:45 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd)
 	return (cmd_arg);
 }
 
-char		***          prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd) //int pipe_len)
+char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd) //int pipe_len)
 {
 	char ***cmd;
 	int i = 0;
