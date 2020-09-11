@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/10 17:05:03 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 11:11:24 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,17 +124,10 @@ int				launch_exec(char **arg, t_cmd *cmd)
 
 void			check_signal(int status)
 {
-	printf("TERMSIG = %d\n", WTERMSIG(status));
-	printf("WIFEXITED = %d\n", WIFEXITED(status));
-	printf("WISIGNALED = %d\n", WIFSIGNALED(status));
-	printf("WEXITSTATUS = %d\n", WEXITSTATUS(status));
 	if (WTERMSIG(status) == 3)
 		ft_putstr("Quit\n");
 	if (WIFEXITED(status))
-	{
 		g_ret = WEXITSTATUS(status);
-			printf("g_ret check signal = %d\n", g_ret);
-	}
 	if (WIFSIGNALED(status))
 		g_ret = 128 + WTERMSIG(status);
 }
@@ -171,8 +164,9 @@ int				ft_exec(char **arg_list)
 			ft_strerror(NULL, NULL, "wait", NULL);
 			return (-1);
 		}
-		printf("ft_exec\n\n");
 		check_signal(status);
+		if (g_ret == 127)
+			return (127);
 	}
 	free_tab(tab_env);
 	return (0);
@@ -220,7 +214,6 @@ int				launch(char *input, t_cmd *cmd)
 		if (ft_count_pipe(cmd->arg) > 0)
 		{
 			ret_exec = ft_pipe_2(cmd->arg, cmd);
-			printf("ret_execcc = %d\n", ret_exec);
 			if (ret_exec == -1)
 				g_ret = 127;
 		}

@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/10 17:05:02 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 11:12:05 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,6 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 			l_bracket(s[i + 1], pipe_cmd);
 			pipe_cmd->chec_redir = 1;
 		}
-		//close(pipe_cmd->fd_redir);
 		i++;
 	}
 }
@@ -264,7 +263,6 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 	
 	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
-		printf("g_ret value = %d\n", pipe_cmd->g_ret);
 		if (pipe(pipe_cmd->pfd) == -1)
 		{
 			ft_strerror(NULL, NULL, NULL, NULL);
@@ -297,28 +295,27 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 			if (!pipe_cmd->chec_redir)
 			{
 				ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i]);
-				printf("ret_exec = %d\n", ret_exec);
 				if (ret_exec == -1)
 					ft_strerror(NULL, NULL, "fork", NULL);
 				else if (ret_exec == -2)
 				{
 					ft_error(CMD_NOT_FOUND, NULL, NULL, pipe_cmd->cmd[pipe_cmd->i][0]);
 					pipe_cmd->g_ret = 127;
-					printf("pipe_cmd_g_Ret = %d\n", pipe_cmd->g_ret);
+					exit(127);
+				}
+				else if (ret_exec == 127)
+				{
+					pipe_cmd->g_ret = 127;
 					exit(127);
 				}
 			}
-			if(pipe_cmd->g_ret == 127)
-				exit(127);
-			else
-				exit (0);
+			exit (0);
 		}
 		else
 		{
 			if (wait(&status) == -1)
 				ft_strerror(NULL, NULL, "wait", NULL);
 			check_signal(status);
-			printf("g_ret pere = %d\n", g_ret);
 			close(pipe_cmd->pfd[1]);
 			pipe_cmd->fd_in = pipe_cmd->pfd[0];
 			pipe_cmd->i++;
@@ -331,7 +328,6 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 
 int		init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list)
 {
-	printf("red init\n");
 	if (!(pipe_cmd->tab_env = tablst(g_env)))
 		return (0);
 	pipe_cmd->chec_redir = 0;
@@ -351,7 +347,6 @@ int    ft_pipe_2(char **arg_list, t_cmd *cmd)
 	if (!init_t_pipe(&pipe_cmd, arg_list))
 		return (0);
 	loop_pipe(&pipe_cmd, cmd);
-	printf("g_ret = %d\n", g_ret);
 	if (pipe_cmd.g_ret == 127)
 		return (-1);
 	return (0);
