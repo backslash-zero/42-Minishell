@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 11:11:24 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 12:07:29 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,12 +172,6 @@ int				ft_exec(char **arg_list)
 	return (0);
 }
 
-void	cmd_init(t_cmd *cmd)
-{
-	cmd->is_pipe = 0;
-	cmd->fd_redir = 0;
-}
-
 int				launch(char *input, t_cmd *cmd)
 {
 	char	**arg;
@@ -218,10 +212,7 @@ int				launch(char *input, t_cmd *cmd)
 				g_ret = 127;
 		}
 		else
-		{
-			cmd_init(cmd);
 			ret_exec = launch_exec(arg, cmd);
-		}
 		if (ret_exec == -2)
 			exit(127);
 		if (arg[i] == NULL)

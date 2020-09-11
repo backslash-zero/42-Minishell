@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 11:41:07 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 11:51:11 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 	int		fd;
 	int		ret_exec;
 	char	**arg_list;
-	t_pipe_cmd	pipe;
 
 	fd = -1;
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
@@ -94,12 +93,10 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 
 int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 {
-	int		i;
 	int		fd;
 	int		ret_exec;
 	char	**arg_list;
 
-	i = 0;
 	fd = -1;
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
@@ -141,13 +138,11 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 
 int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 {
-	int		i;
 	int		fd;
 	int		l;
 	int		ret_exec;
 	char	**arg_list;
 
-	i = 0;
 	l = 0;
 	fd = 0;
 	if (l == arg_len(arg))

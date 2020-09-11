@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 11:17:46 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/11 12:08:41 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,11 @@ typedef struct  s_pipe_cmd{
 	int 	ret_red;
     char    **tab_env;
     int     check_redir;
-    int     fd_redir;
-	int		g_ret;
     t_parse parse;
 }               t_pipe_cmd;
 
 typedef struct  s_cmd{
-	int     is_pipe;
 	char    **arg;
-	int     fd_redir;
 	int		nb_redir;
 	int		apply_redir;
 	t_parse parse;
@@ -84,6 +80,9 @@ void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
 int				ft_exec(char **arg_list);
 int				redirection(t_cmd *cmd);
+int				r_anglebracket(char **arg, t_cmd *cmd, char *name);
+int				r_dbanglebracket(char **arg, t_cmd *cmd, char *name);
+int				l_anglebracket(char **arg, t_cmd *cmd, char *name);
 char			**deletebracket(char **arg);
 char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
