@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/14 12:32:30 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/14 13:38:40 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,10 @@ int				ft_exec(char **arg_list)
 	{
 		s = try_absolut_path(arg_list[0]);
 		if (s != NULL && ft_strcmp(s, "NOT_FOUND") == 0)
-				exit(0);
+		{
+			free_tab(tab_env);
+			exit(0);
+		}
 		if (s == NULL)
 			s = find_path_env(tab_env, arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
