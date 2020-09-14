@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 14:52:48 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/14 12:32:07 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 		}
 	}
 	free_tab(pipe_cmd->tab_env);
-	free_tab_3d(pipe_cmd->cmd);
+//free_tab_3d(pipe_cmd->cmd);
 	return (0);
 }
 

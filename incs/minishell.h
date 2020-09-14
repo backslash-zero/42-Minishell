@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 13:20:23 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/14 12:32:17 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int				l_anglebracket(char **arg, t_cmd *cmd, char *name);
 char			**deletebracket(char **arg);
 char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
+char			*try_absolut_path(char *arg);
 char			**tablst(t_list *lst);
 void			fd_dup(int i);
 int			    ft_pipe_2(char **arg_list, t_cmd *cmd);

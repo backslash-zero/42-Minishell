@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:55:07 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 15:21:30 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/14 12:14:30 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,28 @@ char	*find_correct_path(char *s, char *arg)
 	return (NULL);
 }
 
+char	*try_absolut_path(char *arg)
+{
+	int i;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == 47)
+		{
+			if (try_path(arg) == 0)
+				return (arg);
+			else
+			{
+				ft_error(NO_FILE, NULL, NULL, arg);	
+				return ("NOT_FOUND");
+			}
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 char	*find_path_env(char **env, char *arg)
 {
 	int		i;
@@ -72,8 +94,6 @@ char	*find_path_env(char **env, char *arg)
 	char	*path;
 
 	i = 0;
-	if (try_path(arg) == 0)
-		return (arg);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", ft_strlen("PATH=")) == 0)
