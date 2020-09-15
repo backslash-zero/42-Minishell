@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/15 14:00:28 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/15 14:27:48 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,11 @@ void			check_signal(int status)
 		g_ret = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{
-		g_print = 1;
+		g_print = 0;
 		g_ret = 128 + WTERMSIG(status);
 	}
+	if (status == 2)
+		g_print = 1;
 }
 
 int				ft_exec(char **arg_list)
