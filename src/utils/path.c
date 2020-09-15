@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:55:07 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/14 13:38:41 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/14 15:29:11 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*try_absolut_path(char *arg)
 				return (arg);
 			else
 			{
-				ft_error(NO_FILE, NULL, NULL, arg);	
+				ft_error(NO_FILE, NULL, NULL, arg);
 				return ("NOT_FOUND");
 			}
 		}

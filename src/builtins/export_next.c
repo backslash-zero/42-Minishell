@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:10:10 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/25 10:03:26 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/14 13:59:00 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		replace_elem(char *s, int i)
 				if (!add_to_list(s, &g_env))
 					return (0);
 			}
-			free (s1);
+			free(s1);
 		}
 		else
 		{

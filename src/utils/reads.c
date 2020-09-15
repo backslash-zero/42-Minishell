@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/14 13:38:40 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/15 13:36:06 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 static void		print_gret(char *str)
 {
+	int hey;
+
+	hey = 1;
 	printf("%s		--	g_ret = %d\n", str, g_ret);
-	int hey = 1;
 }
 
 void		printtab(char **tab)
@@ -74,7 +76,7 @@ void			fd_dup(int i)
 	}
 	else if (i == 1)
 	{
-		if (dup2(input, 0) == -1) 
+		if (dup2(input, 0) == -1)
 		{
 			ft_strerror(NULL, NULL, NULL, NULL);
 			exit(errno);
@@ -203,10 +205,10 @@ int				launch(char *input, t_cmd *cmd)
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
 		if (!check_g_ret_var(cmd->arg))
-   		{
+		{
 			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
-		}	
+		}
 		if (!cleanup_quotes(cmd->arg))
 		{
 			free_tab(cmd->arg);
@@ -244,10 +246,10 @@ void			prompt(void)
 	while (1)
 	{
 		ret = 0;
-		if (to_print == 0)
+		if (g_print == 0)
 			print_prompt_prefix();
-		if (to_print == 1)
-			to_print = 0;
+		if (g_print == 1)
+			g_print = 0;
 		ret = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
 		if (ret == -1)
 			exit(errno);
