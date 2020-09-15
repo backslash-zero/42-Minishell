@@ -38,8 +38,8 @@
 
 typedef int		t_ret;
 t_ret			g_ret;
-typedef int		p_prompt;
-p_prompt		to_print;
+typedef int		t_prompt;
+t_prompt		g_print;
 
 typedef int		(*t_builtfunc_addr)(char **s);
 
@@ -48,26 +48,26 @@ typedef struct	s_parse
 	char	*builtnb[NB_BUILINS];
 }				t_parse;
 
-typedef struct  s_pipe_cmd{
-    int     len;
-    char    ***cmd;
-    int     pfd[2];
-    pid_t	proc;
+typedef struct	s_pipe_cmd{
+	int		len;
+	char	***cmd;
+	int		pfd[2];
+	pid_t	proc;
 	int		fd_in;
 	int		i;
-	char 	*s;
-	int 	ret_red;
-    char    **tab_env;
-    int     check_redir;
-    t_parse parse;
-}               t_pipe_cmd;
+	char	*s;
+	int		ret_red;
+	char	**tab_env;
+	int		check_redir;
+	t_parse	parse;
+}				t_pipe_cmd;
 
-typedef struct  s_cmd{
-	char    **arg;
+typedef struct	s_cmd{
+	char	**arg;
 	int		nb_redir;
 	int		apply_redir;
-	t_parse parse;
-}               t_cmd;
+	t_parse	parse;
+}				t_cmd;
 
 void			ft_builtinstab(t_cmd *cmd);
 int				ft_checkbuiltins(char **s, t_cmd *cmd);
@@ -87,16 +87,16 @@ int				l_anglebracket(char **arg, t_cmd *cmd, char *name);
 char			**deletebracket(char **arg);
 char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
+char			*try_absolut_path(char *arg);
 char			**tablst(t_list *lst);
 void			fd_dup(int i);
-int			    ft_pipe_2(char **arg_list, t_cmd *cmd);
+int				ft_pipe_2(char **arg_list, t_cmd *cmd);
 int				loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd);
-
+char			**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
+char			**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
+char			***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
 void			check_signal(int status);
 
-char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
-char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
-char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
-void	printtab(char **tab);
+void			printtab(char **tab);
 
 #endif

@@ -6,14 +6,14 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:29:12 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 14:29:35 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/14 13:33:56 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-# define CMD_NOT_FOUND	"MiniShell: command not found: %s\n"
+# define CMD_NOT_FOUND	"MiniShell: %s: command not found\n"
 # define MANY_ARGS		"MiniShell: %s: too many arguments\n"
 # define NO_ARG			"MiniShell: %s: not enough arguments\n"
 # define NO_FILE		"MiniShell: %s: No such file or directory\n"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:17:37 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/01 14:19:13 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/15 14:51:09 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		builtin_exit(char **arg)
 	unsigned int	j;
 	int				arg_l;
 
-	ft_putstr("exit\n");
+	//ft_putstr("exit\n");
 	i = 0;
 	if ((arg_l = arg_len(arg)) == 1)
 	{

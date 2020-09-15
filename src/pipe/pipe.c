@@ -14,12 +14,14 @@
 
 int		ft_count_pipe(char **arg)
 {
-	int i = 0;
-	int count = 0;
+	int i;
+	int count;
 
+	i = 0;
+	count = 0;
 	while (arg[i])
 	{
-		if (!ft_strcmp(arg[i],"|"))
+		if (!ft_strcmp(arg[i], "|"))
 			count++;
 		i++;
 	}
@@ -28,10 +30,11 @@ int		ft_count_pipe(char **arg)
 
 char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd)
 {
-	int cmd_arg_len = 0;
-	int j;
-	char **cmd_arg;
+	int		cmd_arg_len;
+	int		j;
+	char	**cmd_arg;
 
+	cmd_arg_len = 0;
 	j = 0;
 	while (ft_strcmp(arg[cmd_arg_len], "|"))
 		cmd_arg_len++;
@@ -97,7 +100,7 @@ char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd) //int pipe_len)
 
 int check_redir(char **s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -112,7 +115,7 @@ int check_redir(char **s)
 
 void	count_redir_pipe(char **s, t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	cmd->nb_redir = 0;
@@ -128,9 +131,9 @@ void	count_redir_pipe(char **s, t_cmd *cmd)
 
 void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 {
-	int i;
-	int ret_red;
-	
+	int	i;
+	int	ret_red;
+
 	i = 0;
 	ret_red = 0;
 	pipe_cmd->check_redir = 0;
@@ -142,26 +145,21 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 			cmd->apply_redir++;
 			ret_red = r_anglebracket(s, cmd, s[i + 1]);
 			pipe_cmd->check_redir = 1;
-			if (ret_red == -1)
-				exit (1);
 		}
 		else if (ft_strcmp(s[i], ">>") == 0)
 		{
 			cmd->apply_redir++;
 			ret_red = r_dbanglebracket(s, cmd, s[i + 1]);
 			pipe_cmd->check_redir = 1;
-			if (ret_red == -1)
-				exit (1);
 		}
 		else if (ft_strcmp(s[i], "<") == 0)
 		{
 			cmd->apply_redir++;
 			ret_red = l_anglebracket(s, cmd, s[i + 1]);
 			pipe_cmd->check_redir = 1;
-			ft_printf_fd(2, "badd\n");
-			if (ret_red == -1)
-				exit (1);
 		}
+		if (ret_red == -1)
+			exit(1);
 		i++;
 	}
 }
@@ -170,7 +168,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 {
 	int ret_exec;
 	int status;
-	
+
 	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
 		if (pipe(pipe_cmd->pfd) == -1)
@@ -201,7 +199,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 			}
 			close(pipe_cmd->pfd[0]);
 			if (check_redir(pipe_cmd->cmd[pipe_cmd->i]))
-				redir_pipe(pipe_cmd->cmd[pipe_cmd->i],pipe_cmd, cmd);
+				redir_pipe(pipe_cmd->cmd[pipe_cmd->i], pipe_cmd, cmd);
 			if (!pipe_cmd->check_redir)
 			{
 				ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i]);
@@ -215,7 +213,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 				else if (ret_exec == 127)
 					exit(127);
 			}
-			exit (0);
+			exit(0);
 		}
 		else
 		{
@@ -228,7 +226,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 		}
 	}
 	free_tab(pipe_cmd->tab_env);
-	free_tab_3d(pipe_cmd->cmd);
+	//free_tab_3d(pipe_cmd->cmd);
 	return (0);
 }
 
@@ -244,10 +242,10 @@ int		init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list)
 	return (1);
 }
 
-int    ft_pipe_2(char **arg_list, t_cmd *cmd)
+int		ft_pipe_2(char **arg_list, t_cmd *cmd)
 {
 	t_pipe_cmd	pipe_cmd;
-	
+
 	if (!init_t_pipe(&pipe_cmd, arg_list))
 		return (0);
 	loop_pipe(&pipe_cmd, cmd);

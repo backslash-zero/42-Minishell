@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:55:07 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 13:58:47 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/14 15:29:11 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,28 @@ char	*find_correct_path(char *s, char *arg)
 				return (dup);
 			free(dup);
 			j = i + 1;
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	*try_absolut_path(char *arg)
+{
+	int i;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == 47)
+		{
+			if (try_path(arg) == 0)
+				return (arg);
+			else
+			{
+				ft_error(NO_FILE, NULL, NULL, arg);
+				return ("NOT_FOUND");
+			}
 		}
 		i++;
 	}
