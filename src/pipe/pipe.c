@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 14:52:48 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/15 16:24:47 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd) //int pipe_len)
 		return (NULL);
 	while (count < pipe_cmd->len + 1)
 	{
+		cmd[count] = malloc(sizeof(char*));
 		if (ft_count_pipe(&arg_list[i]) != 0)
 		{
 			cmd[count] = cmd_arg_get(&arg_list[i], &i, pipe_cmd);
@@ -89,6 +90,7 @@ char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd) //int pipe_len)
 		}
 		count++;
 	}
+	cmd[count] = malloc(sizeof(char*));
 	cmd[count] = NULL;
 	return (cmd);
 }
