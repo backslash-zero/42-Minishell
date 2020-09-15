@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/15 16:43:15 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/15 15:06:55 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-static void		print_gret(char *str)
-{
-	int hey;
-
-	hey = 1;
-	printf("%s		--	g_ret = %d\n", str, g_ret);
-}
-
-void		printtab(char **tab)
-{
-	int i;
-
-	i = 0;
-	printf("len tab: %d\n", arg_len(tab));
-	while (tab[i])
-	{
-		printf("str-%d: %s\n", i, tab[i]);
-		i++;
-	}
-}
 
 char			**tablst(t_list *lst)
 {
