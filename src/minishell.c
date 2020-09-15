@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:42:59 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/15 13:36:15 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/15 14:00:27 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	signal_handler(int n)
 		{
 			ft_putchar('\n');
 			print_prompt_prefix();
-			g_print = 1;
+			g_print = 0;
 		}
 		g_ret = 1;
 	}
