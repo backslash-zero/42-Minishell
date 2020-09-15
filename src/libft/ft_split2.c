@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:15:49 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/19 14:20:56 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/14 15:15:46 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,12 @@ static	char			**freefunc(char **s)
 	return (NULL);
 }
 
-char					*addspace(char const *s, char c, char c2)
+char					*addspace_next(char const *s, char c, char c2, int tot)
 {
 	int		i;
 	int		j;
-	int		tot;
 	char	*str;
 
-	i = 0;
-	tot = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == c2)
-		{
-			if (i != 0 && s[i - 1] == c)
-				tot++;
-			if (i < (signed int)ft_strlen(s) && s[i + 1] == c)
-				tot++;
-			else
-				tot += 2;
-		}
-		tot++;
-		i++;
-	}
 	i = 0;
 	j = 0;
 	if (!(str = (char *)malloc(sizeof(char) * (tot + 1))))
@@ -113,10 +96,31 @@ char					*addspace(char const *s, char c, char c2)
 		i++;
 	}
 	str[i] = '\0';
-	i = 0;
-	while (str[i])
-		i++;
 	return (str);
+}
+
+char					*addspace(char const *s, char c, char c2)
+{
+	int		i;
+	int		tot;
+
+	i = 0;
+	tot = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == c2)
+		{
+			if (i != 0 && s[i - 1] == c)
+				tot++;
+			if (i < (signed int)ft_strlen(s) && s[i + 1] == c)
+				tot++;
+			else
+				tot += 2;
+		}
+		tot++;
+		i++;
+	}
+	return (addspace_next(s, c, c2, tot));
 }
 
 char					**ft_split2(char const *s, char c, char c2)

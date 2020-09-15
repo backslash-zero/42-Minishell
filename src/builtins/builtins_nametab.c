@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 10:59:32 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/07 16:56:09 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/15 12:05:13 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_builtinstab(t_cmd *cmd)
 	cmd->parse.builtnb[6] = "exit";
 }
 
-t_builtfunc_addr	builtins_func[] = {
+t_builtfunc_addr	g_builtins_func[] = {
 	&builtin_echo, &builtin_cd, &builtin_pwd, &builtin_export,
 	&builtin_unset, &builtin_env, &builtin_exit
 };
@@ -44,7 +44,7 @@ int		ft_checkbuiltins(char **s, t_cmd *cmd)
 	}
 	if (good == 1)
 	{
-		if (builtins_func[i](s) == -1)
+		if (g_builtins_func[i](s) == -1)
 			return (-1);
 		return (1);
 	}
