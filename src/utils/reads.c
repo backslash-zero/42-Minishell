@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/15 14:27:48 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/15 16:43:15 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 void			check_signal(int status)
 {
 	if (WTERMSIG(status) == 3)
-		ft_putstr("Quit\n");
+		ft_putstr("Quit: 3\n");
 	if (WIFEXITED(status))
 		g_ret = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))

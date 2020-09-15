@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:42:59 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/15 14:30:19 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/15 16:43:59 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int		is_forking(int val)
 void	signal_handler(int n)
 {
 	g_print = 0;
+	ft_putstr("\033[1C");
+	ft_putstr("\b\b \b\b \b\b");
+	ft_putstr("\033[1C");
 	if (n == SIGINT)
 	{
 		if (g_print == 0)
@@ -37,7 +40,7 @@ void	signal_handler(int n)
 		g_ret = 1;
 	}
 	else if (n == SIGQUIT)
-		g_ret = 131;
+		g_ret = 0;
 }
 
 int		main(int ac, char **av, char **envp)
@@ -53,9 +56,6 @@ int		main(int ac, char **av, char **envp)
 	}
 	if (signal(SIGQUIT, signal_handler) == SIG_ERR)
 	{
-		ft_putstr("\033[1C");
-		ft_putstr("\b\b \b\b \b\b");
-		ft_putstr("\033[1C");
 		ft_strerror(NULL, NULL, "signal", NULL);
 		exit(1);
 	}
