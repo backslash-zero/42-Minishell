@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/15 11:38:45 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 15:07:38 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 	char	**arg_list;
 
 	fd = -1;
+	cmd->apply_redir++;
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
 	{
 		g_ret = 1;
@@ -58,7 +59,9 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 		exit(errno);
 	}
 	if (cmd->apply_redir == cmd->nb_redir)
-		apply_redirections(arg, cmd, fd);
+		if ((apply_redirections(arg, cmd, fd)) == -1)
+			return (-1);
+	cmd->redir_ok = 1;
 	close(fd);
 	return (1);
 }
@@ -70,6 +73,7 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 	char	**arg_list;
 
 	fd = -1;
+	cmd->apply_redir++;
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
 		g_ret = 1;
@@ -82,7 +86,9 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 		exit(errno);
 	}
 	if (cmd->apply_redir == cmd->nb_redir)
-		apply_redirections(arg, cmd, fd);
+		if ((apply_redirections(arg, cmd, fd)) == -1)
+			return (-1);
+	cmd->redir_ok = 1;
 	close(fd);
 	return (1);
 }
@@ -94,6 +100,7 @@ int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 	char	**arg_list;
 
 	fd = 0;
+	cmd->apply_redir++;
 	if ((fd = open(name, O_RDONLY, 0644)) == -1)
 	{
 		g_ret = 1;
@@ -108,6 +115,7 @@ int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 	if (cmd->apply_redir == cmd->nb_redir)
 		if ((apply_redirections(arg, cmd, fd)) == -1)
 			return (-1);
+	cmd->redir_ok = 1;
 	close(fd);
 	return (1);
 }

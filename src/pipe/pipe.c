@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 12:14:18 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 15:58:36 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,16 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 	{
 		if (ft_strcmp(s[i], ">") == 0)
 		{
-			cmd->apply_redir++;
 			ret_red = r_anglebracket(s, cmd, s[i + 1]);
 			pipe_cmd->check_redir = 1;
 		}
 		else if (ft_strcmp(s[i], ">>") == 0)
 		{
-			cmd->apply_redir++;
 			ret_red = r_dbanglebracket(s, cmd, s[i + 1]);
 			pipe_cmd->check_redir = 1;
 		}
 		else if (ft_strcmp(s[i], "<") == 0)
 		{
-			cmd->apply_redir++;
 			ret_red = l_anglebracket(s, cmd, s[i + 1]);
 			pipe_cmd->check_redir = 1;
 		}

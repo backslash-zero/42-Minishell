@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_variable.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 15:35:46 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 15:55:29 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		expand_env(t_parsing_tool *tool)
 			&& !test_lone_dollar(tool->input, i)
 			&& (tool->input[i + 1] != '?'))
 		{
-			
 			if (i > 0)
 			{
 				if (!is_backslash(tool->input[i - 1]))
@@ -41,7 +40,7 @@ int		expand_env(t_parsing_tool *tool)
 				if (!insert_env_var(tool, i))
 					return (0);
 				i--;
-			}	
+			}
 		}
 		i++;
 	}
