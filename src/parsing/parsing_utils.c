@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 12:33:19 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 15:56:02 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	quote_checker(t_parsing_tool *tool, int i, int *n)
 			}
 		}
 		else
-		{	switcher_quote(tool, tool->input[i]);
+		{
+			switcher_quote(tool, tool->input[i]);
 			if (!tool->open)
 				*n = 0;
 		}

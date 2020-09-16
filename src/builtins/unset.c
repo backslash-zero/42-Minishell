@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:41:57 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 11:47:00 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 15:51:52 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,19 @@ t_list	*unset_env(t_list *lst, char *s)
 		ft_lstdelone(lst2, free);
 		return (lst);
 	}
-	else
+	lst3 = lst2->next;
+	while (lst3 != NULL)
 	{
-		lst3 = lst2->next;
-		while (lst3 != NULL)
+		if (find_elem(lst3->content, s))
 		{
-			if (find_elem(lst3->content, s))
-			{
-				lst2->next = lst3->next;
-				ft_lstdelone(lst3, free);
-				return (lst);
-			}
-			lst2 = lst3;
-			lst3 = lst3->next;
+			lst2->next = lst3->next;
+			ft_lstdelone(lst3, free);
+			return (lst);
 		}
-		return (lst);
+		lst2 = lst3;
+		lst3 = lst3->next;
 	}
+	return (lst);
 }
 
 int		builtin_unset(char **arg)

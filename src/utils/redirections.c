@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/14 16:50:35 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 14:44:19 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,34 +76,22 @@ int		redirection(t_cmd *cmd)
 	int ok;
 
 	i = 0;
-	ok = 0;
+	cmd->redir_ok = 0;
 	count_redir(cmd);
 	while (cmd->arg[i])
 	{
 		if (ft_strcmp(cmd->arg[i], ">") == 0)
-		{
-			ok = 1;
-			cmd->apply_redir++;
 			if (r_anglebracket(cmd->arg, cmd, cmd->arg[i + 1]) == -1)
 				return (-1);
-		}
-		else if (ft_strcmp(cmd->arg[i], ">>") == 0)
-		{
-			ok = 1;
-			cmd->apply_redir++;
+		if (ft_strcmp(cmd->arg[i], ">>") == 0)
 			if (r_dbanglebracket(cmd->arg, cmd, cmd->arg[i + 1]) == -1)
 				return (-1);
-		}
-		else if (ft_strcmp(cmd->arg[i], "<") == 0)
-		{
-			ok = 1;
-			cmd->apply_redir++;
+		if (ft_strcmp(cmd->arg[i], "<") == 0)
 			if (l_anglebracket(cmd->arg, cmd, cmd->arg[i + 1]) == -1)
 				return (-1);
-		}
 		i++;
 	}
-	if (ok == 0)
+	if (cmd->redir_ok == 0)
 		return (0);
 	return (1);
 }

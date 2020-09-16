@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 12:11:01 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 15:58:35 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**parsing(char *input)
 
 	tool.input = ft_strdup(input);
 	init_tool(&tool);
-	if (((tool.size = size_arg_tool(&tool)) == -1 ) || (check_backslash(tool.input)))
+	if (((tool.size = size_arg_tool(&tool)) == -1) || (check_backslash(tool.input)))
 	{
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);

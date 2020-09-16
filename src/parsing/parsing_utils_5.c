@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_5.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 17:17:43 by celestin          #+#    #+#             */
 /*   Updated: 2020/09/16 17:54:21 by celestin         ###   ########.fr       */
@@ -81,7 +81,7 @@ int		ft_clean_backslash(char **arg_list, int a)
 
 	i = 0;
 	j = 0;
-	if(!(newstr = malloc(sizeof(char) * (new_len_backslash(arg_list[a]) + 1))))
+	if (!(newstr = malloc(sizeof(char) * (new_len_backslash(arg_list[a]) + 1))))
 		return (0);
 	while (arg_list[a][i])
 	{
