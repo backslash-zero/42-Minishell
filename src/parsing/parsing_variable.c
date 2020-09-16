@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 15:35:46 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 17:57:24 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		expand_env(t_parsing_tool *tool)
 	i = 0;
 	while (tool->input[i])
 	{
-		if (is_quote(tool->input[i]))
+		if (is_quote(tool->input[i]) && !check_bf_bs(tool->input, i))
 			switcher_quote(tool, tool->input[i]);
 		else if (is_dollar(tool->input[i])
 			&& !(tool->open && tool->quote == '\'')

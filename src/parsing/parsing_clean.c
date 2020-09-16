@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_clean.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 15:04:09 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/24 18:55:03 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/16 16:47:39 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		clear_quotes(t_newstr *output)
 	i = 0;
 	while (output->str[i])
 	{
-		if (is_quote(output->str[i]))
+		if (check_char_quote(output->str, i))
 		{
 			output->open = 1;
 			output->quote = output->str[i];

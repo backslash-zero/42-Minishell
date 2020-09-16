@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 15:30:50 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 17:54:17 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,7 @@ int				insert_ret(t_parsing_tool *tool, int i);
 int				parsing_checks(int *i, int *j, int *n, t_parsing_tool *tool);
 int				check_var(char **arg_list);
 int				includes_var(char *str);
+int				check_char_quote(char *str, int i);
+int				check_bf_bs(char *str, int i);
 
 #endif
