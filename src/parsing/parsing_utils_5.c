@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 17:17:43 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/16 15:56:41 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 17:54:21 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		check_backslash(char *str)
 		}
 		if (bs_count % 2 != 0 && bs_count != 1 && (is_space(str[i]) || !str[i]))
 		{
-			printf("error here 1\n");
 			return (-1);
 		}
 		bs_count = 0;
@@ -53,30 +52,21 @@ int		new_len_backslash(char *str)
 	int count;
 	int n;
 
-	i = 0;
+	i = 1;
 	count = 0;
 	n = 1;
+
 	while (str[i])
 	{
-		if (i > 0)
-		{
-			if (is_backslash(str[i]) && n)
-			{
-				count++;
+		if (is_backslash(str[i - 1]) && n)
+		{	
+			count++;
+			if (is_backslash(str[i]))
 				n = 0;
-			}
-			else
-			{
-				n = 1;
-			}
 		}
 		else
 		{
-			if (is_backslash(str[i]))
-			{
-				count++;
-				n = 0;
-			}
+			n = 1;
 		}
 		i++;
 	}
@@ -93,7 +83,6 @@ int		ft_clean_backslash(char **arg_list, int a)
 	j = 0;
 	if (!(newstr = malloc(sizeof(char) * (new_len_backslash(arg_list[a]) + 1))))
 		return (0);
-	printf("new_len_backslash(arg_list[a]): %d\n", new_len_backslash(arg_list[a]));
 	while (arg_list[a][i])
 	{
 		if (is_backslash(arg_list[a][i]))
@@ -108,9 +97,7 @@ int		ft_clean_backslash(char **arg_list, int a)
 		}
 	}
 	newstr[j] = '\0';
-	printf("new str: %s\n", newstr);
 	assign_and_free(&newstr, &arg_list[a]);
-	printf("arg_list[a] str: %s\n", arg_list[a]);
 	return (1);
 }
 
@@ -129,4 +116,16 @@ int		ft_backslash(char **arg_list)
 		i++;
 	}
 	return (1);
+}
+
+int		check_bf_bs(char *str, int i)
+{
+	if (i == 0)
+		return (0);
+	else
+	{
+		if (is_backslash(str[i - 1]))
+			return (1);
+	}
+	return (0);
 }
