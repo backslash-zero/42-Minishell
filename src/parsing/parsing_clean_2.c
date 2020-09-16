@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_clean_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/24 18:54:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/07/24 18:55:06 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/16 12:26:26 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,15 @@ int		checkifquotes(char *str)
 	while (str[i])
 	{
 		if (is_quote(str[i]))
-			return (1);
+		{
+			if (i > 0)
+			{
+				if (!is_backslash(str[i - 1]))
+					return (1);
+			}
+			else
+				return (1);
+		}
 		i++;
 	}
 	return (0);

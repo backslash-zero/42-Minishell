@@ -29,6 +29,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				parsing/parsing_utils_2.c		\
 				parsing/parsing_utils_3.c		\
 				parsing/parsing_utils_4.c		\
+				parsing/parsing_utils_5.c		\
 				parsing/parsing_variable.c		\
 				pipe/pipe.c						\
 				utils/arg.c 					\

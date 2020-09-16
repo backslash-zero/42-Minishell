@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/11 15:02:20 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 00:38:24 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,11 @@ int				launch_exec(char **arg, t_cmd *cmd)
 	ret_red = redirection(cmd);
 	if (!ret_red)
 	{
+		if (!ft_backslash(cmd->arg))
+   		{
+			free_tab(cmd->arg);
+			return (ft_strerror(NULL, arg, NULL, NULL));
+		}
 		if (!ft_checkbuiltins(cmd->arg, cmd))
 		{
 			ret_exec = ft_exec(cmd->arg);
@@ -151,7 +156,6 @@ int				ft_exec(char **arg_list)
 		s = find_path_env(tab_env, arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
-			ft_printf_fd(2, "bad fd\n");
 			free(s);
 			free_tab(tab_env);
 			return (-2);
@@ -183,6 +187,7 @@ int				launch(char *input, t_cmd *cmd)
 	if (!(arg = parsing(input)))
 		return (0);
 	i = 0;
+	printtab(arg);
 	while (arg[i] != NULL)
 	{
 		len_new_arg_list = 0;
@@ -200,7 +205,7 @@ int				launch(char *input, t_cmd *cmd)
    		{
 			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
-		}	
+		}
 		if (!cleanup_quotes(cmd->arg))
 		{
 			free_tab(cmd->arg);
