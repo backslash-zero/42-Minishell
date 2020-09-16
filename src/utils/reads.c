@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 00:38:24 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 15:22:37 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,11 @@ int				launch(char *input, t_cmd *cmd)
 			i++;
 		}
 		if ((cmd->arg = semicolon(arg, i, len_new_arg_list)) == NULL)
+		{
+			free_tab(cmd->arg);
+			return (ft_strerror(NULL, arg, NULL, NULL));
+		}
+		if (!check_var(cmd->arg))
 		{
 			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));

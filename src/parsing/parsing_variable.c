@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/07 00:53:36 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 15:35:46 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,22 @@ int		expand_env(t_parsing_tool *tool)
 			&& !test_lone_dollar(tool->input, i)
 			&& (tool->input[i + 1] != '?'))
 		{
-			if (!insert_env_var(tool, i))
-				return (0);
-			i--;
+			
+			if (i > 0)
+			{
+				if (!is_backslash(tool->input[i - 1]))
+				{
+					if (!insert_env_var(tool, i))
+						return (0);
+					i--;
+				}
+			}
+			else
+			{
+				if (!insert_env_var(tool, i))
+					return (0);
+				i--;
+			}	
 		}
 		i++;
 	}
@@ -114,7 +127,7 @@ int		check_var(char **arg_list)
 	i = 0;
 	while (arg_list[i])
 	{
-		if (is_var(arg_list[i]))
+		if (includes_var(arg_list[i]))
 		{
 			init_tool(&tool);
 			tool.input = ft_strdup(arg_list[i]);
