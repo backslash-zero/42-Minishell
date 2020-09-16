@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 13:24:20 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 12:11:01 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int		size_arg_tool(t_parsing_tool *tool)
 	{
 		quote_checker(tool, i, &n);
 		if (semic_checker(tool, i, &n) || redir_pipe_checker(tool, &i, &n))
+		{
 			return (-1);
+		}
 		if (!ft_is_space(tool->input[i]) && n != 0)
 		{
 			count++;
@@ -61,11 +63,11 @@ int		ft_split_args(t_parsing_tool *tool)
 	skipspaces(tool, &i, &j);
 	while (tool->input[i] && n < tool->size)
 	{
-		while ((!ft_is_space(tool->input[j]) && !is_semic(tool->input[j])
-				&& !is_redir_or_pipe(tool->input[j])
+		while ((!ft_is_space(tool->input[j]) && !(is_semic(tool->input[j]) && !is_backslash(tool->input[j - 1]))
+				&& !(is_redir_or_pipe(tool->input[j]) && !is_backslash(tool->input[j - 1]))
 				&& tool->input[j] != '\0') || (tool->open))
 		{
-			if (is_quote(tool->input[j]))
+			if (is_quote(tool->input[j]) && !is_backslash(tool->input[j - 1]))
 				switcher_quote(tool, tool->input[j]);
 			j++;
 		}
@@ -96,11 +98,12 @@ char	**parsing(char *input)
 
 	tool.input = ft_strdup(input);
 	init_tool(&tool);
-	if ((tool.size = size_arg_tool(&tool)) == -1)
+	if (((tool.size = size_arg_tool(&tool)) == -1 ) || (check_backslash(tool.input)))
 	{
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);
 	}
+	printf("tool.size = %d\n", tool.size);
 	if (!(tool.arg = malloc_arg(&tool)))
 		return (NULL);
 	init_tool(&tool);

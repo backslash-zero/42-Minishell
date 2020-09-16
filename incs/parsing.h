@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/06 19:47:19 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 11:04:12 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ int				is_redir_or_pipe(char c);
 int				is_pipe(char c);
 int				is_redir_l(char c);
 int				is_redir_r(char c);
+int				is_backslash(char c);
+int				check_backslash(char *str);
+int				new_len_backslash(char *str);
+int				ft_clean_backslash(char **arg_list, int a);
+int				ft_backslash(char **arg_list);
 int				replace_g_ret(char **arg_list, int i);
 int				check_g_ret_var(char **arg_list);
 int				is_g_ret_var(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 12:22:09 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/05 18:40:19 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/15 18:05:04 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ int		pipe_checker(t_parsing_tool *tool, int i, int *n)
 
 int		redir_pipe_checker(t_parsing_tool *tool, int *i, int *n)
 {
+	if (i > 0)
+	{
+		if (is_redir_or_pipe(tool->input[*i]) && is_backslash((tool->input[*i - 1])))
+			return (0);
+	}
 	if (redir_r_checker(tool, i, n) || pipe_checker(tool, *i, n)
 	|| redir_l_checker(tool, *i, n))
 	{

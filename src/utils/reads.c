@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 12:21:19 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 00:38:24 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ int				launch_exec(char **arg, t_cmd *cmd)
 	ret_red = redirection(cmd);
 	if (!ret_red)
 	{
+		if (!ft_backslash(cmd->arg))
+   		{
+			free_tab(cmd->arg);
+			return (ft_strerror(NULL, arg, NULL, NULL));
+		}
 		if (!ft_checkbuiltins(cmd->arg, cmd))
 		{
 			ret_exec = ft_exec(cmd->arg);
@@ -165,6 +170,7 @@ int				launch(char *input, t_cmd *cmd)
 	if (!(arg = parsing(input)))
 		return (0);
 	i = 0;
+	printtab(arg);
 	while (arg[i] != NULL)
 	{
 		len_new_arg_list = 0;
