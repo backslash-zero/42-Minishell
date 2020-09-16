@@ -1,48 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/21 11:21:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/15 16:26:11 by celestin         ###   ########.fr       */
+/*   Created: 2020/09/15 15:06:25 by celestin          #+#    #+#             */
+/*   Updated: 2020/09/15 15:18:12 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	free_tab(char **tab)
+void		print_gret(char *str)
+{
+	printf("%s		--	g_ret = %d\n", str, g_ret);
+	int hey = 1;
+}
+
+void		printtab(char **tab)
 {
 	int i;
 
 	i = 0;
+	printf("len tab: %d\n", arg_len(tab));
 	while (tab[i])
 	{
-		free(tab[i]);
+		printf("str-%d: %s\n", i, tab[i]);
 		i++;
 	}
-	free(tab);
 }
 
-void	free_tab_3d(char ***tab)
+int		arg_3_len(char ***arg)
 {
 	int i;
 
 	i = 0;
-	while (tab[i])
-	{
-		free_tab(tab[i]);
-		i++;
-	}
-	free(tab);
+	if (arg)
+		while (arg[i])
+			i++;
+	return (i);
 }
 
-void	assign_and_free(char **newstr, char **oldstr)
+void		print3Dtab(char ***tab)
 {
-	char	*tmp;
-
-	tmp = *oldstr;
-	*oldstr = *newstr;
-	free(tmp);
+	int i;
+	i = 0;
+	
+	printf("len ***tab: %d\n", arg_3_len(tab));
+	while (tab[i])
+	{
+		printf("**tab: %d\n", i);
+		printtab(tab[i]);
+		i++;
+	}
 }

@@ -17,6 +17,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				builtins/exit.c 				\
 				builtins/export.c 				\
 				builtins/export_next.c 			\
+				builtins/export_next_2.c 			\
 				builtins/pwd.c 					\
 				builtins/unset.c				\
 				parsing/parsing.c				\
@@ -32,16 +33,18 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				parsing/parsing_utils_5.c		\
 				parsing/parsing_variable.c		\
 				pipe/pipe.c						\
+				pipe/pipe2.c					\
 				utils/arg.c 					\
 				utils/error.c 					\
 				utils/free.c 					\
 				utils/ft_strncpy.c 				\
-				utils/pipe.c 					\
 				utils/prints.c 					\
 				utils/reads.c					\
 				utils/redirections.c			\
+				utils/redirections2.c			\
 				utils/semicolon.c				\
 				utils/path.c					\
+				tools/tools.c					\
 				minishell.c 					\
 
 

@@ -12,25 +12,6 @@
 
 #include "../../incs/minishell.h"
 
-static void		print_gret(char *str)
-{
-	printf("%s		--	g_ret = %d\n", str, g_ret);
-	int hey = 1;
-}
-
-void		printtab(char **tab)
-{
-	int i;
-
-	i = 0;
-	printf("len tab: %d\n", arg_len(tab));
-	while (tab[i])
-	{
-		printf("str-%d: %s\n", i, tab[i]);
-		i++;
-	}
-}
-
 char			**tablst(t_list *lst)
 {
 	char	**ret;
@@ -61,12 +42,7 @@ void			fd_dup(int i)
 
 	if (i == 0)
 	{
-		if ((input = dup(0)) == -1)
-		{
-			ft_strerror(NULL, NULL, NULL, NULL);
-			exit(errno);
-		}
-		if ((output = dup(1)) == -1)
+		if ((input = dup(0)) == -1 || (output = dup(1)) == -1)
 		{
 			ft_strerror(NULL, NULL, NULL, NULL);
 			exit(errno);
@@ -74,12 +50,7 @@ void			fd_dup(int i)
 	}
 	else if (i == 1)
 	{
-		if (dup2(input, 0) == -1) 
-		{
-			ft_strerror(NULL, NULL, NULL, NULL);
-			exit(errno);
-		}
-		if (dup2(output, 1) == -1)
+		if (dup2(input, 0) == -1 || dup2(output, 1) == -1) 
 		{
 			ft_strerror(NULL, NULL, NULL, NULL);
 			exit(errno);
@@ -130,11 +101,16 @@ int				launch_exec(char **arg, t_cmd *cmd)
 void			check_signal(int status)
 {
 	if (WTERMSIG(status) == 3)
-		ft_putstr("Quit\n");
+		ft_putstr("Quit: 3\n");
 	if (WIFEXITED(status))
 		g_ret = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
+	{
+		g_print = 0;
 		g_ret = 128 + WTERMSIG(status);
+	}
+	if (status == 2)
+		g_print = 1;
 }
 
 int				ft_exec(char **arg_list)
@@ -153,7 +129,14 @@ int				ft_exec(char **arg_list)
 	}
 	if (proc == 0)
 	{
-		s = find_path_env(tab_env, arg_list[0]);
+		s = try_absolut_path(arg_list[0]);
+		if (s != NULL && ft_strcmp(s, "NOT_FOUND") == 0)
+		{
+			free_tab(tab_env);
+			exit(0);
+		}
+		if (s == NULL)
+			s = find_path_env(tab_env, arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
 			free(s);
@@ -202,7 +185,7 @@ int				launch(char *input, t_cmd *cmd)
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
 		if (!check_g_ret_var(cmd->arg))
-   		{
+		{
 			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
@@ -243,10 +226,10 @@ void			prompt(void)
 	while (1)
 	{
 		ret = 0;
-		if (to_print == 0)
+		if (g_print == 0)
 			print_prompt_prefix();
-		if (to_print == 1)
-			to_print = 0;
+		if (g_print == 1)
+			g_print = 0;
 		ret = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
 		if (ret == -1)
 			exit(errno);

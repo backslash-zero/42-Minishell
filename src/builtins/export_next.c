@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:10:10 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/25 10:03:26 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 12:06:58 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,41 +54,18 @@ int		set_value(t_list *lst, char *s1, char *s2)
 	return (0);
 }
 
-int		add_elem(char *s)
+char	*catch_name(char *s)
 {
-	if (!add_to_list(s, &g_export))
-		return (0);
-	if (ft_strchr(s, '='))
-	{
-		if (!add_to_list(s, &g_env))
-			return (0);
-	}
-	return (1);
-}
+	int		i;
+	char	*name;
 
-int		replace_elem(char *s, int i)
-{
-	char *s1;
-
-	if (ft_strchr(s, '='))
-	{
-		s1 = ft_substr(s, 0, i);
-		if (set_value(g_export, s, s1))
-		{
-			if (!set_value(g_env, s, s1))
-			{
-				if (!add_to_list(s, &g_env))
-					return (0);
-			}
-			free (s1);
-		}
-		else
-		{
-			free(s1);
-			return (0);
-		}
-	}
-	return (1);
+	i = 0;
+	while (s[i] != '=' && s[i] != '\0')
+		i++;
+	if (i > 0)
+		return (ft_substr(s, 0, i));
+	else
+		return (NULL);
 }
 
 int		check_if_exist(t_list *lst, char *s)
@@ -98,12 +75,7 @@ int		check_if_exist(t_list *lst, char *s)
 	char	*tmp;
 	int		i;
 
-	i = 0;
-	while (s[i] != '=' && s[i] != '\0')
-		i++;
-	if (i > 0)
-		name = ft_substr(s, 0, i);
-	else
+	if ((name = catch_name(s)) == NULL)
 		return (0);
 	while (lst)
 	{
