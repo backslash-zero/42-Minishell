@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 19:08:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/07 00:51:07 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 15:31:05 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,24 @@ int		is_redir_r(char c)
 		return (0);
 }
 
-int		is_var(char *str)
+int		includes_var(char *str)
 {
-	if (ft_strnstr(str, "$", ft_strlen(str)) != NULL)
-		return (1);
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (i > 0)
+		{
+			if (is_dollar(str[i]) && !is_backslash(str[i - 1]))
+				return (1);
+		}
+		else
+		{
+			if (is_dollar(str[i]))
+				return (1);
+		}
+		i++;
+	}
 	return (0);
 }

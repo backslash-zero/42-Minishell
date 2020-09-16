@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 11:04:12 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 15:30:50 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,6 @@ int				is_g_ret_var(char *str);
 int				insert_ret(t_parsing_tool *tool, int i);
 int				parsing_checks(int *i, int *j, int *n, t_parsing_tool *tool);
 int				check_var(char **arg_list);
-int				is_var(char *str);
+int				includes_var(char *str);
 
 #endif
