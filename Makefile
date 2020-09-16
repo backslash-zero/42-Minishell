@@ -17,6 +17,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 	\
 				builtins/exit.c 				\
 				builtins/export.c 				\
 				builtins/export_next.c 			\
+				builtins/export_next_2.c 			\
 				builtins/pwd.c 					\
 				builtins/unset.c				\
 				parsing/parsing.c				\
