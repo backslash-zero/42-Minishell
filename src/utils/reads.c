@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/15 15:06:55 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 12:20:20 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,7 @@ void			fd_dup(int i)
 
 	if (i == 0)
 	{
-		if ((input = dup(0)) == -1)
-		{
-			ft_strerror(NULL, NULL, NULL, NULL);
-			exit(errno);
-		}
-		if ((output = dup(1)) == -1)
+		if ((input = dup(0)) == -1 || (output = dup(1)) == -1)
 		{
 			ft_strerror(NULL, NULL, NULL, NULL);
 			exit(errno);
@@ -55,12 +50,7 @@ void			fd_dup(int i)
 	}
 	else if (i == 1)
 	{
-		if (dup2(input, 0) == -1)
-		{
-			ft_strerror(NULL, NULL, NULL, NULL);
-			exit(errno);
-		}
-		if (dup2(output, 1) == -1)
+		if (dup2(input, 0) == -1 || dup2(output, 1) == -1) 
 		{
 			ft_strerror(NULL, NULL, NULL, NULL);
 			exit(errno);

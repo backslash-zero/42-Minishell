@@ -6,11 +6,33 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:23:45 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/14 15:26:34 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/16 12:12:16 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd)
+{
+	int		cmd_arg_len;
+	int		j;
+	char	**cmd_arg;
+
+	cmd_arg_len = 0;
+	j = 0;
+	while (ft_strcmp(arg[cmd_arg_len], "|"))
+		cmd_arg_len++;
+	*i += cmd_arg_len;
+	if (!(cmd_arg = malloc(sizeof(char*) * cmd_arg_len + 1)))
+		return (NULL);
+	while (j < cmd_arg_len)
+	{
+		cmd_arg[j] = ft_strdup(arg[j]);
+		j++;
+	}
+	cmd_arg[j] = NULL;
+	return (cmd_arg);
+}
 
 char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd)
 {

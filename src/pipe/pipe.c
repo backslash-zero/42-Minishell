@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/15 16:24:47 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 12:14:18 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,77 +28,7 @@ int		ft_count_pipe(char **arg)
 	return (count);
 }
 
-char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd)
-{
-	int		cmd_arg_len;
-	int		j;
-	char	**cmd_arg;
-
-	cmd_arg_len = 0;
-	j = 0;
-	while (ft_strcmp(arg[cmd_arg_len], "|"))
-		cmd_arg_len++;
-	*i += cmd_arg_len;
-	if (!(cmd_arg = malloc(sizeof(char*) * cmd_arg_len + 1)))
-		return (NULL);
-	while (j < cmd_arg_len)
-	{
-		cmd_arg[j] = ft_strdup(arg[j]);
-		j++;
-	}
-	cmd_arg[j] = NULL;
-	return (cmd_arg);
-}
-
-char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd)
-{
-	int len = 0;
-	int j;
-	char **cmd_arg;
-
-	j = 0;
-	while (arg[len])
-		len++;
-	if (!(cmd_arg = malloc(sizeof(char*) * len + 1)))
-		return (NULL);
-	while (j < len)
-	{
-		cmd_arg[j] = ft_strdup(arg[j]);
-		j++;
-	}
-	cmd_arg[j] = NULL;
-	return (cmd_arg);
-}
-
-char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd) //int pipe_len)
-{
-	char ***cmd;
-	int i = 0;
-	int cmd_arg = 0;
-	int count = 0;
-
-	if (!(cmd = malloc(sizeof(char**) * pipe_cmd->len + 1 + 1)))
-		return (NULL);
-	while (count < pipe_cmd->len + 1)
-	{
-		cmd[count] = malloc(sizeof(char*));
-		if (ft_count_pipe(&arg_list[i]) != 0)
-		{
-			cmd[count] = cmd_arg_get(&arg_list[i], &i, pipe_cmd);
-			i++;
-		}
-		else
-		{
-			cmd[count] = last_cmd_arg(&arg_list[i], pipe_cmd);
-		}
-		count++;
-	}
-	cmd[count] = malloc(sizeof(char*));
-	cmd[count] = NULL;
-	return (cmd);
-}
-
-int check_redir(char **s)
+int		check_redir(char **s)
 {
 	int	i;
 
