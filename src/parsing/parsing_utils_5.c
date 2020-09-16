@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 17:17:43 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/16 11:59:57 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/16 13:21:54 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,32 @@ int		new_len_backslash(char *str)
 {
 	int i;
 	int count;
+	int n;
 
 	i = 0;
 	count = 0;
+	n = 1;
 	while (str[i])
 	{
 		if (i > 0)
 		{
-			if (is_backslash(str[i]))
+			if (is_backslash(str[i]) && n)
+			{
 				count++;
+				n = 0;
+			}
+			else
+			{
+				n = 1;
+			}
 		}
 		else
 		{
-			if (is_backslash(str[i]) && !is_backslash(str[i - 1]))
+			if (is_backslash(str[i]))
+			{
 				count++;
+				n = 0;
+			}
 		}
 		i++;
 	}
@@ -81,6 +93,7 @@ int		ft_clean_backslash(char **arg_list, int a)
 	j = 0;
 	if(!(newstr = malloc(sizeof(char) * (new_len_backslash(arg_list[a]) + 1))))
 		return (0);
+	printf("new_len_backslash(arg_list[a]): %d\n", new_len_backslash(arg_list[a]));
 	while (arg_list[a][i])
 	{
 		if (is_backslash(arg_list[a][i]))
@@ -95,7 +108,9 @@ int		ft_clean_backslash(char **arg_list, int a)
 		}
 	}
 	newstr[j] = '\0';
+	printf("new str: %s\n", newstr);
 	assign_and_free(&newstr, &arg_list[a]);
+	printf("arg_list[a] str: %s\n", arg_list[a]);
 	return (1);
 }
 
