@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/17 11:00:58 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/17 15:04:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,10 @@ int				ft_exec(char **arg_list)
 		}
 		check_signal(status);
 		if (g_ret == 127)
+		{
+			free_tab(tab_env);
 			return (127);
+		}
 	}
 	free_tab(tab_env);
 	return (0);
