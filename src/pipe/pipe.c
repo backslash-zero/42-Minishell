@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/17 11:07:44 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/17 11:23:39 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 					free_tab(pipe_cmd->cmd[pipe_cmd->i]);
 					return (ft_strerror(NULL, NULL, NULL, NULL));
 				}
-				if (ft_checkbuiltins(pipe_cmd->cmd[pipe_cmd->i], cmd))
+				if (!ft_checkbuiltins(pipe_cmd->cmd[pipe_cmd->i], cmd))
 				{
 					ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i]);
 					if (ret_exec == -1)
