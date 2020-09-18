@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:41:57 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 14:35:21 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 14:44:54 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int		builtin_unset(char **arg)
 	int j;
 
 	i = 1;
+	if (arg_len(arg) == 1)
+		return (0);
 	if ((j = check_unset_arg(arg[i])) > 0)
 	{
 		while (arg[i] != NULL)

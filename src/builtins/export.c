@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 12:04:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 14:28:15 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 14:41:46 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		builtin_export(char **arg)
 	i = 1;
 	if (arg_len(arg) == 1)
 		return (print_export());
-	while (arg[i] && (j = check_export_arg(arg[i]) > 0))
+	while (arg[i] && (j = check_export_arg(arg[i])) > 0)
 	{
 		if ((start = check_if_exist(g_export, arg[i])))
 		{
