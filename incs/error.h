@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:29:12 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 11:50:26 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 14:33:25 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 # define NO_FILE		"MiniShell: %s: No such file or directory\n"
 # define NO_FILE_LS		"ls: : No such file or directory\n"
 # define EXIT_NUM		"MiniShell: exit: %s: numeric argument required\n"
-# define INVALID_ID_X	"MiniShell: export: %s: not a valid identifier\n"
-# define INVALID_ID_U	"MiniShell: unset: %s: not a valid identifier\n"
+# define INVALID_ID_X	"MiniShell: export: '%s': not a valid identifier\n"
+# define INVALID_OPT_ID_X	"MiniShell: export: %s: invalid option\n"
+# define INVALID_ID_U	"MiniShell: unset: '%s': not a valid identifier\n"
+# define INVALID_OPT_ID_U	"MiniShell: unset: %s: invalid option\n"
 # define SYNTAX_ERR		"MiniShell: syntax error near unexpected token\n"
 # define RNO_FILE		"MiniShell: %s: No such file or is a directory\n"
 # define RNO_CREA		"MiniShell: %s: File could not be created\n"
