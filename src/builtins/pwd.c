@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:41:16 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 08:28:52 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 14:06:17 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int		builtin_pwd(char **arg)
 
 	dir = NULL;
 	(void)arg;
-	if (arg_len(arg) > 1)
-		return (ft_error(PWD_MANY_ARGS, NULL, NULL, NULL));
 	if (!(dir = getcwd(dir, 0)))
 	{
 		if (!(env = tablst(g_env)))
