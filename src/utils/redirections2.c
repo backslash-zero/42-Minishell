@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/17 11:25:59 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 11:49:24 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
 	{
 		g_ret = 1;
-		ft_error(RNO_FILE, NULL, NULL, name);
+		ft_error(NO_RIGHTS, NULL, NULL, name);
 		return (-1);
 	}
 	if (dup2(fd, 1) == -1)
@@ -82,7 +82,7 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
 		g_ret = 1;
-		ft_error(RNO_FILE, NULL, NULL, name);
+		ft_error(NO_RIGHTS, NULL, NULL, name);
 		return (-1);
 	}
 	if (dup2(fd, 1) == -1)
@@ -109,7 +109,7 @@ int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 	if ((fd = open(name, O_RDONLY, 0644)) == -1)
 	{
 		g_ret = 1;
-		ft_error(NO_FILE, NULL, NULL, name);
+		ft_error(NO_RIGHTS, NULL, NULL, name);
 		return (-1);
 	}
 	if (dup2(fd, 0) == -1)

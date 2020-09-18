@@ -6,7 +6,7 @@ CC			=	gcc
 
 FLAGS		=	-Wall -Wextra -Werror
 
-LEAKS		=	-g -fsanitize=address
+LEAKS		=	-g3 -fsanitize=address
 
 SRC_PATH	=	src/
 
