@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/17 11:23:39 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/17 12:34:36 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 			if (!pipe_cmd->check_redir)
 			{
 				if (!ft_backslash(pipe_cmd->cmd[pipe_cmd->i]))
-				{
-					free_tab(pipe_cmd->cmd[pipe_cmd->i]);
-					return (ft_strerror(NULL, NULL, NULL, NULL));
-				}
+					return (ft_strerror(NULL, pipe_cmd->cmd[pipe_cmd->i], NULL, NULL));
 				if (!ft_checkbuiltins(pipe_cmd->cmd[pipe_cmd->i], cmd))
 				{
 					ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i]);
@@ -141,8 +138,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 						ft_strerror(NULL, NULL, "fork", NULL);
 					else if (ret_exec == -2)
 					{
-						ft_error(CMD_NOT_FOUND, NULL, NULL, pipe_cmd->cmd[pipe_cmd->i][0]);
-						free_tab(pipe_cmd->cmd[pipe_cmd->i]);
+						ft_error(CMD_NOT_FOUND, NULL, pipe_cmd->cmd[pipe_cmd->i], pipe_cmd->cmd[pipe_cmd->i][0]);
 						exit(127);
 					}
 					else if (ret_exec == 127)
