@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:41:57 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 14:44:54 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 16:11:50 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int		check_unset_arg(char *arg)
 	i = 0;
 	if (arg[0] == 45)
 		return (-1);
+	if (arg[0] == '(' || arg[0] == ')')
+		return (-2);
 	if ((arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97 && arg[0] <= 122)
 	|| arg[0] == 95 || arg[i] == 32)
 		return (1);
@@ -92,5 +94,7 @@ int		builtin_unset(char **arg)
 		return (ft_error(INVALID_ID_U, NULL, NULL, arg[1]));
 	if (j == -1)
 		return (ft_error(INVALID_OPT_ID_U, NULL, NULL, arg[1]));
+	if (j == -2)
+		return (ft_error(SYNTAX_ERR, NULL, NULL, arg[1]));
 	return (0);
 }
