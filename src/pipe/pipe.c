@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 11:28:15 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 15:05:05 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 						ft_strerror(NULL, NULL, "fork", NULL);
 					else if (ret_exec == -2)
 					{
-						ft_error(CMD_NOT_FOUND, NULL, pipe_cmd->cmd[pipe_cmd->i], pipe_cmd->cmd[pipe_cmd->i][0]);
+						ft_error(NO_FILE, NULL, pipe_cmd->cmd[pipe_cmd->i], pipe_cmd->cmd[pipe_cmd->i][0]);
 						exit(127);
 					}
 					else if (ret_exec == 127)

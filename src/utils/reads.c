@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 11:23:06 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 15:05:14 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 			}
 			else if (ret_exec == -2)
 			{
-				ft_error(CMD_NOT_FOUND, NULL, NULL, cmd->arg[0]);
+				ft_error(NO_FILE, NULL, NULL, cmd->arg[0]);
 				return (-2);
 			}
 		}

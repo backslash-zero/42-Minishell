@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 11:49:24 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 15:05:25 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd)
 			ft_strerror(NULL, NULL, "fork", NULL);
 		else if (ret_exec == -2)
 		{
-			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+			ft_error(NO_FILE, NULL, NULL, arg_list[0]);
 			free_tab(arg_list);
 			close(fd);
 			exit(127);
