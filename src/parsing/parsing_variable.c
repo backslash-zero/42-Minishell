@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_variable.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 17:57:24 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/18 23:15:47 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+int		conditions_expand_env(t_parsing_tool *tool, int i)
+{
+	if (is_dollar(tool->input[i])
+		&& !(tool->open && tool->quote == '\'')
+		&& !test_lone_dollar(tool->input, i)
+		&& (tool->input[i + 1] != '?'))
+		return (1);
+	return (0);
+}
 
 int		expand_env(t_parsing_tool *tool)
 {
@@ -19,29 +29,21 @@ int		expand_env(t_parsing_tool *tool)
 	i = 0;
 	while (tool->input[i])
 	{
-		if (is_quote(tool->input[i]) && !check_bf_bs(tool->input, i))
-			switcher_quote(tool, tool->input[i]);
-		else if (is_dollar(tool->input[i])
-			&& !(tool->open && tool->quote == '\'')
-			&& !test_lone_dollar(tool->input, i)
-			&& (tool->input[i + 1] != '?'))
+		if (is_backslash(tool->input[i]))
+			switcher_bs(tool, i);
+		if (is_quote(tool->input[i]))
+			switcher_quote(tool, i);
+		else if (conditions_expand_env(tool, i))
 		{
-			if (i > 0)
-			{
-				if (!is_backslash(tool->input[i - 1]))
-				{
-					if (!insert_env_var(tool, i))
-						return (0);
-					i--;
-				}
-			}
-			else
+			if (!tool->pre_bs)
 			{
 				if (!insert_env_var(tool, i))
 					return (0);
 				i--;
 			}
 		}
+		if (!is_backslash(tool->input[i]) || (tool->open && tool->quote == '\''))
+			tool->pre_bs = 0;
 		i++;
 	}
 	return (1);

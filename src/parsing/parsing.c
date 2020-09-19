@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 15:58:35 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/19 11:37:06 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int		size_arg_tool(t_parsing_tool *tool)
 	count = 0;
 	while (tool->input[i])
 	{
+		if (is_backslash(tool->input[i]))
+			switcher_bs(tool, i);
 		quote_checker(tool, i, &n);
 		if (semic_checker(tool, i, &n) || redir_pipe_checker(tool, &i, &n))
 		{
@@ -35,6 +37,8 @@ int		size_arg_tool(t_parsing_tool *tool)
 		}
 		if (ft_is_space(tool->input[i]) && !tool->open)
 			n = 1;
+		if (!is_backslash(tool->input[i]) || (tool->open && tool->quote == '\''))
+			tool->pre_bs = 0;
 		i++;
 	}
 	if (tool->open)
@@ -63,12 +67,18 @@ int		ft_split_args(t_parsing_tool *tool)
 	skipspaces(tool, &i, &j);
 	while (tool->input[i] && n < tool->size)
 	{
-		while ((!ft_is_space(tool->input[j]) && !(is_semic(tool->input[j]) && !is_backslash(tool->input[j - 1]))
-				&& !(is_redir_or_pipe(tool->input[j]) && !is_backslash(tool->input[j - 1]))
-				&& tool->input[j] != '\0') || (tool->open))
+		while ((!ft_is_space(tool->input[j])
+				&& !(is_semic(tool->input[j]) && !tool->pre_bs)
+				&& !(is_redir_or_pipe(tool->input[j]) && !tool->pre_bs)
+				&& (tool->input[j] != '\0'))
+				|| (tool->open))
 		{
-			if (is_quote(tool->input[j]) && !is_backslash(tool->input[j - 1]))
-				switcher_quote(tool, tool->input[j]);
+			if (is_backslash(tool->input[j]))
+				switcher_bs(tool, j);
+			if (is_quote(tool->input[j]))
+				switcher_quote(tool, j);
+			if (!is_backslash(tool->input[j]) || (tool->open && tool->quote == '\''))
+				tool->pre_bs = 0;
 			j++;
 		}
 		if (!parsing_checks(&i, &j, &n, tool))
@@ -98,12 +108,11 @@ char	**parsing(char *input)
 
 	tool.input = ft_strdup(input);
 	init_tool(&tool);
-	if (((tool.size = size_arg_tool(&tool)) == -1) || (check_backslash(tool.input)))
+	if (((tool.size = size_arg_tool(&tool)) == -1) || (check_backslash(&tool)))
 	{
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
 		return (NULL);
 	}
-	printf("tool.size = %d\n", tool.size);
 	if (!(tool.arg = malloc_arg(&tool)))
 		return (NULL);
 	init_tool(&tool);

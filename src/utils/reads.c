@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 15:22:37 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/19 11:38:31 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 	ret_red = redirection(cmd);
 	if (!ret_red)
 	{
-		if (!ft_backslash(cmd->arg))
+		if (!arg_cleanup(cmd->arg))
    		{
 			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
@@ -170,7 +170,6 @@ int				launch(char *input, t_cmd *cmd)
 	if (!(arg = parsing(input)))
 		return (0);
 	i = 0;
-	printtab(arg);
 	while (arg[i] != NULL)
 	{
 		len_new_arg_list = 0;
@@ -180,21 +179,6 @@ int				launch(char *input, t_cmd *cmd)
 			i++;
 		}
 		if ((cmd->arg = semicolon(arg, i, len_new_arg_list)) == NULL)
-		{
-			free_tab(cmd->arg);
-			return (ft_strerror(NULL, arg, NULL, NULL));
-		}
-		if (!check_var(cmd->arg))
-		{
-			free_tab(cmd->arg);
-			return (ft_strerror(NULL, arg, NULL, NULL));
-		}
-		if (!check_g_ret_var(cmd->arg))
-		{
-			free_tab(cmd->arg);
-			return (ft_strerror(NULL, arg, NULL, NULL));
-		}
-		if (!cleanup_quotes(cmd->arg))
 		{
 			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));

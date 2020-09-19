@@ -1,16 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_clean_2.c                                  :+:      :+:    :+:   */
+/*   quote_clean_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/24 18:54:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 16:46:45 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/19 11:36:06 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#include "../../../incs/minishell.h"
+
+int		bs_count_inquote(t_newstr *output, int i, int j)
+{
+	int count;
+
+	count = 0;
+	while (i < j)
+	{
+		if (check_bf_bs(output->str, i) && is_bs_spec(output->str[i]) && output->quote == '\"' && i < j)
+			count++;
+		i++;
+	}
+	return (count);
+}
 
 int		check_char_quote(char *str, int i)
 {
@@ -59,10 +73,8 @@ int		cleanup_quotes(char **arg_list)
 	i = 0;
 	while (arg_list[i])
 	{
-		// printf("i:%d\n");
 		if (checkifquotes(arg_list[i]))
 		{
-			// printf("i:%d arglist[i]: %c\n",i, arg_list[i]);
 			if (!removequotes(arg_list, i))
 			{
 				free(arg_list);
