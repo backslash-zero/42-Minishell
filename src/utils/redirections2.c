@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 17:03:00 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/18 15:27:33 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd)
 			ft_strerror(NULL, NULL, "fork", NULL);
 		else if (ret_exec == -2)
 		{
-			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+			ft_error(NO_FILE, NULL, NULL, arg_list[0]);
 			free_tab(arg_list);
 			close(fd);
 			exit(127);
@@ -55,7 +55,7 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
 	{
 		g_ret = 1;
-		ft_error(RNO_FILE, NULL, NULL, name);
+		ft_error(NO_RIGHTS, NULL, NULL, name);
 		return (-1);
 	}
 	if (dup2(fd, 1) == -1)
@@ -82,7 +82,7 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
 		g_ret = 1;
-		ft_error(RNO_FILE, NULL, NULL, name);
+		ft_error(NO_RIGHTS, NULL, NULL, name);
 		return (-1);
 	}
 	if (dup2(fd, 1) == -1)
@@ -109,7 +109,7 @@ int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 	if ((fd = open(name, O_RDONLY, 0644)) == -1)
 	{
 		g_ret = 1;
-		ft_error(NO_FILE, NULL, NULL, name);
+		ft_error(NO_RIGHTS, NULL, NULL, name);
 		return (-1);
 	}
 	if (dup2(fd, 0) == -1)

@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:23:45 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 12:12:16 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 11:28:11 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char		**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd)
 	while (ft_strcmp(arg[cmd_arg_len], "|"))
 		cmd_arg_len++;
 	*i += cmd_arg_len;
-	if (!(cmd_arg = malloc(sizeof(char*) * cmd_arg_len + 1)))
+	if (!(cmd_arg = (char **)malloc(sizeof(char*) * cmd_arg_len + 1)))
 		return (NULL);
 	while (j < cmd_arg_len)
 	{
@@ -44,7 +44,7 @@ char		**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd)
 	j = 0;
 	while (arg[len])
 		len++;
-	if (!(cmd_arg = malloc(sizeof(char*) * len + 1)))
+	if (!(cmd_arg = (char **)malloc(sizeof(char*) * len + 1)))
 		return (NULL);
 	while (j < len)
 	{
@@ -65,7 +65,7 @@ char		***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd)
 	i = 0;
 	cmd_arg = 0;
 	count = 0;
-	if (!(cmd = malloc(sizeof(char**) * pipe_cmd->len + 1 + 1)))
+	if (!(cmd = (char ***)malloc(sizeof(char**) * pipe_cmd->len + 1 + 1)))
 		return (NULL);
 	while (count < pipe_cmd->len + 1)
 	{

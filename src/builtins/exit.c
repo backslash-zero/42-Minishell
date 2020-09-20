@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:17:37 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 10:55:31 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 17:01:46 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		builtin_exit_next(char **arg, int i)
 {
 	unsigned int j;
-
+	
 	while (arg[1][i])
 	{
 		if (!(ft_isdigit(arg[1][i])))
@@ -26,7 +26,9 @@ int		builtin_exit_next(char **arg, int i)
 		i++;
 	}
 	if ((i = ft_atoi(arg[1])) < 0)
+	{
 		j = (unsigned int)i;
+	}
 	else
 		j = i;
 	return (j);

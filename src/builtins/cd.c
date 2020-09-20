@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:58:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/19 12:04:08 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 15:58:46 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		builtin_cd(char **arg)
 {
 	char	*new_dir;
 
-	if (arg_len(arg) == 1)
+	if (arg_len(arg) == 1 || ft_strcmp(arg[1], "~") == 0 || ft_strcmp(arg[1], "~/") == 0)
 	{
 		if (!(new_dir = get_var(g_env, "HOME=")))
 			return (ft_error("cd: HOME not set\n", NULL, NULL, NULL));

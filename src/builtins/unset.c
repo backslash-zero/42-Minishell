@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:41:57 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 15:51:52 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 16:11:50 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,43 @@ t_list	*unset_env(t_list *lst, char *s)
 	return (lst);
 }
 
+int		check_unset_arg(char *arg)
+{
+	int i;
+
+	i = 0;
+	if (arg[0] == 45)
+		return (-1);
+	if (arg[0] == '(' || arg[0] == ')')
+		return (-2);
+	if ((arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97 && arg[0] <= 122)
+	|| arg[0] == 95 || arg[i] == 32)
+		return (1);
+	return (0);
+}
+
 int		builtin_unset(char **arg)
 {
 	int	i;
+	int j;
 
 	i = 1;
-	while (arg[i] != NULL)
+	if (arg_len(arg) == 1)
+		return (0);
+	if ((j = check_unset_arg(arg[i])) > 0)
 	{
-		g_env = unset_env(g_env, arg[i]);
-		g_export = unset_env(g_export, arg[i]);
-		i++;
+		while (arg[i] != NULL)
+		{
+			g_env = unset_env(g_env, arg[i]);
+			g_export = unset_env(g_export, arg[i]);
+			i++;
+		}
 	}
+	if (j == 0)
+		return (ft_error(INVALID_ID_U, NULL, NULL, arg[1]));
+	if (j == -1)
+		return (ft_error(INVALID_OPT_ID_U, NULL, NULL, arg[1]));
+	if (j == -2)
+		return (ft_error(SYNTAX_ERR, NULL, NULL, arg[1]));
 	return (0);
 }

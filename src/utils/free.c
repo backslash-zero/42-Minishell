@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 11:21:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/15 16:26:11 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/18 11:28:18 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,18 @@ void	free_tab(char **tab)
 void	free_tab_3d(char ***tab)
 {
 	int i;
+	int j;
 
 	i = 0;
 	while (tab[i])
 	{
-		free_tab(tab[i]);
+		j = 0;
+		while (tab[i][j])
+		{
+			free(tab[i][j]);
+			j++;
+		}
+		free(tab[i]);
 		i++;
 	}
 	free(tab);

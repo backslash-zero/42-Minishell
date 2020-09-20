@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 12:04:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/08/24 16:41:53 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/18 16:10:10 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		check_export_arg_next(char *arg, int i)
 		{
 			if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 &&
 			arg[i] <= 122) || arg[i] == 95 || arg[i] == 45 || arg[i] == 32 ||
-			(arg[i] >= 48 && arg[i] <= 57))
+			(arg[i] >= 48 && arg[i] <= 57) || arg[i] == 58 || arg[i] == 47)
 				i++;
 			else
 				return (0);
@@ -35,14 +35,18 @@ int		check_export_arg(char *arg)
 	int i;
 
 	i = 0;
+	if (arg[0] == 45)
+		return (-1);
+	if (arg[0] == '(' || arg[0] == ')')
+		return (-2);
 	if ((arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97 && arg[0] <= 122)
-	|| arg[0] == 95 || arg[i] == 45 || arg[i] == 32)
+	|| arg[0] == 95 || arg[i] == 32)
 	{
 		i++;
 		while (arg[i] && arg[i] != '=')
 		{
 			if ((arg[i] >= 65 && arg[i] <= 90) || (arg[i] >= 97 &&
-			arg[i] <= 122) || arg[i] == 95 || arg[i] == 45 || arg[i] == 32 ||
+			arg[i] <= 122) || arg[i] == 95 || arg[i] == 32 ||
 			(arg[i] >= 48 && arg[i] <= 57))
 				i++;
 			else
@@ -119,7 +123,7 @@ int		builtin_export(char **arg)
 	i = 1;
 	if (arg_len(arg) == 1)
 		return (print_export());
-	while (arg[i] && (j = check_export_arg(arg[i])))
+	while (arg[i] && (j = check_export_arg(arg[i])) > 0)
 	{
 		if ((start = check_if_exist(g_export, arg[i])))
 		{
@@ -135,5 +139,9 @@ int		builtin_export(char **arg)
 	}
 	if (j == 0)
 		return (ft_error(INVALID_ID_X, NULL, NULL, arg[1]));
+	if (j == -1)
+		return (ft_error(INVALID_OPT_ID_X, NULL, NULL, arg[1]));
+	if (j == -2)
+		return (ft_error(SYNTAX_ERR, NULL, NULL, arg[1]));
 	return (0);
 }
