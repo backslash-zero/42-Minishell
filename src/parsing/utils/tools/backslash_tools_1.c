@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backslash_cleanup_2.c                              :+:      :+:    :+:   */
+/*   backslash_tools_1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/17 11:22:58 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/19 11:32:03 by celestin         ###   ########.fr       */
+/*   Created: 2020/09/20 19:22:15 by celestin          #+#    #+#             */
+/*   Updated: 2020/09/20 21:04:37 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../../../incs/minishell.h"
 
 int		bs_count_conditions(int bs_count, t_parsing_tool *tool, int i)
 {
 	if (tool->open && tool->quote == '\'')
 		return (0);
- 	if (!tool->open && tool->input[i] == '\"' && bs_count % 2 == 0 && bs_count != 0)
+	if (!tool->open && tool->input[i] == '\"'
+		&& bs_count % 2 == 0 && bs_count != 0)
 	{
 		if (i > tool->size)
 		{

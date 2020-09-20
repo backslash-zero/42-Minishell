@@ -1,69 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils_3.c                                  :+:      :+:    :+:   */
+/*   is_funcs_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/21 19:08:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/17 11:57:27 by celestin         ###   ########.fr       */
+/*   Created: 2020/09/20 19:50:31 by celestin          #+#    #+#             */
+/*   Updated: 2020/09/20 20:03:12 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../../../incs/minishell.h"
 
-int		is_redir_or_pipe(char c)
+int		is_space(char c)
 {
-	if (is_pipe(c) ||
-		is_redir_l(c) ||
-		is_redir_r(c))
+	if (c == ' ')
 		return (1);
 	else
 		return (0);
 }
 
-int		is_pipe(char c)
+int		is_equal(char c)
 {
-	if (c == '|')
+	if (c == '=')
 		return (1);
 	else
 		return (0);
 }
 
-int		is_redir_l(char c)
+int		is_semic(char c)
 {
-	if (c == '<')
+	if (c == ';')
 		return (1);
 	else
 		return (0);
 }
 
-int		is_redir_r(char c)
+int		test_lone_dollar(char *str, int i)
 {
-	if (c == '>')
+	if (!envvar_authorized_character(str[i + 1], TRUE))
 		return (1);
-	else
-		return (0);
-}
-
-int		includes_var(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (i > 0)
-		{
-			if (is_dollar(str[i]) && !is_backslash(str[i - 1]))
-				return (1);
-		}
-		else
-		{
-			if (is_dollar(str[i]))
-				return (1);
-		}
-		i++;
-	}
 	return (0);
+}
+
+int		is_dollar(char c)
+{
+	if (c == '$')
+		return (1);
+	else
+		return (0);
 }
