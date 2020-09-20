@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   parsing_utils_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 19:05:26 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 15:56:02 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/20 13:39:54 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#include "../../../incs/minishell.h"
+
+void 	cancel_pre_bs(t_parsing_tool *tool, int i)
+{
+	if (!is_backslash(tool->input[i]) || (tool->open && tool->quote == '\''))
+			tool->pre_bs = 0;
+}
+
+void	bs_checker(t_parsing_tool *tool, int i)
+{
+	if (is_backslash(tool->input[i]))
+			switcher_bs(tool, i);
+}
 
 void	quote_checker(t_parsing_tool *tool, int i, int *n)
 {
 	if (is_quote(tool->input[i]))
 	{
-		if (i > 0)
-		{
-			if (!is_backslash(tool->input[i - 1]))
-			{
-				switcher_quote(tool, tool->input[i]);
-				if (!tool->open)
-					*n = 0;
-			}
-		}
-		else
-		{
-			switcher_quote(tool, tool->input[i]);
-			if (!tool->open)
-				*n = 0;
-		}
+		switcher_quote(tool, i);
+		if (!tool->open)
+			*n = 0;
 	}
 }
 
@@ -115,4 +115,13 @@ char	*parsing_variable(t_parsing_tool *tool, char *str)
 	}
 	tool->empty_var = 1;
 	return (ft_strdup(""));
+}
+
+void	skipspaces(t_parsing_tool *tool, int *i, int *j)
+{
+	while (ft_is_space(tool->input[*i]))
+	{
+		*i += 1;
+		*j += 1;
+	}
 }

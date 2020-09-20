@@ -6,11 +6,11 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 19:08:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 15:31:05 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/17 11:57:27 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#include "../../../incs/minishell.h"
 
 int		is_redir_or_pipe(char c)
 {

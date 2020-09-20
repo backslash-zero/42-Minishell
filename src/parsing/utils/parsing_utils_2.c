@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmeunier <cmeunier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 19:08:27 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/08/09 20:55:42 by cmeunier         ###   ########.fr       */
+/*   Updated: 2020/09/19 10:39:34 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#include "../../../incs/minishell.h"
 
 int		calc_len_newstr(char *var, char *input, char *env_name, int i)
 {
@@ -27,6 +27,8 @@ void	init_tool(t_parsing_tool *tool)
 	tool->quote = '\0';
 	tool->open = 0;
 	tool->empty_var = 0;
+	tool->pre_bs = 0;
+	tool->expand = 0;
 }
 
 int		test_empty_quote(char c, char d)

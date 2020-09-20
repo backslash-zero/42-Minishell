@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 17:54:17 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/20 14:25:40 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 typedef struct	s_newstr
 {
 	char	*str;
+	char	*new_str;
 	int		len;
+	int		new_len;
 	int		open;
 	int		expand;
 	char	quote;
@@ -25,25 +27,27 @@ typedef struct	s_newstr
 typedef struct	s_parsing_tool
 {
 	int		size;
+	int		new_size;
 	char	*input;
+	char	*new_str;
 	char	**arg;
 	int		open;
+	int		expand;
 	char	quote;
 	int		empty_var;
+	int		pre_bs;
 }				t_parsing_tool;
 
 char			**parsing(char *input);
 int				ft_split_args(t_parsing_tool *tool);
 int				size_arg_tool(t_parsing_tool *tool);
-void			switcher_quote(t_parsing_tool *tool, char c);
 char			*ft_addsubstr(int i, int j, t_parsing_tool *tool);
-void			switcher_quote(t_parsing_tool *tool, char c);
+int				switcher_quote(t_parsing_tool *tool, int i);
 int				test_empty_quote(char c, char d);
 int				cleanup_quotes(char **arg_list);
 char			*clean_substring(char *str);
 void			init_tool(t_parsing_tool *tool);
-int				append_string_to_arg(int *i, int *j, int *n,
-				t_parsing_tool *tool);
+int				append_string_to_arg(int *i, int *j, int *n, t_parsing_tool *tool);
 int				append_semicolon(int *i, int *j, int *n, t_parsing_tool *tool);
 int				is_quote(char c);
 int				is_space(char c);
@@ -52,8 +56,7 @@ int				is_dollar(char c);
 int				is_equal(char c);
 int				test_lone_dollar(char *str, int i);
 int				expand_env(t_parsing_tool *tool);
-int				replace_var(t_parsing_tool *tool, int i, char *var,
-				char *env_name);
+int				replace_var(t_parsing_tool *tool, int i, char *var, char *env_name);
 int				remove_var(t_parsing_tool *tool, int i, char *env_name);
 int				insert_env_var(t_parsing_tool *tool, int i);
 char			*get_var_name(t_parsing_tool *tool, int i);
@@ -75,8 +78,9 @@ int				is_pipe(char c);
 int				is_redir_l(char c);
 int				is_redir_r(char c);
 int				is_backslash(char c);
-int				check_backslash(char *str);
-int				new_len_backslash(char *str);
+int				is_bs_spec(char c);
+int				check_backslash(t_parsing_tool *tool);
+int				new_len_backslash(t_parsing_tool *tool);
 int				ft_clean_backslash(char **arg_list, int a);
 int				ft_backslash(char **arg_list);
 int				replace_g_ret(char **arg_list, int i);
@@ -88,5 +92,16 @@ int				check_var(char **arg_list);
 int				includes_var(char *str);
 int				check_char_quote(char *str, int i);
 int				check_bf_bs(char *str, int i);
+int				arg_cleanup(char **arg);
+int				backslash_loop_checker(t_parsing_tool *tool);
+int				find_pos_nextquote(int i, t_newstr *output);
+void			copynew_bs_str(t_parsing_tool *tool_newstr, t_parsing_tool *tool_oldstr);
+int				bs_count_inquote(t_newstr *output, int i, int j);
+void			init_newstr(t_newstr *output);
+void			switcher_bs(t_parsing_tool *tool, int i);
+int				find_nextquote(int *i, t_newstr *output);
+void			ft_clean_and_cpy(t_parsing_tool *tool);
+void		 	cancel_pre_bs(t_parsing_tool *tool, int i);
+void			bs_checker(t_parsing_tool *tool, int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 12:14:45 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/16 17:54:33 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/18 23:20:41 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,12 @@ int		replace_g_ret(char **arg_list, int i)
 	j = 0;
 	while (tool.input[j])
 	{
-		if (is_quote(tool.input[j]) && !check_bf_bs(tool.input, j))
-			switcher_quote(&tool, tool.input[j]);
+		if (is_backslash(tool.input[j]))
+			switcher_bs(&tool, j);
+		if (is_quote(tool.input[j]))
+			switcher_quote(&tool, j);
 		if (is_dollar(tool.input[j]) && tool.input[j + 1] == '?'
-			&& !(tool.open && tool.quote == '\'') && !check_bf_bs(tool.input, j))
+			&& !(tool.open && tool.quote == '\'') && !tool.pre_bs)
 		{
 			if (!insert_ret(&tool, j))
 			{
@@ -61,6 +63,8 @@ int		replace_g_ret(char **arg_list, int i)
 				return (0);
 			}
 		}
+		if (!is_backslash(tool.input[j]) || (tool.open && tool.quote == '\''))
+			tool.pre_bs = 0;
 		j++;
 	}
 	assign_and_free(&tool.input, &arg_list[i]);
