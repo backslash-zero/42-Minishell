@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/19 10:27:26 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/20 14:25:40 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,7 @@ void			init_newstr(t_newstr *output);
 void			switcher_bs(t_parsing_tool *tool, int i);
 int				find_nextquote(int *i, t_newstr *output);
 void			ft_clean_and_cpy(t_parsing_tool *tool);
+void		 	cancel_pre_bs(t_parsing_tool *tool, int i);
+void			bs_checker(t_parsing_tool *tool, int i);
 
 #endif
