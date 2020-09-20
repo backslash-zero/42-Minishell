@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 15:27:33 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/20 14:42:49 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	if (!ft_backslash(arg_list))
-   	{
+	if (!arg_cleanup(arg_list))
+	{
 		free_tab(arg_list);
 		return (ft_strerror(NULL, arg, NULL, NULL));
 	}

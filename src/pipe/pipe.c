@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 15:39:27 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/20 14:41:42 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 				redir_pipe(pipe_cmd->cmd[pipe_cmd->i], pipe_cmd, cmd);
 			if (!pipe_cmd->check_redir)
 			{
-				if (!ft_backslash(pipe_cmd->cmd[pipe_cmd->i]))
+				if (!arg_cleanup(pipe_cmd->cmd[pipe_cmd->i]))
 					return (ft_strerror(NULL, pipe_cmd->cmd[pipe_cmd->i], NULL, NULL));
 				if (!ft_checkbuiltins(pipe_cmd->cmd[pipe_cmd->i], cmd))
 				{
