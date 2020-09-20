@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 10:53:56 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/19 11:34:04 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/20 13:19:43 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,13 @@ void	len_cleaned_str(t_parsing_tool *tool)
 	{
 		if (conditions_xtra_bs(tool, i))
 			tool->new_size--;
-		if (is_backslash(tool->input[i]))
-			switcher_bs(tool, i);
+		bs_checker(tool, i);
 		if (is_quote(tool->input[i]) && !tool->pre_bs)
 		{	
 			if (switcher_quote(tool, i))
 				tool->new_size--;
 		}
-		if (!is_backslash(tool->input[i]) || (tool->open && tool->quote == '\''))
-			tool->pre_bs = 0;
+		cancel_pre_bs(tool, i);
 		i++;
 	}
 }
@@ -125,8 +123,7 @@ void	ft_clean_and_cpy(t_parsing_tool *tool)
 			if (switcher_quote(tool, i))
 				tool->expand = 0;
 		}
-		if (!is_backslash(tool->input[i]) || (tool->open && tool->quote == '\''))
-			tool->pre_bs = 0;
+		cancel_pre_bs(tool, i);
 		if (tool->expand)
 		{
 			tool->new_str[j] = tool->input[i];

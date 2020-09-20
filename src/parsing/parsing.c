@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:24:14 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/19 11:37:06 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/20 13:40:04 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,10 @@ int		size_arg_tool(t_parsing_tool *tool)
 	count = 0;
 	while (tool->input[i])
 	{
-		if (is_backslash(tool->input[i]))
-			switcher_bs(tool, i);
+		bs_checker(tool, i);
 		quote_checker(tool, i, &n);
 		if (semic_checker(tool, i, &n) || redir_pipe_checker(tool, &i, &n))
-		{
 			return (-1);
-		}
 		if (!ft_is_space(tool->input[i]) && n != 0)
 		{
 			count++;
@@ -37,22 +34,21 @@ int		size_arg_tool(t_parsing_tool *tool)
 		}
 		if (ft_is_space(tool->input[i]) && !tool->open)
 			n = 1;
-		if (!is_backslash(tool->input[i]) || (tool->open && tool->quote == '\''))
-			tool->pre_bs = 0;
+		cancel_pre_bs(tool, i);
 		i++;
 	}
-	if (tool->open)
-		return (-1);
-	return (count);
+	return (tool->open ? -1 : count);
 }
 
-void	skipspaces(t_parsing_tool *tool, int *i, int *j)
+int		conditions_split(t_parsing_tool *tool, int j)
 {
-	while (ft_is_space(tool->input[*i]))
-	{
-		*i += 1;
-		*j += 1;
-	}
+	if ((!ft_is_space(tool->input[j])
+		&& !(is_semic(tool->input[j]) && !tool->pre_bs)
+		&& !(is_redir_or_pipe(tool->input[j]) && !tool->pre_bs)
+		&& (tool->input[j] != '\0'))
+		|| (tool->open))
+		return (1);
+	return (0);
 }
 
 int		ft_split_args(t_parsing_tool *tool)
@@ -67,18 +63,12 @@ int		ft_split_args(t_parsing_tool *tool)
 	skipspaces(tool, &i, &j);
 	while (tool->input[i] && n < tool->size)
 	{
-		while ((!ft_is_space(tool->input[j])
-				&& !(is_semic(tool->input[j]) && !tool->pre_bs)
-				&& !(is_redir_or_pipe(tool->input[j]) && !tool->pre_bs)
-				&& (tool->input[j] != '\0'))
-				|| (tool->open))
+		while (conditions_split(tool, j))
 		{
-			if (is_backslash(tool->input[j]))
-				switcher_bs(tool, j);
+			bs_checker(tool, j);
 			if (is_quote(tool->input[j]))
 				switcher_quote(tool, j);
-			if (!is_backslash(tool->input[j]) || (tool->open && tool->quote == '\''))
-				tool->pre_bs = 0;
+			cancel_pre_bs(tool, j);
 			j++;
 		}
 		if (!parsing_checks(&i, &j, &n, tool))

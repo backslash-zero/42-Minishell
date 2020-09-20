@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 09:16:10 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/18 23:15:47 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/20 13:19:09 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int		expand_env(t_parsing_tool *tool)
 	i = 0;
 	while (tool->input[i])
 	{
-		if (is_backslash(tool->input[i]))
-			switcher_bs(tool, i);
+		bs_checker(tool, i);
 		if (is_quote(tool->input[i]))
 			switcher_quote(tool, i);
 		else if (conditions_expand_env(tool, i))
@@ -42,8 +41,7 @@ int		expand_env(t_parsing_tool *tool)
 				i--;
 			}
 		}
-		if (!is_backslash(tool->input[i]) || (tool->open && tool->quote == '\''))
-			tool->pre_bs = 0;
+		cancel_pre_bs(tool, i);
 		i++;
 	}
 	return (1);
