@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_redir.c                                    :+:      :+:    :+:   */
+/*   redir_pipe_tools.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/29 12:22:09 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/15 18:05:04 by celestin         ###   ########.fr       */
+/*   Created: 2020/09/20 19:44:14 by celestin          #+#    #+#             */
+/*   Updated: 2020/09/20 21:05:41 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#include "../../../../incs/minishell.h"
 
 int		redir_r_checker(t_parsing_tool *tool, int *i, int *n)
 {
@@ -73,7 +73,8 @@ int		redir_pipe_checker(t_parsing_tool *tool, int *i, int *n)
 {
 	if (i > 0)
 	{
-		if (is_redir_or_pipe(tool->input[*i]) && is_backslash((tool->input[*i - 1])))
+		if (is_redir_or_pipe(tool->input[*i])
+			&& is_backslash((tool->input[*i - 1])))
 			return (0);
 	}
 	if (redir_r_checker(tool, i, n) || pipe_checker(tool, *i, n)
@@ -82,15 +83,4 @@ int		redir_pipe_checker(t_parsing_tool *tool, int *i, int *n)
 		return (-1);
 	}
 	return (0);
-}
-
-int		parsing_checks(int *i, int *j, int *n, t_parsing_tool *tool)
-{
-	if (!append_string_to_arg(i, j, n, tool))
-		return (0);
-	if (!append_semicolon(i, j, n, tool))
-		return (0);
-	if (!append_redir_pipe(i, j, n, tool))
-		return (0);
-	return (1);
 }

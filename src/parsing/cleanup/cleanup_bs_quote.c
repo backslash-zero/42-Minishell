@@ -1,45 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_cleanup.c                                      :+:      :+:    :+:   */
+/*   cleanup_bs_quote.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/17 10:53:56 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/20 13:19:43 by celestin         ###   ########.fr       */
+/*   Created: 2020/09/20 20:17:21 by celestin          #+#    #+#             */
+/*   Updated: 2020/09/20 21:24:56 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incs/minishell.h"
 
-int		clear_quotes_bs(t_newstr *output)
+void	ft_clean_and_cpy_switchers(t_parsing_tool *tool, int i)
 {
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (output->str[i])
+	if (is_backslash(tool->input[i]))
 	{
-		if (check_char_quote(output->str, i))
-		{
-			output->open = 1;
-			output->quote = output->str[i];
-			if (!find_nextquote(&i, output))
-				return (0);
-		}
-		else
-			i++;
+		switcher_bs(tool, i);
+		if (tool->pre_bs)
+			tool->expand = 0;
 	}
-	return (1);
+	if (is_quote(tool->input[i]) && !tool->pre_bs)
+	{
+		if (switcher_quote(tool, i))
+			tool->expand = 0;
+	}
+	cancel_pre_bs(tool, i);
 }
 
-int		conditions_xtra_bs(t_parsing_tool *tool, int i)
+void	ft_clean_and_cpy(t_parsing_tool *tool)
 {
-	if (tool->pre_bs
-			&& !(tool->open && tool->quote == '\'') 
-			&& !(tool->open && tool->quote == '\"' && !is_bs_spec(tool->input[i])))
-		return (1);
-	return (0);
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	tool->expand = 1;
+	while (tool->input[i])
+	{
+		ft_clean_and_cpy_switchers(tool, i);
+		if (tool->expand)
+		{
+			tool->new_str[j] = tool->input[i];
+			j++;
+		}
+		tool->expand = 1;
+		i++;
+	}
+	tool->new_str[j] = '\0';
 }
 
 void	len_cleaned_str(t_parsing_tool *tool)
@@ -56,7 +64,7 @@ void	len_cleaned_str(t_parsing_tool *tool)
 			tool->new_size--;
 		bs_checker(tool, i);
 		if (is_quote(tool->input[i]) && !tool->pre_bs)
-		{	
+		{
 			if (switcher_quote(tool, i))
 				tool->new_size--;
 		}
@@ -68,13 +76,13 @@ void	len_cleaned_str(t_parsing_tool *tool)
 int		process_str(char **arg_list, int i)
 {
 	int				new_len;
-	t_parsing_tool 	tool;
-	
+	t_parsing_tool	tool;
+
 	init_tool(&tool);
 	tool.input = arg_list[i];
 	tool.size = ft_strlen(arg_list[i]);
 	len_cleaned_str(&tool);
-	if(!(tool.new_str = malloc(sizeof(char) * (tool.new_size + 1))))
+	if (!(tool.new_str = malloc(sizeof(char) * (tool.new_size + 1))))
 		return (0);
 	init_tool(&tool);
 	ft_clean_and_cpy(&tool);
@@ -99,49 +107,5 @@ int		ft_clean_bs_quote(char **arg_list)
 		}
 		i++;
 	}
-	return (1);
-}
-
-void	ft_clean_and_cpy(t_parsing_tool *tool)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	tool->expand = 1;
-	while (tool->input[i])
-	{
-		if (is_backslash(tool->input[i]))
-		{	
-			switcher_bs(tool, i);
-			if (tool->pre_bs)
-				tool->expand = 0;
-		}
-		if (is_quote(tool->input[i]) && !tool->pre_bs)
-		{	
-			if (switcher_quote(tool, i))
-				tool->expand = 0;
-		}
-		cancel_pre_bs(tool, i);
-		if (tool->expand)
-		{
-			tool->new_str[j] = tool->input[i];
-			j++;
-		}
-		tool->expand = 1;
-		i++;
-	}
-	tool->new_str[j] = '\0';
-}
-
-int		arg_cleanup(char **arg)
-{
-	if (!check_var(arg))
-		return (0);
-	if (!check_g_ret_var(arg))
-		return (0);
-	if (!ft_clean_bs_quote(arg))
-		return (0);
 	return (1);
 }

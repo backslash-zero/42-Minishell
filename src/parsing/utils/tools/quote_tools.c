@@ -1,50 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils_4.c                                  :+:      :+:    :+:   */
+/*   quote_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/29 12:24:24 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/19 00:22:44 by celestin         ###   ########.fr       */
+/*   Created: 2020/09/20 19:25:01 by celestin          #+#    #+#             */
+/*   Updated: 2020/09/20 21:05:07 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../../../incs/minishell.h"
 
-int		is_space(char c)
+int		check_char_quote(char *str, int i)
 {
-	if (c == ' ')
-		return (1);
-	else
-		return (0);
+	if (is_quote(str[i]))
+	{
+		if (i > 0)
+		{
+			if (!is_backslash(str[i - 1]))
+				return (1);
+		}
+		else
+			return (1);
+	}
+	return (0);
 }
 
-int		is_equal(char c)
+int		checkifquotes(char *str)
 {
-	if (c == '=')
-		return (1);
-	else
-		return (0);
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (check_char_quote(str, i))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-int		is_semic(char c)
+void	quote_checker(t_parsing_tool *tool, int i, int *n)
 {
-	if (c == ';')
-		return (1);
-	else
-		return (0);
+	if (is_quote(tool->input[i]))
+	{
+		switcher_quote(tool, i);
+		if (!tool->open)
+			*n = 0;
+	}
 }
 
-void	switcher_bs(t_parsing_tool *tool, int i)
-{
-	if (tool->pre_bs && !(tool->open && tool->quote == '\''))
-		tool->pre_bs = 0;
-	else if (!tool->pre_bs && !(tool->open && tool->quote == '\''))
-		tool->pre_bs = 1;
-}
-
-int 	switcher_quote(t_parsing_tool *tool, int i)
+int		switcher_quote(t_parsing_tool *tool, int i)
 {
 	if (!tool->open && !tool->pre_bs)
 	{
@@ -59,12 +66,5 @@ int 	switcher_quote(t_parsing_tool *tool, int i)
 		tool->quote = '\0';
 		return (1);
 	}
-	return (0);
-}
-
-int		test_lone_dollar(char *str, int i)
-{
-	if (!envvar_authorized_character(str[i + 1], TRUE))
-		return (1);
 	return (0);
 }

@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils_5.c                                  :+:      :+:    :+:   */
+/*   is_funcs_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/15 17:17:43 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/18 10:40:15 by celestin         ###   ########.fr       */
+/*   Created: 2020/09/20 19:18:16 by celestin          #+#    #+#             */
+/*   Updated: 2020/09/20 19:55:49 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incs/minishell.h"
+#include "../../../../incs/minishell.h"
 
-int		is_backslash(char c)
+int		is_redir_or_pipe(char c)
 {
-	if (c == '\\')
+	if (is_pipe(c) ||
+		is_redir_l(c) ||
+		is_redir_r(c))
 		return (1);
 	else
 		return (0);
 }
 
-int		is_bs_spec(char c)
+int		is_pipe(char c)
 {
-	if (c == '$' || c == '\"' || c == '`' || c == '\\' || c == '\n')
+	if (c == '|')
+		return (1);
+	else
+		return (0);
+}
+
+int		is_redir_l(char c)
+{
+	if (c == '<')
 		return (1);
 	else
 		return (0);
