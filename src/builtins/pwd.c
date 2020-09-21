@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:41:16 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 11:42:13 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 17:46:21 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char *find_pwd_env(char **env)
+char	*find_pwd_env(char **env)
 {
 	char	*s;
 	int		i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:17:37 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 11:31:06 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 17:21:54 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		builtin_exit_next(char **arg, int i)
 {
-	unsigned int j;
-	
+	unsigned int	j;
+
 	while (arg[1][i])
 	{
 		if (!(ft_isdigit(arg[1][i])))
@@ -34,6 +34,21 @@ int		builtin_exit_next(char **arg, int i)
 	return (j);
 }
 
+int		builtin_exit_long_arg(char **arg, int i)
+{
+	while (arg[1][i])
+	{
+		if (!(ft_isdigit(arg[1][i])))
+		{
+			ft_error(EXIT_NUM, NULL, NULL, arg[1]);
+			exit(255);
+		}
+		i++;
+	}
+	g_ret = 1;
+	return (ft_error(MANY_ARGS, NULL, NULL, arg[0]));
+}
+
 int		builtin_exit(char **arg)
 {
 	int				i;
@@ -48,19 +63,7 @@ int		builtin_exit(char **arg)
 		exit(0);
 	}
 	if (arg_l > 2)
-	{
-		while (arg[1][i])
-		{
-			if (!(ft_isdigit(arg[1][i])))
-			{
-				ft_error(EXIT_NUM, NULL, NULL, arg[1]);
-				exit(255);
-			}
-			i++;
-		}
-		g_ret = 1;
-		return (ft_error(MANY_ARGS, NULL, NULL, arg[0]));
-	}
+		return (builtin_exit_long_arg(arg, i));
 	if (arg[1][i] == '+' || arg[1][i] == '-')
 		i++;
 	j = builtin_exit_next(arg, i);
