@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:11:25 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/21 14:07:17 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 14:22:32 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**parsing(char *input)
 
 	tool.input = ft_strdup(input);
 	init_tool(&tool);
-	if (!ft_strcmp(input, ";;"))
+	if (input[0] == ';')
 	{
 		g_ret = 258;
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
