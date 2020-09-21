@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 15:32:34 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 16:28:52 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,11 @@ int				ft_exec(char **arg_list)
 	if (proc == 0)
 	{
 		s = try_absolut_path(arg_list[0]);
-		if (s != NULL && ft_strcmp(s, "NOT_FOUND") == 0)
+		if (s != NULL && (ft_strcmp(s, "NOT_FOUND") == 0 || ft_strcmp(s, "IS_DIR") == 0))
 		{
 			free_tab(tab_env);
-			exit(0);
+			g_ret = 126;
+			exit(126);
 		}
 		if (s == NULL)
 			s = find_path_env(tab_env, arg_list[0]);
@@ -239,3 +240,27 @@ void			prompt(void)
 			return ;
 	}
 }
+/* 
+int		path_exec	(char **arg)
+{
+	char	*path;
+	char	*tmp;
+
+	path = ft_strrchr(arg[0], '/');
+	if (path && !(path = ft_strdup(try_path(arg[0]))))
+		return (ft_strerror(NULL, NULL, arg[0], NULL));
+}
+
+char	*try_path(char *path)
+{
+	struct stat	file;
+
+	errno = 0;
+	stat(path, &file);
+	if (errno)
+		return (NULL);
+	if ((file.st_mode & S_IFMT) == S_IFDIR && (errno = EISDIR))
+		return (NULL);
+	return (path);
+}
+ */

@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:55:07 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 14:28:11 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 16:28:52 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 int		try_path(char *s)
 {
-	struct stat buff;
+	struct stat file;
 
 	errno = 0;
-	stat(s, &buff);
+	stat(s, &file);
 	if (errno)
 		return (-1);
+	if ((file.st_mode & S_IFMT) == S_IFDIR && (errno = EISDIR))
+	{
+		printf("is dir\n");
+		return (-2);
+	}
 	return (0);
 }
 
@@ -68,16 +73,26 @@ char	*find_correct_path(char *s, char *arg)
 char	*try_absolut_path(char *arg)
 {
 	int i;
+	int ret_trypath;
 
 	i = 0;
 	while (arg[i])
 	{
 		if (arg[i] == 47)
 		{
-			if (try_path(arg) == 0)
+			if ((ret_trypath = try_path(arg)) == 0)
+			{
+				printf("found path\n");
 				return (arg);
+			}
+			else if (ret_trypath == -2)
+			{
+				ft_strerror(arg, NULL, NULL, NULL);
+				return ("IS_DIR");
+			}
 			else
 			{
+				printf("not found\n");
 				ft_error(NO_FILE, NULL, NULL, arg);
 				return ("NOT_FOUND");
 			}
