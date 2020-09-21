@@ -51,6 +51,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 				\
 				utils/redirections2.c						\
 				utils/semicolon.c							\
 				utils/path.c								\
+				utils/path_2.c								\
 				tools/tools.c								\
 				minishell.c 								\
 
