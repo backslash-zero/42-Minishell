@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:42:59 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 17:12:04 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 00:45:31 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,9 @@ int		is_forking(int val)
 
 void	signal_handler(int n)
 {
-	//if (g_signal == 1)
-	//{
-		ft_putstr("\033[1C");
-		ft_putstr("\b\b \b\b \b\b");
-		ft_putstr("\033[1C");
-//	}
-//	else if (g_signal == 0)
-//		g_signal = 1;
+	ft_putstr("\033[1C");
+	ft_putstr("\b\b \b\b \b\b");
+	ft_putstr("\033[1C");
 	if (n == SIGINT)
 	{
 		if (g_print == 0)

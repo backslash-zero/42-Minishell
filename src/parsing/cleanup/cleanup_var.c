@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:59:05 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/20 20:05:56 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/22 00:08:08 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		insert_env_var(t_parsing_tool *tool, int i)
 		tool->empty_var = 0;
 	}
 	else
-		replace_var(tool, i, var, env_name);
+		rplc_vr(tool, i, var, env_name);
 	free(env_name);
 	free(var);
 	return (1);

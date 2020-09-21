@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:48:46 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/20 19:52:47 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/22 00:05:41 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_addsubstr(int i, int j, t_parsing_tool *tool)
 	return (str);
 }
 
-int		append_string_to_arg(int *i, int *j, int *n, t_parsing_tool *tool)
+int		append_str2arg(int *i, int *j, int *n, t_parsing_tool *tool)
 {
 	if (*j - *i > 0)
 	{
@@ -88,7 +88,7 @@ int		append_redir_pipe(int *i, int *j, int *n, t_parsing_tool *tool)
 
 int		parsing_checks(int *i, int *j, int *n, t_parsing_tool *tool)
 {
-	if (!append_string_to_arg(i, j, n, tool))
+	if (!append_str2arg(i, j, n, tool))
 		return (0);
 	if (!append_semicolon(i, j, n, tool))
 		return (0);

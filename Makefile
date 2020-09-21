@@ -41,20 +41,21 @@ SRC_NAME	=	builtins/builtins_nametab.c 				\
 				parsing/utils/parsing_utils_1.c				\
 				pipe/pipe.c									\
 				pipe/pipe2.c								\
+				pipe/pipe3.c								\
 				utils/arg.c 								\
 				utils/error.c 								\
 				utils/free.c 								\
 				utils/ft_strncpy.c 							\
 				utils/prints.c 								\
-				utils/reads.c								\
-				utils/redirections.c						\
-				utils/redirections2.c						\
+				execs/reads.c								\
+				execs/reads_2.c								\
+				execs/redirections.c						\
+				execs/redirections2.c						\
 				utils/semicolon.c							\
-				utils/path.c								\
-				utils/path_2.c								\
+				execs/path.c								\
+				execs/path_2.c								\
 				tools/tools.c								\
 				minishell.c 								\
-
 
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_NAME))
 

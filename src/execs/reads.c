@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 17:09:01 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 01:01:19 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 		{
 			ret_exec = ft_exec(cmd->arg);
 			if (ret_exec == -1)
-			{
 				return (ft_strerror(NULL, NULL, "fork", NULL));
-			}
 			else if (ret_exec == -2)
 			{
 				ft_error(CMD_NOT_FOUND, NULL, NULL, cmd->arg[0]);
@@ -148,8 +146,8 @@ int				ft_exec(char **arg_list)
 			free_tab(tab_env);
 			if (errno == 13)
 			{
-					ft_strerror(s, NULL, arg_list[0], NULL);
-					return (-3);
+				ft_strerror(s, NULL, arg_list[0], NULL);
+				return (-3);
 			}
 			free(s);
 			return (-2);
@@ -188,12 +186,7 @@ int				launch(char *input, t_cmd *cmd)
 	i = 0;
 	while (arg[i] != NULL)
 	{
-		len_new_arg_list = 0;
-		while (i < arg_len(arg) && ft_strcmp(arg[i], ";") != 0)
-		{
-			len_new_arg_list++;
-			i++;
-		}
+		get_len_semic(arg, &i, &len_new_arg_list);
 		if ((cmd->arg = semicolon(arg, i, len_new_arg_list)) == NULL)
 		{
 			free_tab(cmd->arg);
@@ -210,14 +203,9 @@ int				launch(char *input, t_cmd *cmd)
 		if (ret_exec == -2)
 			exit(127);
 		if (arg[i] == NULL)
-		{
-			//free_tab(cmd->arg);
 			break ;
-		}
-		//free_tab(cmd->arg);
 		i++;
 	}
-	//free_tab(arg);
 	return (0);
 }
 
@@ -249,27 +237,3 @@ void			prompt(void)
 			return ;
 	}
 }
-/* 
-int		path_exec	(char **arg)
-{
-	char	*path;
-	char	*tmp;
-
-	path = ft_strrchr(arg[0], '/');
-	if (path && !(path = ft_strdup(try_path(arg[0]))))
-		return (ft_strerror(NULL, NULL, arg[0], NULL));
-}
-
-char	*try_path(char *path)
-{
-	struct stat	file;
-
-	errno = 0;
-	stat(path, &file);
-	if (errno)
-		return (NULL);
-	if ((file.st_mode & S_IFMT) == S_IFDIR && (errno = EISDIR))
-		return (NULL);
-	return (path);
-}
- */

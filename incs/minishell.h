@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 19:48:11 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/22 00:51:31 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@
 # include "error.h"
 # include "libft.h"
 # include "env.h"
-# include "builtin.h"
 # include "ft_printf.h"
 # include "parsing.h"
-# include "pipe.h"
+# include "builtin.h"
 # include "tools.h"
+# include "pipe.h"
 
 typedef int		t_ret;
 t_ret			g_ret;
@@ -44,34 +44,6 @@ typedef int		t_signal;
 t_signal		g_signal;
 
 typedef int		(*t_builtfunc_addr)(char **s);
-
-typedef struct	s_parse
-{
-	char	*builtnb[NB_BUILINS];
-}				t_parse;
-
-typedef struct	s_pipe_cmd{
-	int		len;
-	char	***cmd;
-	int		pfd[2];
-	pid_t	proc;
-	int		fd_in;
-	int		i;
-	char	*s;
-	int		ret_red;
-	char	**tab_env;
-	int		check_redir;
-	t_parse	parse;
-}				t_pipe_cmd;
-
-typedef struct	s_cmd{
-	char	**arg;
-	int		nb_redir;
-	int		apply_redir;
-	int		redir_ok;
-	int		pipe_ret;
-	t_parse	parse;
-}				t_cmd;
 
 void			ft_builtinstab(t_cmd *cmd);
 int				ft_checkbuiltins(char **s, t_cmd *cmd);
@@ -85,6 +57,8 @@ void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
 int				ft_exec(char **arg_list);
 int				redirection(t_cmd *cmd);
+void			redir_exec(char **arg_list, t_cmd *cmd, int fd);
+int				apply_redirections(char **arg, t_cmd *cmd, int fd);
 int				r_anglebracket(char **arg, t_cmd *cmd, char *name);
 int				r_dbanglebracket(char **arg, t_cmd *cmd, char *name);
 int				l_anglebracket(char **arg, t_cmd *cmd, char *name);

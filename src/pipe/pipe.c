@@ -3,92 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 17:08:53 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 23:33:28 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		ft_count_pipe(char **arg)
+int		pipe_fork(t_pipe_cmd *pipe_cmd)
 {
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (arg[i])
+	if (pipe(pipe_cmd->pfd) == -1)
 	{
-		if (!ft_strcmp(arg[i], "|"))
-			count++;
-		i++;
+		ft_strerror(NULL, NULL, NULL, NULL);
+		return (-1);
 	}
-	return (count);
-}
-
-int		check_redir(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
+	if ((pipe_cmd->proc = fork()) == -1)
 	{
-		if (ft_strcmp(s[i], ">") == 0 || ft_strcmp(s[i], ">>") == 0 ||
-		ft_strcmp(s[i], "<") == 0)
-			return (1);
-		i++;
+		free_tab(pipe_cmd->tab_env);
+		free_tab_3d(pipe_cmd->cmd);
+		return (-1);
 	}
 	return (0);
 }
 
-void	count_redir_pipe(char **s, t_cmd *cmd)
+void	pipe_dups(t_pipe_cmd *pipe_cmd)
 {
-	int	i;
-
-	i = 0;
-	cmd->nb_redir = 0;
-	cmd->apply_redir = 0;
-	while (s[i])
+	if (dup2(pipe_cmd->fd_in, 0) == -1)
 	{
-		if (ft_strcmp(s[i], ">") == 0 || ft_strcmp(s[i], ">>") == 0 ||
-		ft_strcmp(s[i], "<") == 0)
-			cmd->nb_redir++;
-		i++;
+		ft_strerror(NULL, NULL, NULL, NULL);
+		exit(errno);
 	}
+	if (pipe_cmd->cmd[pipe_cmd->i + 1] != NULL)
+	{
+		if (dup2(pipe_cmd->pfd[1], 1) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
+	}
+	close(pipe_cmd->pfd[0]);
 }
 
-void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
+int		pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
 {
-	int	i;
-	int	ret_red;
-
-	i = 0;
-	ret_red = 0;
-	pipe_cmd->check_redir = 0;
-	count_redir_pipe(s, cmd);
-	while (s[i])
+	if (!arg_cleanup(pipe_cmd->cmd[pipe_cmd->i]))
+		return (ft_strerror(NULL, pipe_cmd->cmd[pipe_cmd->i], NULL, NULL));
+	if (!ft_checkbuiltins(pipe_cmd->cmd[pipe_cmd->i], cmd))
 	{
-		if (ft_strcmp(s[i], ">") == 0)
+		*ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i]);
+		if (*ret_exec == -1)
+			ft_strerror(NULL, NULL, "fork", NULL);
+		else if (*ret_exec == -2)
 		{
-			ret_red = r_anglebracket(s, cmd, s[i + 1]);
-			pipe_cmd->check_redir = 1;
+			ft_error(CMD_NOT_FOUND, NULL, pipe_cmd->cmd[pipe_cmd->i],
+						pipe_cmd->cmd[pipe_cmd->i][0]);
+			exit(127);
 		}
-		else if (ft_strcmp(s[i], ">>") == 0)
-		{
-			ret_red = r_dbanglebracket(s, cmd, s[i + 1]);
-			pipe_cmd->check_redir = 1;
-		}
-		else if (ft_strcmp(s[i], "<") == 0)
-		{
-			ret_red = l_anglebracket(s, cmd, s[i + 1]);
-			pipe_cmd->check_redir = 1;
-		}
-		if (ret_red == -1)
-			exit(1);
-		i++;
+		else if (*ret_exec == 127 || *ret_exec == -3)
+			exit(127);
 	}
+	return (0);
+}
+
+void	pipe_wait(int status, t_pipe_cmd *pipe_cmd)
+{
+	if (wait(&status) == -1)
+		ft_strerror(NULL, NULL, "wait", NULL);
+	check_signal(status);
+	close(pipe_cmd->pfd[1]);
+	pipe_cmd->fd_in = pipe_cmd->pfd[0];
+	pipe_cmd->i++;
 }
 
 int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
@@ -98,91 +84,24 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 
 	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
-		if (pipe(pipe_cmd->pfd) == -1)
-		{
-			ft_strerror(NULL, NULL, NULL, NULL);
+		if (pipe_fork(pipe_cmd) == -1)
 			return (-1);
-		}
-		if ((pipe_cmd->proc = fork()) == -1)
+		if (pipe_cmd->proc == 0)
 		{
-			free_tab(pipe_cmd->tab_env);
-			free_tab_3d(pipe_cmd->cmd);
-			return (-1);
-		}
-		else if (pipe_cmd->proc == 0)
-		{
-			if (dup2(pipe_cmd->fd_in, 0) == -1)
-			{
-				ft_strerror(NULL, NULL, NULL, NULL);
-				exit(errno);
-			}
-			if (pipe_cmd->cmd[pipe_cmd->i + 1] != NULL)
-			{
-				if (dup2(pipe_cmd->pfd[1], 1) == -1)
-				{
-					ft_strerror(NULL, NULL, NULL, NULL);
-					exit(errno);
-				}
-			}
-			close(pipe_cmd->pfd[0]);
+			pipe_dups(pipe_cmd);
 			if (check_redir(pipe_cmd->cmd[pipe_cmd->i]))
 				redir_pipe(pipe_cmd->cmd[pipe_cmd->i], pipe_cmd, cmd);
 			if (!pipe_cmd->check_redir)
 			{
-				if (!arg_cleanup(pipe_cmd->cmd[pipe_cmd->i]))
-					return (ft_strerror(NULL, pipe_cmd->cmd[pipe_cmd->i], NULL, NULL));
-				if (!ft_checkbuiltins(pipe_cmd->cmd[pipe_cmd->i], cmd))
-				{
-					ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i]);
-					if (ret_exec == -1)
-						ft_strerror(NULL, NULL, "fork", NULL);
-					else if (ret_exec == -2)
-					{
-						ft_error(CMD_NOT_FOUND, NULL, pipe_cmd->cmd[pipe_cmd->i], pipe_cmd->cmd[pipe_cmd->i][0]);
-						exit(127);
-					}
-					else if (ret_exec == 127 || ret_exec == -3)
-						exit(127);
-				}
+				if (pipe_default(pipe_cmd, cmd, &ret_exec) == -1)
+					return (-1);
 			}
 			cmd->pipe_ret = g_ret;
 			exit(g_ret);
 		}
 		else
-		{
-			if (wait(&status) == -1)
-				ft_strerror(NULL, NULL, "wait", NULL);
-			check_signal(status);
-			close(pipe_cmd->pfd[1]);
-			pipe_cmd->fd_in = pipe_cmd->pfd[0];
-			pipe_cmd->i++;
-		}
+			pipe_wait(status, pipe_cmd);
 	}
 	free_tab(pipe_cmd->tab_env);
-	//free_tab_3d(pipe_cmd->cmd);
-	return (0);
-}
-
-int		init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list)
-{
-	if (!(pipe_cmd->tab_env = tablst(g_env)))
-		return (0);
-	pipe_cmd->check_redir = 0;
-	pipe_cmd->len = ft_count_pipe(arg_list);
-	pipe_cmd->cmd = prepare_cmd(arg_list, pipe_cmd);
-	pipe_cmd->fd_in = 0;
-	pipe_cmd->i = 0;
-	return (1);
-}
-
-int		ft_pipe_2(char **arg_list, t_cmd *cmd)
-{
-	t_pipe_cmd	pipe_cmd;
-
-	if (!init_t_pipe(&pipe_cmd, arg_list))
-		return (0);
-	loop_pipe(&pipe_cmd, cmd);
-	if (g_ret == 127)
-		return (-1);
 	return (0);
 }

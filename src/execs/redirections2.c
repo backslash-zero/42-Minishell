@@ -6,28 +6,16 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/20 14:42:49 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/22 00:50:12 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		apply_redirections(char **arg, t_cmd *cmd, int fd)
+void	redir_exec(char **arg_list, t_cmd *cmd, int fd)
 {
 	int		ret_exec;
-	char	**arg_list;
 
-	if (!(arg_list = deletebracket(arg)))
-	{
-		close(fd);
-		ft_strerror(NULL, NULL, NULL, NULL);
-		return (-1);
-	}
-	if (!arg_cleanup(arg_list))
-	{
-		free_tab(arg_list);
-		return (ft_strerror(NULL, arg, NULL, NULL));
-	}
 	if (!ft_checkbuiltins(arg_list, cmd))
 	{
 		ret_exec = ft_exec(arg_list);
@@ -41,6 +29,24 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd)
 			exit(127);
 		}
 	}
+}
+
+int		apply_redirections(char **arg, t_cmd *cmd, int fd)
+{
+	char	**arg_list;
+
+	if (!(arg_list = deletebracket(arg)))
+	{
+		close(fd);
+		ft_strerror(NULL, NULL, NULL, NULL);
+		return (-1);
+	}
+	if (!arg_cleanup(arg_list))
+	{
+		free_tab(arg_list);
+		return (ft_strerror(NULL, arg, NULL, NULL));
+	}
+	redir_exec(arg_list, cmd, fd);
 	free_tab(arg_list);
 	return (0);
 }

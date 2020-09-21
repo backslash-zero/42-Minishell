@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:05:54 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/14 13:49:34 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 23:49:03 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,35 @@
 
 # include <memory.h>
 
-int			ft_count_pipe(char **arg);
-void		ft_pipe(void);
+typedef struct	s_pipe_cmd{
+	int			len;
+	char		***cmd;
+	int			pfd[2];
+	pid_t		proc;
+	int			fd_in;
+	int			i;
+	char		*s;
+	int			ret_red;
+	char		**tab_env;
+	int			check_redir;
+	t_parse		parse;
+}				t_pipe_cmd;
+
+int				ft_count_pipe(char **arg);
+void			ft_pipe(void);
+int				check_redir(char **s);
+void			count_redir_pipe(char **s, t_cmd *cmd);
+void			redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd);
+int				loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd);
+int				init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list);
+int				ft_pipe_2(char **arg_list, t_cmd *cmd);
+char			**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
+char			**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
+char			***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
+void			pipe_wait(int status, t_pipe_cmd *pipe_cmd);
+int				pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec);
+void			toggle_redir(char **s, int i, t_pipe_cmd *pipe_cmd);
+int				pipe_fork(t_pipe_cmd *pipe_cmd);
+void			pipe_dups(t_pipe_cmd *pipe_cmd);
 
 #endif
