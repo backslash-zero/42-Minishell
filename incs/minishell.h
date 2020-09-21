@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 14:33:28 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 14:57:06 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef int		t_ret;
 t_ret			g_ret;
 typedef int		t_prompt;
 t_prompt		g_print;
+typedef int		t_signal;
+t_signal		g_signal;
 
 typedef int		(*t_builtfunc_addr)(char **s);
 

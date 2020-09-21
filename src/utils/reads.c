@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 13:31:47 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 15:32:34 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int				launch_exec(char **arg, t_cmd *cmd)
 	int	ret_exec;
 
 	fd_dup(0);
-	//g_ret = 0;
 	ret_red = redirection(cmd);
 	if (!ret_red)
 	{
@@ -137,6 +136,8 @@ int				ft_exec(char **arg_list)
 		}
 		if (s == NULL)
 			s = find_path_env(tab_env, arg_list[0]);
+		if (!ft_strcmp(arg_list[0], "cat"))
+			g_signal = 0;
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
 			free(s);
@@ -158,6 +159,8 @@ int				ft_exec(char **arg_list)
 			free_tab(tab_env);
 			return (127);
 		}
+		if (!ft_strcmp(arg_list[0], "cat"))
+			g_signal = 0;
 	}
 	free_tab(tab_env);
 	return (0);
@@ -215,6 +218,7 @@ void			prompt(void)
 	t_cmd	cmd;
 
 	ft_builtinstab(&cmd);
+	g_signal = 1;
 	while (1)
 	{
 		ret = 0;
@@ -222,6 +226,8 @@ void			prompt(void)
 			print_prompt_prefix();
 		if (g_print == 1)
 			g_print = 0;
+		if (g_signal == 0)
+			g_signal = 1;
 		ret = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
 		if (ret == -1)
 			exit(errno);
