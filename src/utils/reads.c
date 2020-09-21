@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/19 11:38:31 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/21 11:33:21 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 	int	ret_exec;
 
 	fd_dup(0);
-	g_ret = 0;
+	//g_ret = 0;
 	ret_red = redirection(cmd);
 	if (!ret_red)
 	{

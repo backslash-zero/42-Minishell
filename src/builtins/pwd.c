@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:41:16 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 14:06:17 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 11:42:13 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ int		builtin_pwd(char **arg)
 	ft_putstr_fd(1, dir);
 	ft_putchar_fd(1, '\n');
 	free(dir);
+	g_ret = 0;
 	return (0);
 }

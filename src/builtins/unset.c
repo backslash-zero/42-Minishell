@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:41:57 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/18 16:11:50 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 12:07:23 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,14 @@ int		builtin_unset(char **arg)
 			i++;
 		}
 	}
+	if (j == 0 || j == -1 || j == -2)
+		g_ret = 1;
 	if (j == 0)
 		return (ft_error(INVALID_ID_U, NULL, NULL, arg[1]));
 	if (j == -1)
 		return (ft_error(INVALID_OPT_ID_U, NULL, NULL, arg[1]));
 	if (j == -2)
 		return (ft_error(SYNTAX_ERR, NULL, NULL, arg[1]));
+	g_ret = 0;
 	return (0);
 }

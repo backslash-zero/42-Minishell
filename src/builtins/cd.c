@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:58:29 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/18 15:58:46 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 11:40:33 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		update_pwd(void)
 	set_var(g_export, "OLDPWD=", old_dir);
 	free(dir);
 	free(old_dir);
+	g_ret = 0;
 	return (0);
 }
 
@@ -50,7 +51,10 @@ int		builtin_cd(char **arg)
 			return (0);
 		new_dir = arg[1];
 		if (chdir(new_dir) == -1)
+		{
+			g_ret = 1;
 			return (ft_strerror(NULL, NULL, "cd", arg[1]));
+		}
 	}
 	return (update_pwd());
 }
