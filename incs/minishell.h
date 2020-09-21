@@ -40,6 +40,8 @@ typedef int		t_ret;
 t_ret			g_ret;
 typedef int		t_prompt;
 t_prompt		g_print;
+typedef int		t_signal;
+t_signal		g_signal;
 
 typedef int		(*t_builtfunc_addr)(char **s);
 
@@ -67,6 +69,7 @@ typedef struct	s_cmd{
 	int		nb_redir;
 	int		apply_redir;
 	int		redir_ok;
+	int		pipe_ret;
 	t_parse	parse;
 }				t_cmd;
 
