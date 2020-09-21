@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:11:25 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/20 19:11:30 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/21 14:22:32 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ char	**parsing(char *input)
 
 	tool.input = ft_strdup(input);
 	init_tool(&tool);
+	if (input[0] == ';')
+	{
+		g_ret = 258;
+		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
+		return (NULL);
+	}
 	if (((tool.size = size_arg_tool(&tool)) == -1) || (check_backslash(&tool)))
 	{
 		ft_error(SYNTAX_ERR, NULL, NULL, NULL);
