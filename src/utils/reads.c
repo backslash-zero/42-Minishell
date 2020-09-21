@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 16:17:54 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/21 16:26:29 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,10 @@ int				ft_exec(char **arg_list)
 		if (s != NULL && (ft_strcmp(s, "NOT_FOUND") == 0 || ft_strcmp(s, "IS_DIR") == 0))
 		{
 			free_tab(tab_env);
-			exit(0);
+			if (ft_strcmp(s, "NOT_FOUND") == 0 )
+				exit(126);
+			if (ft_strcmp(s, "IS_DIR") == 0)
+				exit(127);
 		}
 		if (s == NULL)
 			s = find_path_env(tab_env, arg_list[0]);
