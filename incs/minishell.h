@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 16:56:18 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 19:48:11 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ int				l_anglebracket(char **arg, t_cmd *cmd, char *name);
 char			**deletebracket(char **arg);
 char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
+int				try_path(char *s);
+char			*catch_path(char *test, char *arg);
+char			*find_correct_path(char *s, char *arg);
 char			*try_absolut_path(char *arg);
 char			**tablst(t_list *lst);
 void			fd_dup(int i);
