@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 14:57:06 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 16:56:18 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct	s_cmd{
 	int		nb_redir;
 	int		apply_redir;
 	int		redir_ok;
+	int		pipe_ret;
 	t_parse	parse;
 }				t_cmd;
 

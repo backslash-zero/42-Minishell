@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/20 14:41:42 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/21 17:08:53 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,12 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 						ft_error(CMD_NOT_FOUND, NULL, pipe_cmd->cmd[pipe_cmd->i], pipe_cmd->cmd[pipe_cmd->i][0]);
 						exit(127);
 					}
-					else if (ret_exec == 127)
+					else if (ret_exec == 127 || ret_exec == -3)
 						exit(127);
 				}
 			}
-			exit(0);
+			cmd->pipe_ret = g_ret;
+			exit(g_ret);
 		}
 		else
 		{

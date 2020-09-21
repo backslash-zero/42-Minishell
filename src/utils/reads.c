@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 16:28:52 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/21 17:09:01 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int				launch_exec(char **arg, t_cmd *cmd)
 				ft_error(CMD_NOT_FOUND, NULL, NULL, cmd->arg[0]);
 				return (-2);
 			}
+			else if (ret_exec == -3)
+				return (-2);
 		}
 		fd_dup(1);
 		return (1);
@@ -132,17 +134,24 @@ int				ft_exec(char **arg_list)
 		if (s != NULL && (ft_strcmp(s, "NOT_FOUND") == 0 || ft_strcmp(s, "IS_DIR") == 0))
 		{
 			free_tab(tab_env);
-			g_ret = 126;
-			exit(126);
+			if (ft_strcmp(s, "NOT_FOUND") == 0 )
+				exit(126);
+			if (ft_strcmp(s, "IS_DIR") == 0)
+				exit(127);
 		}
 		if (s == NULL)
 			s = find_path_env(tab_env, arg_list[0]);
 		if (!ft_strcmp(arg_list[0], "cat"))
-			g_signal = 0;
+			g_signal = 2;
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
-			free(s);
 			free_tab(tab_env);
+			if (errno == 13)
+			{
+					ft_strerror(s, NULL, arg_list[0], NULL);
+					return (-3);
+			}
+			free(s);
 			return (-2);
 		}
 	}
