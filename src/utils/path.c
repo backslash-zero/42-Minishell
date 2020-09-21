@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:55:07 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 14:44:16 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/21 16:07:42 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,10 @@ int		try_path(char *s)
 
 	errno = 0;
 	stat(s, &file);
+	if ((file.st_mode & S_IFMT) == S_IFDIR && (errno = EISDIR))
+		return (-21);
 	if (errno)
 		return (-1);
-	if ((file.st_mode & S_IFMT) == S_IFDIR && (errno = EISDIR))
-	{
-		printf("is dir\n");
-		return (-2);
-	}
 	return (0);
 }
 
@@ -82,10 +79,9 @@ char	*try_absolut_path(char *arg)
 		{
 			if ((ret_trypath = try_path(arg)) == 0)
 			{
-				printf("found path\n");
 				return (arg);
 			}
-			else if (ret_trypath == -2)
+			else if (ret_trypath == -21)
 			{
 				ft_strerror(arg, NULL, NULL, NULL);
 				return ("IS_DIR");

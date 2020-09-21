@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 14:43:17 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/21 16:17:54 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int				launch_exec(char **arg, t_cmd *cmd)
 				ft_error(CMD_NOT_FOUND, NULL, NULL, cmd->arg[0]);
 				return (-2);
 			}
+			else if (ret_exec == -3)
+				return (-2);
 		}
 		fd_dup(1);
 		return (1);
@@ -139,8 +141,13 @@ int				ft_exec(char **arg_list)
 			s = find_path_env(tab_env, arg_list[0]);
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
-			free(s);
 			free_tab(tab_env);
+			if (errno == 13)
+			{
+					ft_strerror(s, NULL, arg_list[0], NULL);
+					return (-3);
+			}
+			free(s);
 			return (-2);
 		}
 	}
