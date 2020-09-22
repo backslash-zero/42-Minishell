@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 11:21:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/18 11:28:18 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 16:04:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ void	free_tab_3d(char ***tab)
 		i++;
 	}
 	free(tab);
+}
+
+void	free_tmp_tab(char **tofree)
+{
+	char	**tmp;
+
+	tmp = tofree;
+	free_tab(tmp);
 }
 
 void	assign_and_free(char **newstr, char **oldstr)

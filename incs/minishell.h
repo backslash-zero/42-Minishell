@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 10:16:34 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 16:05:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void			prompt(void);
 int				launch(char *input, t_cmd *cmd);
 void			free_tab(char **tab);
 void			free_tab_3d(char ***tab);
+void        	free_tmp_tab(char **tofree);
 void			assign_and_free(char **newstr, char **oldstr);
 void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
