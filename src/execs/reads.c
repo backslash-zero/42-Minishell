@@ -6,34 +6,11 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 10:42:34 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 11:16:31 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-char			**tablst(t_list *lst)
-{
-	char	**ret;
-	t_list	*tmp;
-	int		i;
-
-	ret = NULL;
-	tmp = NULL;
-	if (!(ret = malloc((ft_lstsize(lst) + 1) * sizeof(*ret))))
-		return (NULL);
-	i = 0;
-	tmp = lst;
-	while (tmp)
-	{
-		if (!(ret[i] = ft_strdup(tmp->content)))
-			return (NULL);
-		tmp = tmp->next;
-		i++;
-	}
-	ret[i] = NULL;
-	return (ret);
-}
 
 void			fd_dup(int i)
 {
@@ -68,7 +45,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 	if (!ret_red)
 	{
 		if (!arg_cleanup(cmd->arg))
-   		{
+		{
 			free_tab(cmd->arg);
 			return (ft_strerror(NULL, arg, NULL, NULL));
 		}
@@ -94,81 +71,6 @@ int				launch_exec(char **arg, t_cmd *cmd)
 		return (-1);
 	}
 	fd_dup(1);
-	return (0);
-}
-
-void			check_signal(int status)
-{
-	if (WTERMSIG(status) == 3)
-		ft_putstr("Quit: 3\n");
-	if (WIFEXITED(status))
-		g_ret = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-	{
-		g_print = 0;
-		g_ret = 128 + WTERMSIG(status);
-	}
-	if (status == 2)
-		g_print = 1;
-}
-
-int				ft_exec(char **arg_list)
-{
-	pid_t	proc;
-	int		status;
-	char	*s;
-	char	**tab_env;
-
-	if (!(tab_env = tablst(g_env)))
-		return (-1);
-	if ((proc = fork()) == -1)
-	{
-		free_tab(tab_env);
-		return (-1);
-	}
-	if (proc == 0)
-	{
-		s = try_absolut_path(arg_list[0]);
-		if (s != NULL && (ft_strcmp(s, "NOT_FOUND") == 0 || ft_strcmp(s, "IS_DIR") == 0))
-		{
-			free_tab(tab_env);
-			if (ft_strcmp(s, "NOT_FOUND") == 0 )
-				exit(126);
-			if (ft_strcmp(s, "IS_DIR") == 0)
-				exit(127);
-		}
-		if (s == NULL)
-			s = find_path_env(tab_env, arg_list[0]);
-		if ((execve(s, arg_list, tab_env)) == -1)
-		{
-			free_tab(tab_env);
-			if (errno == 13)
-			{
-				ft_strerror(s, NULL, arg_list[0], NULL);
-				return (-3);
-			}
-			free(s);
-			return (-2);
-		}
-	}
-	else if (proc > 0)
-	{
-		if (!ft_strcmp(arg_list[0], "cat"))
-			g_signal = 0;
-		if (wait(&status) == -1)
-		{
-			free_tab(tab_env);
-			ft_strerror(NULL, NULL, "wait", NULL);
-			return (-1);
-		}
-		check_signal(status);
-		if (g_ret == 127)
-		{
-			free_tab(tab_env);
-			return (127);
-		}
-	}
-	free_tab(tab_env);
 	return (0);
 }
 

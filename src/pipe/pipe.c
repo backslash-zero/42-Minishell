@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 23:33:28 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/22 11:35:56 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int		pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
 			ft_strerror(NULL, NULL, "fork", NULL);
 		else if (*ret_exec == -2)
 		{
+			//ft_error(CMD_NOT_FOUND, NULL, NULL,
+			//			pipe_cmd->cmd[pipe_cmd->i][0]);
 			ft_error(CMD_NOT_FOUND, NULL, pipe_cmd->cmd[pipe_cmd->i],
 						pipe_cmd->cmd[pipe_cmd->i][0]);
 			exit(127);
