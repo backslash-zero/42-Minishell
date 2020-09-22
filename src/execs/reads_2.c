@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 00:53:51 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/22 11:17:11 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 14:37:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void			get_len_semic(char **arg, int *i, int *len_new_arg_list)
 	*len_new_arg_list = 0;
 	while (*i < arg_len(arg) && ft_strcmp(arg[*i], ";") != 0)
 	{
-		*len_new_arg_list++;
-		*i++;
+		*len_new_arg_list += 1;
+		*i += 1;
 	}
 }
 
