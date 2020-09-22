@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 01:01:19 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/22 09:26:47 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,6 @@ int				ft_exec(char **arg_list)
 		}
 		if (s == NULL)
 			s = find_path_env(tab_env, arg_list[0]);
-		if (!ft_strcmp(arg_list[0], "cat"))
-			g_signal = 2;
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
 			free_tab(tab_env);
@@ -155,6 +153,8 @@ int				ft_exec(char **arg_list)
 	}
 	else if (proc > 0)
 	{
+		if (!ft_strcmp(arg_list[0], "cat"))
+			g_signal = 0;
 		if (wait(&status) == -1)
 		{
 			free_tab(tab_env);
@@ -167,8 +167,6 @@ int				ft_exec(char **arg_list)
 			free_tab(tab_env);
 			return (127);
 		}
-		if (!ft_strcmp(arg_list[0], "cat"))
-			g_signal = 0;
 	}
 	free_tab(tab_env);
 	return (0);
@@ -186,7 +184,13 @@ int				launch(char *input, t_cmd *cmd)
 	i = 0;
 	while (arg[i] != NULL)
 	{
-		get_len_semic(arg, &i, &len_new_arg_list);
+		//get_len_semic(arg, &i, &len_new_arg_list);
+		len_new_arg_list = 0;
+		while (i < arg_len(arg) && ft_strcmp(arg[i], ";") != 0)
+		{
+			len_new_arg_list++;
+			i++;
+		}
 		if ((cmd->arg = semicolon(arg, i, len_new_arg_list)) == NULL)
 		{
 			free_tab(cmd->arg);
