@@ -31,6 +31,7 @@ int		ft_pipe_2(char **arg_list, t_cmd *cmd)
 	if (!init_t_pipe(&pipe_cmd, arg_list))
 		return (0);
 	loop_pipe(&pipe_cmd, cmd);
+	printf("ft_pipe2_00\n");
 	if (g_ret == 127)
 		return (-1);
 	return (0);

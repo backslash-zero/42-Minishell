@@ -36,6 +36,7 @@ void	free_tab_3d(char ***tab)
 		j = 0;
 		while (tab[i][j])
 		{
+			ft_printf_fd(2, "tab[%d][%d] = %s\n",i, j,tab[i][j]);
 			printf("tab[%d][%d] = %s\n",i, j,tab[i][j]);
 			free(tab[i][j]);
 			j++;
