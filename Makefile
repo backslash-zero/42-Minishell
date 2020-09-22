@@ -2,11 +2,11 @@ NAME		=	minishell
 
 HEADER		=	incs/
 
-CC			=	gcc
+CC			=	clang
 
 FLAGS		=	-Wall -Wextra -Werror
 
-LEAKS		=	-g3 -fsanitize=address
+LEAKS		=	-g3 -fsanitize=leak -fsanitize=address
 
 SRC_PATH	=	src/
 

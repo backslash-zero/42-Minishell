@@ -112,6 +112,8 @@ int				launch(char *input, t_cmd *cmd)
 			break ;
 		i++;
 	}
+	free_tab(cmd->arg);
+	free_tab(arg);
 	return (0);
 }
 

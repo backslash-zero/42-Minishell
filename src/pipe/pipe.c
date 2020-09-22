@@ -99,11 +99,15 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 					return (-1);
 			}
 			cmd->pipe_ret = g_ret;
+			free_tab_3d(pipe_cmd->cmd);
 			exit(g_ret);
 		}
 		else
 			pipe_wait(status, pipe_cmd);
 	}
 	free_tab(pipe_cmd->tab_env);
+	free_tab_3d(pipe_cmd->cmd);
+
+	printf("lolll\n");
 	return (0);
 }
