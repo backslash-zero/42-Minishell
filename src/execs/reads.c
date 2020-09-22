@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 11:16:31 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 16:04:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,15 @@ int				launch(char *input, t_cmd *cmd)
 		else
 			ret_exec = launch_exec(arg, cmd);
 		if (ret_exec == -2)
+		{
+			free_tab(cmd->arg);
 			exit(127);
+		}
 		if (arg[i] == NULL)
 			break ;
+		free_tmp_tab(cmd->arg);
 		i++;
 	}
-	free_tab(cmd->arg);
 	free_tab(arg);
 	return (0);
 }
