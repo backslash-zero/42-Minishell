@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 09:26:47 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 10:42:34 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void			fd_dup(int i)
 	}
 	else if (i == 1)
 	{
-		if (dup2(input, 0) == -1 || dup2(output, 1) == -1) 
+		if (dup2(input, 0) == -1 || dup2(output, 1) == -1)
 		{
 			ft_strerror(NULL, NULL, NULL, NULL);
 			exit(errno);
@@ -234,7 +234,14 @@ void			prompt(void)
 		if (ret == -1)
 			exit(errno);
 		if (ret)
+		{
+			while (buffer[ret - 1] != '\n')
+			{
+				ft_putstr("\033[2C\b\b  \033[2D");
+				ret += read(STDIN_FILENO, &buffer[ret], MAX_INPUT_SIZE);
+			}
 			buffer[ret - 1] = '\0';
+		}
 		else
 			ft_strlcpy(buffer, "exit", 5);
 		if (launch(buffer, &cmd) == -1)

@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 09:00:34 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 10:16:34 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char			**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
 char			***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
 void			check_signal(int status);
 void			get_len_semic(char **arg, int *i, int *len_new_arg_list);
-int				is_forking(int val);
 
 void			printtab(char **tab);
 

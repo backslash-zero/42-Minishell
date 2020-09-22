@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:42:59 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 09:38:28 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/22 09:51:16 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	signal_handler(int n)
 	}
 	if (n == SIGINT)
 	{
-
 		if (g_print == 0)
 		{
 			ft_putchar('\n');
