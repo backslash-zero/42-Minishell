@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 16:04:38 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/22 16:32:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ int				launch(char *input, t_cmd *cmd)
 			free_tab(cmd->arg);
 			exit(127);
 		}
+		free_tmp_tab(cmd->arg);
 		if (arg[i] == NULL)
 			break ;
-		free_tmp_tab(cmd->arg);
 		i++;
 	}
 	free_tab(arg);
