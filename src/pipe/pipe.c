@@ -57,15 +57,17 @@ int		pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
 			ft_strerror(NULL, NULL, "fork", NULL);
 		else if (*ret_exec == -2)
 		{
-			//ft_error(CMD_NOT_FOUND, NULL, NULL,
-			//			pipe_cmd->cmd[pipe_cmd->i][0]);
-			ft_error(CMD_NOT_FOUND, NULL, pipe_cmd->cmd[pipe_cmd->i],
+			ft_error(CMD_NOT_FOUND, NULL, NULL,
 						pipe_cmd->cmd[pipe_cmd->i][0]);
-			exit(127);
+			//free_tab_3d(pipe_cmd->cmd);
+			return (-1);
+			//exit(127);
 		}
 		else if (*ret_exec == 127 || *ret_exec == -3)
-			exit(127);
+			return (-1);
+			//exit(127);
 	}
+	ft_printf_fd(2, "pipe-default00\n");
 	return (0);
 }
 
@@ -84,6 +86,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 	int ret_exec;
 	int status;
 
+	status = 0;
 	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
 		if (pipe_fork(pipe_cmd) == -1)

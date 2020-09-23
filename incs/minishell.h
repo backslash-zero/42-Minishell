@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 16:05:38 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/23 15:04:48 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # define MAX_INPUT_SIZE 131072
-# define NB_BUILINS 7
+# define NB_BUILINS 6
 # define TRUE  1
 # define FALSE 0
 
@@ -50,6 +50,7 @@ int				ft_checkbuiltins(char **s, t_cmd *cmd);
 void			print_prompt_prefix(void);
 void			prompt(void);
 int				launch(char *input, t_cmd *cmd);
+void			free_tool(char **cmd_arg, char **arg, int free_env);
 void			free_tab(char **tab);
 void			free_tab_3d(char ***tab);
 void        	free_tmp_tab(char **tofree);
@@ -74,8 +75,8 @@ char			**tablst(t_list *lst);
 void			fd_dup(int i);
 int				ft_pipe_2(char **arg_list, t_cmd *cmd);
 int				loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd);
-char			**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd);
-char			**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd);
+char			**last_cmd_arg(char **arg);
+char			**cmd_arg_get(char **arg, int *i);
 char			***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
 void			check_signal(int status);
 void			get_len_semic(char **arg, int *i, int *len_new_arg_list);

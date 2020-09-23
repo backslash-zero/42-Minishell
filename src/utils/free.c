@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 11:21:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/22 16:04:59 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/23 15:11:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,28 @@ void	free_tab_3d(char ***tab)
 		j = 0;
 		while (tab[i][j])
 		{
+			ft_printf_fd(2, "tab[%d][%d] = %s\n",i, j,tab[i][j]);
 			printf("tab[%d][%d] = %s\n",i, j,tab[i][j]);
-			free(tab[i][j]);
+		//	free(tab[i][j]);
 			j++;
 		}
-		free(tab[i]);
+		//free(tab[i]);
 		i++;
 	}
 	free(tab);
+}
+
+void	free_tool(char **cmd_arg, char **arg, int free_env)
+{
+	if (cmd_arg)
+		free_tab(cmd_arg);
+	if (arg)
+		free_tab(arg);
+	if (free_env)
+	{
+		ft_lstclear(&g_env, free);
+		ft_lstclear(&g_export, free);
+	}
 }
 
 void	free_tmp_tab(char **tofree)

@@ -36,7 +36,7 @@ int		ft_pipe_2(char **arg_list, t_cmd *cmd)
 	return (0);
 }
 
-char	**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd)
+char	**cmd_arg_get(char **arg, int *i)
 {
 	int		cmd_arg_len;
 	int		j;
@@ -58,7 +58,7 @@ char	**cmd_arg_get(char **arg, int *i, t_pipe_cmd *pipe_cmd)
 	return (cmd_arg);
 }
 
-char	**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd)
+char	**last_cmd_arg(char **arg)
 {
 	int		len;
 	int		j;
@@ -79,6 +79,7 @@ char	**last_cmd_arg(char **arg, t_pipe_cmd *pipe_cmd)
 	return (cmd_arg);
 }
 
+
 char	***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd)
 {
 	char	***cmd;
@@ -91,16 +92,17 @@ char	***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd)
 	count = 0;
 	if (!(cmd = (char ***)malloc(sizeof(char**) * (pipe_cmd->len + 1 + 1))))
 		return (NULL);
+	printf("pipe_cmd_len = %d\n",pipe_cmd->len );
 	while (count < pipe_cmd->len + 1)
 	{
 		if (ft_count_pipe(&arg_list[i]) != 0)
 		{
-			cmd[count] = cmd_arg_get(&arg_list[i], &i, pipe_cmd);
+			cmd[count] = cmd_arg_get(&arg_list[i], &i);
 			i++;
 		}
 		else
 		{
-			cmd[count] = last_cmd_arg(&arg_list[i], pipe_cmd);
+			cmd[count] = last_cmd_arg(&arg_list[i]);
 		}
 		count++;
 	}

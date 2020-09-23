@@ -27,7 +27,6 @@ int		add_to_list(char *s, t_list **lst)
 
 int		set_value(t_list *lst, char *s1, char *s2)
 {
-	t_list	*lst2;
 	char	*tmp;
 	char	*value;
 	char	*s3;
@@ -57,7 +56,6 @@ int		set_value(t_list *lst, char *s1, char *s2)
 char	*catch_name(char *s)
 {
 	int		i;
-	char	*name;
 
 	i = 0;
 	while (s[i] != '=' && s[i] != '\0')

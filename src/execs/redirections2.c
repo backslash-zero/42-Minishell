@@ -54,7 +54,6 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd)
 int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 {
 	int		fd;
-	char	**arg_list;
 
 	fd = -1;
 	cmd->apply_redir++;
@@ -80,8 +79,6 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 {
 	int		fd;
-	int		ret_exec;
-	char	**arg_list;
 
 	fd = -1;
 	cmd->apply_redir++;
@@ -107,8 +104,6 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 {
 	int		fd;
-	int		ret_exec;
-	char	**arg_list;
 
 	fd = 0;
 	cmd->apply_redir++;

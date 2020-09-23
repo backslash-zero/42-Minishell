@@ -48,8 +48,6 @@ int		append_str2arg(int *i, int *j, int *n, t_parsing_tool *tool)
 
 int		append_semicolon(int *i, int *j, int *n, t_parsing_tool *tool)
 {
-	char *newstr;
-
 	if (is_semic(tool->input[*i]))
 	{
 		if (!(tool->arg[*n] = malloc(sizeof(char) * 2)))
@@ -64,7 +62,6 @@ int		append_semicolon(int *i, int *j, int *n, t_parsing_tool *tool)
 
 int		append_redir_pipe(int *i, int *j, int *n, t_parsing_tool *tool)
 {
-	char	*newstr;
 	int		len;
 
 	len = 1;

@@ -15,7 +15,6 @@
 void		print_gret(char *str)
 {
 	printf("%s		--	g_ret = %d\n", str, g_ret);
-	int hey = 1;
 }
 
 void		printtab(char **tab)

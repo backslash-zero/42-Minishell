@@ -73,7 +73,6 @@ void	count_redir(t_cmd *cmd)
 int		redirection(t_cmd *cmd)
 {
 	int	i;
-	int ok;
 
 	i = 0;
 	cmd->redir_ok = 0;
