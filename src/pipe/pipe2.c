@@ -47,7 +47,7 @@ char	**cmd_arg_get(char **arg, int *i)
 	while (ft_strcmp(arg[cmd_arg_len], "|"))
 		cmd_arg_len++;
 	*i += cmd_arg_len;
-	if (!(cmd_arg = (char **)malloc(sizeof(char*) * cmd_arg_len + 1)))
+	if (!(cmd_arg = (char **)malloc(sizeof(char*) * (cmd_arg_len + 1))))
 		return (NULL);
 	while (j < cmd_arg_len)
 	{
@@ -68,7 +68,7 @@ char	**last_cmd_arg(char **arg)
 	j = 0;
 	while (arg[len])
 		len++;
-	if (!(cmd_arg = (char **)malloc(sizeof(char*) * len + 1)))
+	if (!(cmd_arg = (char **)malloc(sizeof(char*) * (len + 1))))
 		return (NULL);
 	while (j < len)
 	{
@@ -90,7 +90,7 @@ char	***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd)
 	i = 0;
 	cmd_arg = 0;
 	count = 0;
-	if (!(cmd = (char ***)malloc(sizeof(char**) * pipe_cmd->len + 1 + 1)))
+	if (!(cmd = (char ***)malloc(sizeof(char**) * (pipe_cmd->len + 1 + 1))))
 		return (NULL);
 	printf("pipe_cmd_len = %d\n",pipe_cmd->len );
 	while (count < pipe_cmd->len + 1)
@@ -106,8 +106,6 @@ char	***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd)
 		}
 		count++;
 	}
-	cmd[count] = NULL;
-	count++;
 	cmd[count] = NULL;
 	return (cmd);
 }
