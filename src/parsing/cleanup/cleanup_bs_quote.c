@@ -16,7 +16,7 @@ void	ft_clean_and_cpy_switchers(t_parsing_tool *tool, int i)
 {
 	if (is_backslash(tool->input[i]))
 	{
-		switcher_bs(tool, i);
+		switcher_bs(tool);
 		if (tool->pre_bs)
 			tool->expand = 0;
 	}
@@ -75,7 +75,6 @@ void	len_cleaned_str(t_parsing_tool *tool)
 
 int		process_str(char **arg_list, int i)
 {
-	int				new_len;
 	t_parsing_tool	tool;
 
 	init_tool(&tool);

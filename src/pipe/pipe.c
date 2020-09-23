@@ -59,6 +59,7 @@ int		pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
 		{
 			ft_error(CMD_NOT_FOUND, NULL, NULL,
 						pipe_cmd->cmd[pipe_cmd->i][0]);
+			//free_tab_3d(pipe_cmd->cmd);
 			return (-1);
 			//exit(127);
 		}
@@ -75,7 +76,6 @@ void	pipe_wait(int status, t_pipe_cmd *pipe_cmd)
 		ft_strerror(NULL, NULL, "wait", NULL);
 	check_signal(status);
 	close(pipe_cmd->pfd[1]);
-	ft_printf_fd(2, "pipe_wait00\n");	
 	pipe_cmd->fd_in = pipe_cmd->pfd[0];
 	pipe_cmd->i++;
 }
@@ -85,6 +85,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 	int ret_exec;
 	int status;
 
+	status = 0;
 	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
 		if (pipe_fork(pipe_cmd) == -1)

@@ -12,7 +12,7 @@
 
 #include "../../../../incs/minishell.h"
 
-void	switcher_bs(t_parsing_tool *tool, int i)
+void	switcher_bs(t_parsing_tool *tool)
 {
 	if (tool->pre_bs && !(tool->open && tool->quote == '\''))
 		tool->pre_bs = 0;
@@ -29,7 +29,7 @@ void	cancel_pre_bs(t_parsing_tool *tool, int i)
 void	bs_checker(t_parsing_tool *tool, int i)
 {
 	if (is_backslash(tool->input[i]))
-		switcher_bs(tool, i);
+		switcher_bs(tool);
 }
 
 int		check_backslash(t_parsing_tool *tool)

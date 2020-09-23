@@ -12,8 +12,8 @@
 
 NAME= libft.a
 HEADER= "/incs/libft.h"
-CC=gcc
-FLAGS= -Wall -Wextra -Werror
+CC= clang
+FLAGS = -Wall -Wextra -Werror
 SRC= ft_atoi.c ft_is_space.c ft_isprint.c ft_memcpy.c ft_split.c ft_strmapi.c ft_toupper.c\
 	ft_bzero.c ft_itoa.c ft_memmove.c ft_strchr.c ft_strncmp.c ft_calloc.c\
 	ft_memset.c ft_strdup.c ft_strldup.c ft_strnstr.c ft_isalnum.c ft_putchar_fd.c ft_putchar.c\
@@ -28,16 +28,19 @@ B_OBJ= $(B_SRC:.c=.o)
 
 all: $(NAME)
 
+.c.o :
+	@$(CC) $(FLAGS) -c $< -o $@
+
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) -I$(HEADER) -c $(SRC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 	@echo $(NAME) ready	
 
-bonus: $(B_OBJ)
-	@$(CC) $(FLAGS) -I$(HEADER) -c $(B_SRC)
-	@ar rc $(NAME) $(B_OBJ)
+bonus: $(B_OBJ) $(OBJ)
+	
+	@ar rc $(NAME) $(B_OBJ) $(OBJ)
 	@ranlib $(NAME)
+	@echo $(NAME) bonus ready
 
 clean:
 	@/bin/rm -f $(OBJ) $(B_OBJ)

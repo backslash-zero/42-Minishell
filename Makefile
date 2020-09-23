@@ -6,7 +6,7 @@ CC			=	clang
 
 FLAGS		=	-Wall -Wextra -Werror
 
-LEAKS		=	-g3 -fsanitize=leak -fsanitize=address
+LEAKS		= -g3 -fsanitize=address -fsanitize=leak
 
 SRC_PATH	=	src/
 
@@ -71,15 +71,19 @@ PRINTFEXEC	=	src/ft_printf_fd/libftprintf.a
 
 MOV			=	"."
 
-all: 		$(NAME)
+all: 	$(NAME)
 
-$(NAME):	$(OBJ)
-			@cd $(LIBFT) && $(MAKE) && $(MAKE) bonus
-			@mv $(LIBFTEXEC) $(MOV)
-			@cd $(PRINTF) && $(MAKE)
-			@mv $(PRINTFEXEC) $(MOV)
-			@$(CC) $(FLAGS) $(LEAKS) $(OBJ) -I$(HEADER) libft.a libftprintf.a -o $(NAME)
-			@echo $(NAME) created
+$(LIBFTEXEC):
+	$(MAKE) -C $(LIBFT) bonus
+$(PRINTFEXEC):
+	$(MAKE) -C $(PRINTF)
+
+.c.o:
+	@$(CC) $(FLAGS) $(LEAKS) -c $< -o $@
+
+$(NAME): $(LIBFTEXEC) $(PRINTFEXEC) $(OBJ)	
+	@echo $(NAME) ready
+	@echo $(NAME) created
 
 clean:
 			@/bin/rm -f  $(OBJ)
