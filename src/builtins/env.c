@@ -78,6 +78,7 @@ int		builtin_env(char **arg)
 	t_list	*tmp;
 
 	tmp = g_env;
+	(void)arg;
 	while (tmp)
 	{
 		ft_putstr_fd(1, tmp->content);

@@ -78,7 +78,7 @@ int				is_dollar(char c);
 int				bs_count_conditions(int bs_count, t_parsing_tool *tool, int i);
 int				backslash_loop_checker(t_parsing_tool *tool);
 
-void			switcher_bs(t_parsing_tool *tool, int i);
+void			switcher_bs(t_parsing_tool *tool);
 void			cancel_pre_bs(t_parsing_tool *tool, int i);
 void			bs_checker(t_parsing_tool *tool, int i);
 int				check_backslash(t_parsing_tool *tool);

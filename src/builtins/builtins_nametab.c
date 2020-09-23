@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_nametab.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 10:59:32 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 15:19:52 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/23 15:06:36 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ void	ft_builtinstab(t_cmd *cmd)
 	cmd->parse.builtnb[3] = "export";
 	cmd->parse.builtnb[4] = "unset";
 	cmd->parse.builtnb[5] = "env";
-	cmd->parse.builtnb[6] = "exit";
 }
 
 t_builtfunc_addr	g_builtins_func[] = {
 	&builtin_echo, &builtin_cd, &builtin_pwd, &builtin_export,
-	&builtin_unset, &builtin_env, &builtin_exit
+	&builtin_unset, &builtin_env
 };
 
 int		ft_checkbuiltins(char **s, t_cmd *cmd)
@@ -42,9 +41,11 @@ int		ft_checkbuiltins(char **s, t_cmd *cmd)
 		if (good != 1)
 			i++;
 	}
-	if (good == 1)
+	if (good == 1 || !ft_strcmp(s[0], "exit"))
 	{
-		if (g_builtins_func[i](s) == -1)
+		if (!ft_strcmp(s[0], "exit"))
+			builtin_exit(cmd);
+		else if (g_builtins_func[i](s) == -1)
 			return (-1);
 		return (1);
 	}

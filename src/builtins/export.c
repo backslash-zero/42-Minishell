@@ -57,7 +57,6 @@ int		export_return(char **arg, int j)
 
 int		builtin_export(char **arg)
 {
-	t_list	*lst;
 	int		i;
 	int		start;
 	int		j;

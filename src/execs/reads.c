@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 16:32:39 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/23 14:42:43 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int				launch(char *input, t_cmd *cmd)
 
 	if (!(arg = parsing(input)))
 		return (0);
+	cmd->input_arg = arg;
 	i = 0;
 	while (arg[i] != NULL)
 	{
@@ -111,11 +112,13 @@ int				launch(char *input, t_cmd *cmd)
 			free_tab(cmd->arg);
 			exit(127);
 		}
+		printf("end loop: cmd->arg\n");
 		free_tmp_tab(cmd->arg);
 		if (arg[i] == NULL)
 			break ;
 		i++;
 	}
+	printf("end read\n");
 	free_tab(arg);
 	return (0);
 }

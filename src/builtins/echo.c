@@ -58,8 +58,8 @@ int		echo_n(char **arg, int i)
 int		builtin_echo(char **arg)
 {
 	int i;
-	int j;
 
+	(void)arg;
 	if (arg_len(arg) == 1)
 		return (echo_lonely());
 	i = 1;

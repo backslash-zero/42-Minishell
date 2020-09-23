@@ -15,7 +15,6 @@
 char	*parsing_variable(t_parsing_tool *tool, char *str)
 {
 	t_list	*tmp;
-	char	*output;
 	int		len;
 
 	len = ft_strlen(str);

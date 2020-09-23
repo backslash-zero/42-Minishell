@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:26:35 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 23:52:02 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/23 15:02:14 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef struct	s_cmd{
 	char		**arg;
+	char		**input_arg;
 	int			nb_redir;
 	int			apply_redir;
 	int			redir_ok;
@@ -41,8 +42,8 @@ int				replace_elem(char *s, int i);
 int				add_elem(char *s);
 int				builtin_unset(char **arg);
 int				builtin_env(char **arg);
-int				builtin_exit_next(char **arg, int i);
-int				builtin_exit_long_arg(char **arg, int i);
-int				builtin_exit(char **arg);
+int				builtin_exit_next(t_cmd *cmd, int i);
+int				builtin_exit_long_arg(t_cmd *cmd, int i);
+int				builtin_exit(t_cmd *cmd);
 
 #endif
