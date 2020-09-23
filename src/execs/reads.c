@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/23 13:27:41 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/23 14:42:43 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int				launch(char *input, t_cmd *cmd)
 
 	if (!(arg = parsing(input)))
 		return (0);
+	cmd->input_arg = arg;
 	i = 0;
 	while (arg[i] != NULL)
 	{
