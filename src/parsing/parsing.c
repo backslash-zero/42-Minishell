@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:11:25 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/22 15:38:20 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/23 13:12:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		ft_split_args(t_parsing_tool *tool)
 		}
 		if (!parsing_checks(&i, &j, &n, tool))
 			return (0);
-		if (j++ != '\0')
+		if (tool->input[j++] != '\0')
 			i++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 11:21:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/22 16:04:59 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/23 13:19:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,19 @@ void	free_tab_3d(char ***tab)
 		i++;
 	}
 	free(tab);
+}
+
+void	free_tool(char **cmd_arg, char **arg, int free_env)
+{
+	if (cmd_arg)
+		free(cmd_arg);
+	if (arg)
+		free(arg);
+	if (free_env)
+	{
+		ft_lstclear(&g_env, free);
+		ft_lstclear(&g_export, free);
+	}
 }
 
 void	free_tmp_tab(char **tofree)
