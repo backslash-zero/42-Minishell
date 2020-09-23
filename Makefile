@@ -79,10 +79,10 @@ $(PRINTFEXEC):
 	$(MAKE) -C $(PRINTF)
 
 .c.o:
-	@$(CC) $(FLAGS) $(LEAKS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(LIBFTEXEC) $(PRINTFEXEC) $(OBJ)
-	$(CC) $(FLAGS) $(LEAKS) $(OBJ) -o $(NAME) $(LIBFTEXEC) $(PRINTFEXEC)
+	$(CC) $(FLAGS) $(OBJ) -I$(HEADER) -o $(NAME) $(LIBFTEXEC) $(PRINTFEXEC)
 	@echo $(NAME) ready
 	@echo $(NAME) created
 

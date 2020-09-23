@@ -47,6 +47,7 @@ char	*find_correct_path(char *s, char *arg)
 
 	i = -1;
 	j = 0;
+	dup = NULL;
 	if (!ft_strchr(s, ':'))
 		return (NULL);
 	while (s[++i])

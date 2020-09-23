@@ -68,7 +68,6 @@ char	**last_cmd_arg(char **arg)
 	j = 0;
 	while (arg[len])
 		len++;
-	printf("lssss\n");
 	if (!(cmd_arg = (char **)malloc(sizeof(char*) * len + 1)))
 		return (NULL);
 	while (j < len)

@@ -38,10 +38,10 @@ void	free_tab_3d(char ***tab)
 		{
 			ft_printf_fd(2, "tab[%d][%d] = %s\n",i, j,tab[i][j]);
 			printf("tab[%d][%d] = %s\n",i, j,tab[i][j]);
-			free(tab[i][j]);
+		//	free(tab[i][j]);
 			j++;
 		}
-		free(tab[i]);
+		//free(tab[i]);
 		i++;
 	}
 	free(tab);

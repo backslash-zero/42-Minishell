@@ -67,6 +67,7 @@ int		pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
 			return (-1);
 			//exit(127);
 	}
+	ft_printf_fd(2, "pipe-default00\n");
 	return (0);
 }
 
@@ -110,7 +111,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 		else
 			pipe_wait(status, pipe_cmd);
 	}
-	free_tab(pipe_cmd->tab_env);
+	//free_tab(pipe_cmd->tab_env);
 	free_tab_3d(pipe_cmd->cmd);
 	return (0);
 }
