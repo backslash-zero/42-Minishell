@@ -93,6 +93,10 @@ clean:
 	@/bin/rm -f libft.a libftprintf.a
 	@echo Objects and libraries cleaned
 
+oclean:
+	@/bin/rm -f  $(OBJ)
+	@echo Objects cleaned
+
 fclean: 	clean
 	@/bin/rm -f $(NAME)
 	@(cd $(LIBFT) && $(MAKE) fclean)

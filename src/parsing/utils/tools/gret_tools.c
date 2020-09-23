@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gret_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 20:12:07 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/21 11:30:14 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/24 00:53:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int		insert_ret(t_parsing_tool *tool, int i)
 	ret = ft_itoa(g_ret);
 	if (!(newstr = malloc(sizeof(char) *
 		(ft_strlen(ret) + (ft_strlen(tool->input) - 2) + 1))))
+	{
+		free(ret);
 		return (0);
+	}
 	ft_strncpy(newstr, tool->input, i);
 	ft_strncpy(&newstr[i], ret, ft_strlen(ret));
 	i = i + ft_strlen(ret);
@@ -36,6 +39,7 @@ int		insert_ret(t_parsing_tool *tool, int i)
 		i++;
 	}
 	newstr[i] = '\0';
+	free(ret);
 	assign_and_free(&newstr, &tool->input);
 	return (1);
 }
