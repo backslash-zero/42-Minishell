@@ -78,7 +78,7 @@ $(NAME):	$(OBJ)
 			@mv $(LIBFTEXEC) $(MOV)
 			@cd $(PRINTF) && $(MAKE)
 			@mv $(PRINTFEXEC) $(MOV)
-			@$(CC) $(FLAGS) $(LEAKS) $(OBJ) -I$(HEADER) libft.a libftprintf.a -o $(NAME)
+			@$(CC) $(FLAGS) $(OBJ) -I$(HEADER) libft.a libftprintf.a -o $(NAME)
 			@echo $(NAME) created
 
 clean:
