@@ -81,20 +81,24 @@ $(PRINTFEXEC):
 .c.o:
 	@$(CC) $(FLAGS) $(LEAKS) -c $< -o $@
 
-$(NAME): $(LIBFTEXEC) $(PRINTFEXEC) $(OBJ)	
+$(NAME): $(LIBFTEXEC) $(PRINTFEXEC) $(OBJ)
+	$(CC) $(FLAGS) $(LEAKS) $(OBJ) -o $(NAME) $(LIBFTEXEC) $(PRINTFEXEC)
 	@echo $(NAME) ready
 	@echo $(NAME) created
 
 clean:
-			@/bin/rm -f  $(OBJ)
-			@(cd $(LIBFT) && $(MAKE) clean)
-			@(cd $(PRINTF) && $(MAKE) clean)
-			@/bin/rm -f libft.a libftprintf.a
-			@echo Objects and libraries cleaned
+	@/bin/rm -f  $(OBJ)
+	@(cd $(LIBFT) && $(MAKE) clean)
+	@(cd $(PRINTF) && $(MAKE) clean)
+	@/bin/rm -f libft.a libftprintf.a
+	@echo Objects and libraries cleaned
 
 fclean: 	clean
-			@/bin/rm -f $(NAME)
-			@echo $(NAME) deleted
+	@/bin/rm -f $(NAME)
+	@(cd $(LIBFT) && $(MAKE) fclean)
+	@(cd $(PRINTF) && $(MAKE) fclean)
+	@/bin/rm -f libft.a libftprintf.a
+	@echo $(NAME) deleted
 
 re: 		fclean all
 
