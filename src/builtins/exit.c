@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:17:37 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/23 15:02:42 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/23 15:20:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int		builtin_exit(t_cmd *cmd)
 	if (cmd->arg[1][i] == '+' || cmd->arg[1][i] == '-')
 		i++;
 	j = builtin_exit_next(cmd, i);
+	free_tool(cmd->arg, cmd->input_arg, 1);
 	exit(j);
 }
