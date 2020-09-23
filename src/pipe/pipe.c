@@ -101,17 +101,23 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 				if (pipe_default(pipe_cmd, cmd, &ret_exec) == -1)
 				{
 					free_tab_3d(pipe_cmd->cmd);
+					free_tab(pipe_cmd->tab_env);
+					ft_lstclear(&g_env, free);
+					ft_lstclear(&g_export, free);
 					exit(0);
 				}
 			}
 			cmd->pipe_ret = g_ret;
 			free_tab_3d(pipe_cmd->cmd);
+			free_tab(pipe_cmd->tab_env);
+			ft_lstclear(&g_env, free);
+			ft_lstclear(&g_export, free);
 			exit(g_ret);
 		}
 		else
 			pipe_wait(status, pipe_cmd);
 	}
-	//free_tab(pipe_cmd->tab_env);
+	free_tab(pipe_cmd->tab_env);
 	free_tab_3d(pipe_cmd->cmd);
 	return (0);
 }
