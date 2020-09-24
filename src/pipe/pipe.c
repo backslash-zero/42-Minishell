@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 11:35:56 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/24 15:30:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,15 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 				if (pipe_default(pipe_cmd, cmd, &ret_exec) == -1)
 				{
 					free_tab_3d(pipe_cmd->cmd);
+					free_tool(cmd->arg, cmd->input_arg, 1);
 					free_tab(pipe_cmd->tab_env);
-					ft_lstclear(&g_env, free);
-					ft_lstclear(&g_export, free);
 					exit(0);
 				}
 			}
 			cmd->pipe_ret = g_ret;
 			free_tab_3d(pipe_cmd->cmd);
+			free_tool(cmd->arg, cmd->input_arg, 1);
 			free_tab(pipe_cmd->tab_env);
-			ft_lstclear(&g_env, free);
-			ft_lstclear(&g_export, free);
 			exit(g_ret);
 		}
 		else

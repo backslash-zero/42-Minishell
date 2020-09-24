@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/23 14:42:43 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/24 14:09:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int				launch(char *input, t_cmd *cmd)
 			ret_exec = launch_exec(arg, cmd);
 		if (ret_exec == -2)
 		{
-			free_tab(cmd->arg);
+			free_tool(cmd->arg, cmd->input_arg, 1);
 			exit(127);
 		}
 		printf("end loop: cmd->arg\n");

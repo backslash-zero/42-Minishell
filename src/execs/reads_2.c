@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 00:53:51 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/22 14:37:02 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/24 14:21:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,12 @@ int				ft_exec(char **arg_list)
 		}
 		if (s == NULL)
 			s = find_path_env(tab_env, arg_list[0]);
+		if (!s)
+		{
+			free_tab(tab_env);
+			free(s);
+			return (-2);
+		}
 		if ((execve(s, arg_list, tab_env)) == -1)
 		{
 			free_tab(tab_env);
