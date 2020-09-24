@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/24 14:09:11 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/24 15:51:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,11 @@ int				launch(char *input, t_cmd *cmd)
 			free_tool(cmd->arg, cmd->input_arg, 1);
 			exit(127);
 		}
-		printf("end loop: cmd->arg\n");
 		free_tmp_tab(cmd->arg);
 		if (arg[i] == NULL)
 			break ;
 		i++;
 	}
-	printf("end read\n");
 	free_tab(arg);
 	return (0);
 }

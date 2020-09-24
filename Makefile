@@ -6,7 +6,7 @@ CC			=	clang
 
 FLAGS		=	-Wall -Wextra -Werror
 
-LEAKS		= -g3 -fsanitize=address -fsanitize=leak
+LEAKS		=	-g3 -fsanitize=address -fsanitize=leak
 
 SRC_PATH	=	src/
 
@@ -71,38 +71,38 @@ PRINTFEXEC	=	src/ft_printf_fd/libftprintf.a
 
 MOV			=	"."
 
-all: 	$(NAME)
+all: 			$(NAME)
 
 $(LIBFTEXEC):
-	$(MAKE) -C $(LIBFT) bonus
+				$(MAKE) -C $(LIBFT) bonus
 $(PRINTFEXEC):
-	$(MAKE) -C $(PRINTF)
+				$(MAKE) -C $(PRINTF)
 
 .c.o:
-	@$(CC) $(FLAGS) -c $< -o $@
+				@$(CC) $(FLAGS) -c $< -o $@
 
-$(NAME): $(LIBFTEXEC) $(PRINTFEXEC) $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) -I$(HEADER) -o $(NAME) $(LIBFTEXEC) $(PRINTFEXEC)
-	@echo $(NAME) ready
-	@echo $(NAME) created
+$(NAME):		$(LIBFTEXEC) $(PRINTFEXEC) $(OBJ)
+				$(CC) $(FLAGS) $(OBJ) -I$(HEADER) -o $(NAME) $(LIBFTEXEC) $(PRINTFEXEC)
+				@echo $(NAME) ready
+				@echo $(NAME) created
 
 clean:
-	@/bin/rm -f  $(OBJ)
-	@(cd $(LIBFT) && $(MAKE) clean)
-	@(cd $(PRINTF) && $(MAKE) clean)
-	@/bin/rm -f libft.a libftprintf.a
-	@echo Objects and libraries cleaned
+				@/bin/rm -f  $(OBJ)
+				@(cd $(LIBFT) && $(MAKE) clean)
+				@(cd $(PRINTF) && $(MAKE) clean)
+				@/bin/rm -f libft.a libftprintf.a
+				@echo Objects and libraries cleaned
 
 oclean:
-	@/bin/rm -f  $(OBJ)
-	@echo Objects cleaned
+				@/bin/rm -f  $(OBJ)
+				@echo Objects cleaned
 
-fclean: 	clean
-	@/bin/rm -f $(NAME)
-	@(cd $(LIBFT) && $(MAKE) fclean)
-	@(cd $(PRINTF) && $(MAKE) fclean)
-	@/bin/rm -f libft.a libftprintf.a
-	@echo $(NAME) deleted
+fclean: 		clean
+				@/bin/rm -f $(NAME)
+				@(cd $(LIBFT) && $(MAKE) fclean)
+				@(cd $(PRINTF) && $(MAKE) fclean)
+				@/bin/rm -f libft.a libftprintf.a
+				@echo $(NAME) deleted
 
 re: 		fclean all
 

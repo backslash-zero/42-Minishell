@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 18:50:32 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/23 15:59:39 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/24 15:48:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,11 @@ int		try_path(char *s)
 	struct	stat file;
 
 	errno = 0;
-	printf("try path 1\n");
 	if (stat(s, &file) != -1)
 	{
-		printf("try path 2\n");
 		if ((file.st_mode & S_IFMT) == S_IFDIR && (errno = EISDIR))
-		return (-21);
+			return (-21);
 	}
-	printf("try path 3\n");
 	if (errno)
 		return (-1);
 	return (0);

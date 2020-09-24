@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:23:45 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 23:35:15 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/24 15:50:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ char	***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd)
 	count = 0;
 	if (!(cmd = (char ***)malloc(sizeof(char**) * (pipe_cmd->len + 1 + 1))))
 		return (NULL);
-	printf("pipe_cmd_len = %d\n",pipe_cmd->len );
 	while (count < pipe_cmd->len + 1)
 	{
 		if (ft_count_pipe(&arg_list[i]) != 0)

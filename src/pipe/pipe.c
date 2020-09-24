@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/24 15:30:26 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/24 15:50:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,11 @@ int		pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
 		{
 			ft_error(CMD_NOT_FOUND, NULL, NULL,
 						pipe_cmd->cmd[pipe_cmd->i][0]);
-			//free_tab_3d(pipe_cmd->cmd);
 			return (-1);
-			//exit(127);
 		}
 		else if (*ret_exec == 127 || *ret_exec == -3)
 			return (-1);
-			//exit(127);
 	}
-	ft_printf_fd(2, "pipe-default00\n");
 	return (0);
 }
 
