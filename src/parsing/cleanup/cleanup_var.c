@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:59:05 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/24 01:20:14 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/24 21:27:40 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		expand_env(t_parsing_tool *tool)
 					i--;
 			}
 		}
-			cancel_pre_bs(tool, i);
+		cancel_pre_bs(tool, i);
 		i++;
 	}
 	return (1);

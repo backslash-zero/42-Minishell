@@ -42,6 +42,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 				\
 				pipe/pipe.c									\
 				pipe/pipe2.c								\
 				pipe/pipe3.c								\
+				pipe/pipe4.c								\
 				utils/arg.c 								\
 				utils/error.c 								\
 				utils/free.c 								\
@@ -49,12 +50,12 @@ SRC_NAME	=	builtins/builtins_nametab.c 				\
 				utils/prints.c 								\
 				execs/reads.c								\
 				execs/reads_2.c								\
+				execs/reads_3.c								\
 				execs/redirections.c						\
 				execs/redirections2.c						\
 				utils/semicolon.c							\
 				execs/path.c								\
 				execs/path_2.c								\
-				tools/tools.c								\
 				minishell.c 								\
 
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_NAME))
@@ -74,15 +75,18 @@ MOV			=	"."
 all: 			$(NAME)
 
 $(LIBFTEXEC):
-				$(MAKE) -C $(LIBFT) bonus
+				@$(MAKE) -C $(LIBFT) bonus
+				@echo $(LIBFTEXEC) ready
+
 $(PRINTFEXEC):
-				$(MAKE) -C $(PRINTF)
+				@$(MAKE) -C $(PRINTF)
+				@echo $(PRINTFEXEC) ready
 
 .c.o:
 				@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME):		$(LIBFTEXEC) $(PRINTFEXEC) $(OBJ)
-				$(CC) $(FLAGS) $(OBJ) -I$(HEADER) -o $(NAME) $(LIBFTEXEC) $(PRINTFEXEC)
+				$(CC) $(FLAGS) $(OBJ) -I$(HEADER) $(LIBFTEXEC) $(PRINTFEXEC) -o $(NAME) 
 				@echo $(NAME) ready
 				@echo $(NAME) created
 

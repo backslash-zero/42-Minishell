@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reads.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/24 15:51:18 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/25 00:51:18 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ void			fd_dup(int i)
 
 	if (i == 0)
 	{
-		if ((input = dup(0)) == -1 || (output = dup(1)) == -1)
+		if ((input = dup(0)) == -1)
+		{
+			ft_strerror(NULL, NULL, NULL, NULL);
+			exit(errno);
+		}
+		if ((output = dup(1)) == -1)
 		{
 			ft_strerror(NULL, NULL, NULL, NULL);
 			exit(errno);
@@ -35,90 +40,24 @@ void			fd_dup(int i)
 	}
 }
 
-int				launch_exec(char **arg, t_cmd *cmd)
+int				dup_return(int value)
 {
-	int	ret_red;
-	int	ret_exec;
-
-	fd_dup(0);
-	ret_red = redirection(cmd);
-	if (!ret_red)
-	{
-		if (!arg_cleanup(cmd->arg))
-		{
-			free_tab(cmd->arg);
-			return (ft_strerror(NULL, arg, NULL, NULL));
-		}
-		if (!ft_checkbuiltins(cmd->arg, cmd))
-		{
-			ret_exec = ft_exec(cmd->arg);
-			if (ret_exec == -1)
-				return (ft_strerror(NULL, NULL, "fork", NULL));
-			else if (ret_exec == -2)
-			{
-				ft_error(CMD_NOT_FOUND, NULL, NULL, cmd->arg[0]);
-				return (-2);
-			}
-			else if (ret_exec == -3)
-				return (-2);
-		}
-		fd_dup(1);
-		return (1);
-	}
-	if (ret_red == -1)
-	{
-		fd_dup(1);
-		return (-1);
-	}
 	fd_dup(1);
-	return (0);
+	return(value);
 }
 
-int				launch(char *input, t_cmd *cmd)
+void			init_prompt(int *ret, char *buffer)
 {
-	char	**arg;
-	int		i;
-	int		len_new_arg_list;
-	int		ret_exec;
-
-	if (!(arg = parsing(input)))
-		return (0);
-	cmd->input_arg = arg;
-	i = 0;
-	while (arg[i] != NULL)
-	{
-		//get_len_semic(arg, &i, &len_new_arg_list);
-		len_new_arg_list = 0;
-		while (i < arg_len(arg) && ft_strcmp(arg[i], ";") != 0)
-		{
-			len_new_arg_list++;
-			i++;
-		}
-		if ((cmd->arg = semicolon(arg, i, len_new_arg_list)) == NULL)
-		{
-			free_tab(cmd->arg);
-			return (ft_strerror(NULL, arg, NULL, NULL));
-		}
-		if (ft_count_pipe(cmd->arg) > 0)
-		{
-			ret_exec = ft_pipe_2(cmd->arg, cmd);
-			if (ret_exec == -1)
-				g_ret = 127;
-		}
-		else
-			ret_exec = launch_exec(arg, cmd);
-		if (ret_exec == -2)
-		{
-			free_tool(cmd->arg, cmd->input_arg, 1);
-			exit(127);
-		}
-		free_tmp_tab(cmd->arg);
-		if (arg[i] == NULL)
-			break ;
-		i++;
-	}
-	free_tab(arg);
-	return (0);
+	*ret = 0;
+	if (g_print == 0)
+		print_prompt_prefix();
+	if (g_print == 1)
+		g_print = 0;
+	if (g_signal == 0)
+		g_signal = 1;
+	*ret = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
+	if (*ret == -1)
+		exit(errno);
 }
 
 void			prompt(void)
@@ -131,16 +70,7 @@ void			prompt(void)
 	g_signal = 1;
 	while (1)
 	{
-		ret = 0;
-		if (g_print == 0)
-			print_prompt_prefix();
-		if (g_print == 1)
-			g_print = 0;
-		if (g_signal == 0)
-			g_signal = 1;
-		ret = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
-		if (ret == -1)
-			exit(errno);
+		init_prompt(&ret, buffer);
 		if (ret)
 		{
 			while (buffer[ret - 1] != '\n')

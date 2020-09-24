@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   gret_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 20:12:07 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/24 00:53:30 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/25 00:49:46 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../incs/minishell.h"
+
+void		insert_copy_rest(t_parsing_tool *tool, char *newstr, int i, int j)
+{
+	while (tool->input[j])
+	{
+		newstr[i] = tool->input[j];
+		j++;
+		i++;
+	}
+	newstr[i] = '\0';
+}
 
 int		insert_ret(t_parsing_tool *tool, int i)
 {
@@ -32,13 +43,7 @@ int		insert_ret(t_parsing_tool *tool, int i)
 	ft_strncpy(&newstr[i], ret, ft_strlen(ret));
 	i = i + ft_strlen(ret);
 	j = k + 2;
-	while (tool->input[j])
-	{
-		newstr[i] = tool->input[j];
-		j++;
-		i++;
-	}
-	newstr[i] = '\0';
+	insert_copy_rest(tool, newstr, i, j);
 	free(ret);
 	assign_and_free(&newstr, &tool->input);
 	return (1);

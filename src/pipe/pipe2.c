@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:23:45 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/24 15:50:07 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/24 21:22:54 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	**last_cmd_arg(char **arg)
 	return (cmd_arg);
 }
 
-
 char	***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd)
 {
 	char	***cmd;
@@ -100,9 +99,7 @@ char	***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd)
 			i++;
 		}
 		else
-		{
 			cmd[count] = last_cmd_arg(&arg_list[i]);
-		}
 		count++;
 	}
 	cmd[count] = NULL;

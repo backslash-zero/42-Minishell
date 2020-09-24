@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:55:07 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/22 10:46:50 by rzafari          ###   ########.fr       */
+/*   Updated: 2020/09/25 00:47:21 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+
+char		*check_paths(char **tab_env, char **arg_list)
+{
+	char *s;
+
+	s = try_absolut_path(arg_list[0]);
+	if (s != NULL && (ft_strcmp(s, "NOT_FOUND") == 0
+		|| ft_strcmp(s, "IS_DIR") == 0))
+	{
+		free_tab(tab_env);
+		if (ft_strcmp(s, "NOT_FOUND") == 0)
+			exit(126);
+		if (ft_strcmp(s, "IS_DIR") == 0)
+			exit(127);
+	}
+	if (s == NULL)
+		s = find_path_env(tab_env, arg_list[0]);
+	if (!s)
+	{
+		free_tab(tab_env);
+		free(s); // pas sur
+		return (NULL);
+	}
+	return (s);
+}
 
 char	*try_absolut_path(char *arg)
 {

@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/24 15:50:30 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/25 00:50:26 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-int		pipe_fork(t_pipe_cmd *pipe_cmd)
-{
-	if (pipe(pipe_cmd->pfd) == -1)
-	{
-		ft_strerror(NULL, NULL, NULL, NULL);
-		return (-1);
-	}
-	if ((pipe_cmd->proc = fork()) == -1)
-	{
-		free_tab(pipe_cmd->tab_env);
-		free_tab_3d(pipe_cmd->cmd);
-		return (-1);
-	}
-	return (0);
-}
 
 void	pipe_dups(t_pipe_cmd *pipe_cmd)
 {
@@ -77,6 +61,20 @@ void	pipe_wait(int status, t_pipe_cmd *pipe_cmd)
 	pipe_cmd->i++;
 }
 
+void	pipe_child(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
+{
+	pipe_dups(pipe_cmd);
+	if (check_redir(pipe_cmd->cmd[pipe_cmd->i]))
+		redir_pipe(pipe_cmd->cmd[pipe_cmd->i], pipe_cmd, cmd);
+	if (!pipe_cmd->check_redir)
+	{
+		if (pipe_default(pipe_cmd, cmd, ret_exec) == -1)
+			free_and_exit(pipe_cmd, cmd, 0);
+	}
+	cmd->pipe_ret = g_ret;
+	free_and_exit(pipe_cmd, cmd, g_ret);
+}
+
 int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 {
 	int ret_exec;
@@ -88,26 +86,7 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 		if (pipe_fork(pipe_cmd) == -1)
 			return (-1);
 		if (pipe_cmd->proc == 0)
-		{
-			pipe_dups(pipe_cmd);
-			if (check_redir(pipe_cmd->cmd[pipe_cmd->i]))
-				redir_pipe(pipe_cmd->cmd[pipe_cmd->i], pipe_cmd, cmd);
-			if (!pipe_cmd->check_redir)
-			{
-				if (pipe_default(pipe_cmd, cmd, &ret_exec) == -1)
-				{
-					free_tab_3d(pipe_cmd->cmd);
-					free_tool(cmd->arg, cmd->input_arg, 1);
-					free_tab(pipe_cmd->tab_env);
-					exit(0);
-				}
-			}
-			cmd->pipe_ret = g_ret;
-			free_tab_3d(pipe_cmd->cmd);
-			free_tool(cmd->arg, cmd->input_arg, 1);
-			free_tab(pipe_cmd->tab_env);
-			exit(g_ret);
-		}
+			pipe_child(pipe_cmd, cmd, &ret_exec);
 		else
 			pipe_wait(status, pipe_cmd);
 	}

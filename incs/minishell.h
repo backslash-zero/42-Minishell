@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/23 15:04:48 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 01:53:48 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include "ft_printf.h"
 # include "parsing.h"
 # include "builtin.h"
-# include "tools.h"
 # include "pipe.h"
 
 typedef int		t_ret;
@@ -49,11 +48,19 @@ void			ft_builtinstab(t_cmd *cmd);
 int				ft_checkbuiltins(char **s, t_cmd *cmd);
 void			print_prompt_prefix(void);
 void			prompt(void);
+int				init_semic(t_cmd *cmd, char **arg, int *i);
+int				ft_exec_father(char **tab_env, char **arg_list);
+int				ft_exec_child(char **tab_env, char **arg_list);
+int				launch_ft_exec(t_cmd *cmd);
+char			*check_paths(char **tab_env, char **arg_list);
+int				dup_return(int value);
+int				launch_exec(char **arg, t_cmd *cmd);
+void			launch_start(t_cmd *cmd, char **arg);
 int				launch(char *input, t_cmd *cmd);
 void			free_tool(char **cmd_arg, char **arg, int free_env);
 void			free_tab(char **tab);
 void			free_tab_3d(char ***tab);
-void        	free_tmp_tab(char **tofree);
+void			free_tmp_tab(char **tofree);
 void			assign_and_free(char **newstr, char **oldstr);
 void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
@@ -80,7 +87,5 @@ char			**cmd_arg_get(char **arg, int *i);
 char			***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
 void			check_signal(int status);
 void			get_len_semic(char **arg, int *i, int *len_new_arg_list);
-
-void			printtab(char **tab);
 
 #endif

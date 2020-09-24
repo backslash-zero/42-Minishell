@@ -3,18 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   path_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 18:50:32 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/24 15:48:26 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/25 01:31:25 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+void			check_signal(int status)
+{
+	if (WTERMSIG(status) == 3)
+		ft_putstr("Quit: 3\n");
+	if (WIFEXITED(status))
+		g_ret = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		g_print = 0;
+		g_ret = 128 + WTERMSIG(status);
+	}
+	if (status == 2)
+		g_print = 1;
+}
+
 int		try_path(char *s)
 {
-	struct	stat file;
+	struct stat file;
 
 	errno = 0;
 	if (stat(s, &file) != -1)
@@ -40,6 +55,12 @@ char	*catch_path(char *test, char *arg)
 	return (dup);
 }
 
+void	init_find_correct_path(int *i, int *j)
+{
+	*i = -1;
+	*j = 0;
+}
+
 char	*find_correct_path(char *s, char *arg)
 {
 	int		i;
@@ -47,8 +68,7 @@ char	*find_correct_path(char *s, char *arg)
 	char	*test;
 	char	*dup;
 
-	i = -1;
-	j = 0;
+	init_find_correct_path(&i, &j);
 	dup = NULL;
 	if (!ft_strchr(s, ':'))
 		return (NULL);

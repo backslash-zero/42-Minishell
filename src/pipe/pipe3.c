@@ -6,57 +6,26 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 21:34:01 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/21 23:43:19 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/24 21:16:55 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		ft_count_pipe(char **arg)
+int		pipe_fork(t_pipe_cmd *pipe_cmd)
 {
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (arg[i])
+	if (pipe(pipe_cmd->pfd) == -1)
 	{
-		if (!ft_strcmp(arg[i], "|"))
-			count++;
-		i++;
+		ft_strerror(NULL, NULL, NULL, NULL);
+		return (-1);
 	}
-	return (count);
-}
-
-int		check_redir(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
+	if ((pipe_cmd->proc = fork()) == -1)
 	{
-		if (ft_strcmp(s[i], ">") == 0 || ft_strcmp(s[i], ">>") == 0 ||
-		ft_strcmp(s[i], "<") == 0)
-			return (1);
-		i++;
+		free_tab(pipe_cmd->tab_env);
+		free_tab_3d(pipe_cmd->cmd);
+		return (-1);
 	}
 	return (0);
-}
-
-void	count_redir_pipe(char **s, t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	cmd->nb_redir = 0;
-	cmd->apply_redir = 0;
-	while (s[i])
-	{
-		if (ft_strcmp(s[i], ">") == 0 || ft_strcmp(s[i], ">>") == 0 ||
-		ft_strcmp(s[i], "<") == 0)
-			cmd->nb_redir++;
-		i++;
-	}
 }
 
 void	toggle_redir(char **s, int i, t_pipe_cmd *pipe_cmd)
