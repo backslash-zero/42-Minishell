@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/25 02:05:59 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/25 16:51:38 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ void			assign_and_free(char **newstr, char **oldstr);
 void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
 int				ft_exec(char **arg_list);
+int				find_first_redir(t_cmd *cmd);
+int				find_first_redir(t_cmd *cmd);
+int				arg_is_redir(char *str);
+int				sort_cmd(t_cmd *cmd, t_sort_redir *sort);
+int				sort_redir(t_cmd *cmd);
 int				redirection(t_cmd *cmd);
 void			redir_exec(char **arg_list, t_cmd *cmd, int fd);
 int				apply_redirections(char **arg, t_cmd *cmd, int fd);

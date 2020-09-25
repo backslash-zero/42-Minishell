@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/21 23:54:51 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 16:24:40 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ typedef struct	s_parsing_tool
 	int			empty_var;
 	int			pre_bs;
 }				t_parsing_tool;
+
+typedef struct	s_sort_redir
+{
+	int		i;
+	int		i_first_redir;
+	int		prev_redir;
+	int		prev_file;
+	int		len_arg;
+}				t_sort_redir;
 
 typedef struct	s_parse
 {

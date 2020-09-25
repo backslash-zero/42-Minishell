@@ -53,6 +53,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 				\
 				execs/reads_3.c								\
 				execs/redirections.c						\
 				execs/redirections2.c						\
+				execs/sort_redir.c							\
 				utils/semicolon.c							\
 				execs/path.c								\
 				execs/path_2.c								\
@@ -83,10 +84,10 @@ $(PRINTFEXEC):
 				@echo $(PRINTFEXEC) ready
 
 .c.o:
-				@$(CC) $(FLAGS) -c $< -o $@
+				$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME):		$(LIBFTEXEC) $(PRINTFEXEC) $(OBJ)
-				$(CC) $(FLAGS) $(OBJ) -I$(HEADER) $(LIBFTEXEC) $(PRINTFEXEC) -o $(NAME) 
+				@$(CC) $(FLAGS) $(OBJ) -I$(HEADER) $(LIBFTEXEC) $(PRINTFEXEC) -o $(NAME) 
 				@echo $(NAME) ready
 				@echo $(NAME) created
 
