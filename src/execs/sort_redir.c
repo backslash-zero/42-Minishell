@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 15:43:53 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/25 17:26:32 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 17:58:57 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,38 @@ int		arg_is_redir(char *str)
 
 int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
 {
+	char	**new_arg;
+	char	**tmp;
+	int		i;
+	
+	i = 0;
+	if (!(new_arg = malloc(sizeof(char *) * (sort->len_arg + 1))))
+		return (0);
+	while (i < sort->i_first_redir)
+	{
+		new_arg[i] = cmd->arg[i];
+		i++;
+	}
+	new_arg[i] = cmd->arg[sort->i];
+	i++;
+	while (cmd->arg[i])
+	{
+		if (i <= sort->i)
+			new_arg[i] = cmd->arg[i - 1];
+		else
+			new_arg[i] = cmd->arg[i];
+		i++;
+	}
+	new_arg[i] = NULL;
+	tmp = cmd->arg;
+	cmd->arg = new_arg;
+	free(tmp);
+	sort->i_first_redir++; 
+	return (1);
+}
+/* 
+int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
+{
 	int i;
 	char *tmp;
 	char *tmp2;
@@ -55,7 +87,7 @@ int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
 	}
 	sort->i_first_redir++;
 	return (1);
-}
+} */
 
 int		sort_redir(t_cmd *cmd)
 {
