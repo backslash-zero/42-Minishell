@@ -48,23 +48,23 @@ int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
 		return (0);
 	while (i < sort->i_first_redir)
 	{
-		new_arg[i] = cmd->arg[i];
+		new_arg[i] = ft_strdup(cmd->arg[i]);
 		i++;
 	}
-	new_arg[i] = cmd->arg[sort->i];
+	new_arg[i] = ft_strdup(cmd->arg[sort->i]);
 	i++;
 	while (cmd->arg[i])
 	{
 		if (i <= sort->i)
-			new_arg[i] = cmd->arg[i - 1];
+			new_arg[i] = ft_strdup(cmd->arg[i - 1]);
 		else
-			new_arg[i] = cmd->arg[i];
+			new_arg[i] = ft_strdup(cmd->arg[i]);
 		i++;
 	}
 	new_arg[i] = NULL;
 	tmp = cmd->arg;
 	cmd->arg = new_arg;
-	freetab(tmp);
+	free_tab(tmp);
 	sort->i_first_redir++; 
 	return (1);
 }
