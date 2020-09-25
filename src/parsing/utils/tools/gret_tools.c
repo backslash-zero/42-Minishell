@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   gret_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 20:12:07 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/25 02:00:51 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:05:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../incs/minishell.h"
 
-void	nsert_copy_rest(t_parsing_tool *tool, char *newstr, int i, int j)
+void	insert_copy_rest(t_parsing_tool *tool, char *newstr, int i, int j)
 {
 	while (tool->input[j])
 	{

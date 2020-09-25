@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/25 01:53:48 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:05:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
 int				try_path(char *s);
 char			*catch_path(char *test, char *arg);
+void	        insert_copy_rest(t_parsing_tool *tool, char *newstr, int i, int j);
 char			*find_correct_path(char *s, char *arg);
 char			*try_absolut_path(char *arg);
 char			**tablst(t_list *lst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:55:07 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/25 02:03:12 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:15:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*check_paths(char **tab_env, char **arg_list)
 	if (!s)
 	{
 		free_tab(tab_env);
-		free(s); // pas sur
+		free(s);
 		return (NULL);
 	}
 	return (s);
