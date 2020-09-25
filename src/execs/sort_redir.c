@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 15:43:53 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/25 17:58:57 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 18:00:53 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
 	new_arg[i] = NULL;
 	tmp = cmd->arg;
 	cmd->arg = new_arg;
-	free(tmp);
+	freetab(tmp);
 	sort->i_first_redir++; 
 	return (1);
 }
