@@ -6,13 +6,13 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 18:50:32 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/25 01:31:25 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:01:12 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void			check_signal(int status)
+void	check_signal(int status)
 {
 	if (WTERMSIG(status) == 3)
 		ft_putstr("Quit: 3\n");

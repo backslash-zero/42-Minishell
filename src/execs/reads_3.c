@@ -6,13 +6,13 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 23:04:58 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/25 01:54:20 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:01:44 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char			**tablst(t_list *lst)
+char	**tablst(t_list *lst)
 {
 	char	**ret;
 	t_list	*tmp;
@@ -35,7 +35,7 @@ char			**tablst(t_list *lst)
 	return (ret);
 }
 
-void			get_len_semic(char **arg, int *i, int *len_new_arg_list)
+void	get_len_semic(char **arg, int *i, int *len_new_arg_list)
 {
 	*len_new_arg_list = 0;
 	while (*i < arg_len(arg) && ft_strcmp(arg[*i], ";") != 0)

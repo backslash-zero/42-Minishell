@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:07:50 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/25 00:51:18 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:01:24 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			fd_dup(int i)
 int				dup_return(int value)
 {
 	fd_dup(1);
-	return(value);
+	return (value);
 }
 
 void			init_prompt(int *ret, char *buffer)

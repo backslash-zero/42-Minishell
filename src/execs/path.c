@@ -6,14 +6,13 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 13:55:07 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/25 00:47:21 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:03:12 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-
-char		*check_paths(char **tab_env, char **arg_list)
+char	*check_paths(char **tab_env, char **arg_list)
 {
 	char *s;
 

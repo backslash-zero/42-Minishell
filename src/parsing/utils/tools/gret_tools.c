@@ -6,13 +6,13 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 20:12:07 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/25 00:49:46 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/25 02:00:51 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../incs/minishell.h"
 
-void		insert_copy_rest(t_parsing_tool *tool, char *newstr, int i, int j)
+void	nsert_copy_rest(t_parsing_tool *tool, char *newstr, int i, int j)
 {
 	while (tool->input[j])
 	{
