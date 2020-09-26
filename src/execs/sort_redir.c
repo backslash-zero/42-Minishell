@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 15:43:53 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/25 18:00:53 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/26 15:04:23 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int		arg_is_redir(char *str)
 		return (1);
 	else
 		return (0);
-	
 }
 
 int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
@@ -42,52 +41,33 @@ int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
 	char	**new_arg;
 	char	**tmp;
 	int		i;
-	
-	i = 0;
+
+	i = -1;
 	if (!(new_arg = malloc(sizeof(char *) * (sort->len_arg + 1))))
 		return (0);
-	while (i < sort->i_first_redir)
-	{
-		new_arg[i] = cmd->arg[i];
-		i++;
-	}
-	new_arg[i] = cmd->arg[sort->i];
-	i++;
-	while (cmd->arg[i])
+	while (++i < sort->i_first_redir)
+		new_arg[i] = ft_strdup(cmd->arg[i]);
+	new_arg[i] = ft_strdup(cmd->arg[sort->i]);
+	while (cmd->arg[++i])
 	{
 		if (i <= sort->i)
-			new_arg[i] = cmd->arg[i - 1];
+			new_arg[i] = ft_strdup(cmd->arg[i - 1]);
 		else
-			new_arg[i] = cmd->arg[i];
-		i++;
+			new_arg[i] = ft_strdup(cmd->arg[i]);
 	}
 	new_arg[i] = NULL;
 	tmp = cmd->arg;
 	cmd->arg = new_arg;
-	freetab(tmp);
-	sort->i_first_redir++; 
-	return (1);
-}
-/* 
-int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
-{
-	int i;
-	char *tmp;
-	char *tmp2;
-	
-	i = sort->i_first_redir + 1;
-	tmp = cmd->arg[sort->i_first_redir];
-	cmd->arg[sort->i_first_redir] = cmd->arg[sort->i];
-	while (i < sort->len_arg)
-	{
-		tmp2 = cmd->arg[i];
-		cmd->arg[i] = tmp;
-		tmp = tmp2;
-		i++;	
-	}
+	free_tab(tmp);
 	sort->i_first_redir++;
 	return (1);
-} */
+}
+
+void	sort_redir_next(t_sort_redir *sort)
+{
+	sort->prev_redir = 0;
+	sort->prev_file = 1;
+}
 
 int		sort_redir(t_cmd *cmd)
 {
@@ -107,15 +87,12 @@ int		sort_redir(t_cmd *cmd)
 				return (0);
 		}
 		if (arg_is_redir(cmd->arg[sort.i]))
-		{	
+		{
 			sort.prev_redir = 1;
 			sort.prev_file = 0;
 		}
 		else if (sort.prev_redir && !arg_is_redir(cmd->arg[sort.i]))
-		{
-			sort.prev_redir = 0;
-			sort.prev_file = 1;
-		}
+			sort_redir_next(&sort);
 		sort.i++;
 	}
 	return (1);

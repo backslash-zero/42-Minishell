@@ -81,7 +81,8 @@ char			**semicolon(char **arg, int i, int len_new_arg_list);
 char			*find_path_env(char **env, char *arg);
 int				try_path(char *s);
 char			*catch_path(char *test, char *arg);
-void	        insert_copy_rest(t_parsing_tool *tool, char *newstr, int i, int j);
+void			insert_copy_rest(t_parsing_tool *tool, char *newstr,
+				int i, int j);
 char			*find_correct_path(char *s, char *arg);
 char			*try_absolut_path(char *arg);
 char			**tablst(t_list *lst);
