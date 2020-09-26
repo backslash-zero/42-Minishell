@@ -34,7 +34,6 @@ int		arg_is_redir(char *str)
 		return (1);
 	else
 		return (0);
-	
 }
 
 int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
@@ -42,31 +41,32 @@ int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
 	char	**new_arg;
 	char	**tmp;
 	int		i;
-	
-	i = 0;
+
+	i = -1;
 	if (!(new_arg = malloc(sizeof(char *) * (sort->len_arg + 1))))
 		return (0);
-	while (i < sort->i_first_redir)
-	{
+	while (++i < sort->i_first_redir)
 		new_arg[i] = ft_strdup(cmd->arg[i]);
-		i++;
-	}
 	new_arg[i] = ft_strdup(cmd->arg[sort->i]);
-	i++;
-	while (cmd->arg[i])
+	while (cmd->arg[++i])
 	{
 		if (i <= sort->i)
 			new_arg[i] = ft_strdup(cmd->arg[i - 1]);
 		else
 			new_arg[i] = ft_strdup(cmd->arg[i]);
-		i++;
 	}
 	new_arg[i] = NULL;
 	tmp = cmd->arg;
 	cmd->arg = new_arg;
 	free_tab(tmp);
-	sort->i_first_redir++; 
+	sort->i_first_redir++;
 	return (1);
+}
+
+void	sort_redir_next(t_sort_redir *sort)
+{
+	sort->prev_redir = 0;
+	sort->prev_file = 1;
 }
 
 int		sort_redir(t_cmd *cmd)
@@ -87,15 +87,12 @@ int		sort_redir(t_cmd *cmd)
 				return (0);
 		}
 		if (arg_is_redir(cmd->arg[sort.i]))
-		{	
+		{
 			sort.prev_redir = 1;
 			sort.prev_file = 0;
 		}
 		else if (sort.prev_redir && !arg_is_redir(cmd->arg[sort.i]))
-		{
-			sort.prev_redir = 0;
-			sort.prev_file = 1;
-		}
+			sort_redir_next(&sort);
 		sort.i++;
 	}
 	return (1);
