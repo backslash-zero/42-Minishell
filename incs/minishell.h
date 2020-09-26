@@ -71,7 +71,7 @@ int				arg_is_redir(char *str);
 int				sort_cmd(t_cmd *cmd, t_sort_redir *sort);
 int				sort_redir(t_cmd *cmd);
 int				redirection(t_cmd *cmd);
-void			redir_exec(char **arg_list, t_cmd *cmd, int fd);
+void			redir_exec(char **arg_list, t_cmd *cmd, int fd, char **arg);
 int				apply_redirections(char **arg, t_cmd *cmd, int fd);
 int				r_anglebracket(char **arg, t_cmd *cmd, char *name);
 int				r_dbanglebracket(char **arg, t_cmd *cmd, char *name);
