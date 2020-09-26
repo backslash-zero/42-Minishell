@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 15:43:53 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/25 18:00:53 by celestin         ###   ########.fr       */
+/*   Updated: 2020/09/26 15:04:23 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,6 @@ int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
 	sort->i_first_redir++; 
 	return (1);
 }
-/* 
-int		sort_cmd(t_cmd *cmd, t_sort_redir *sort)
-{
-	int i;
-	char *tmp;
-	char *tmp2;
-	
-	i = sort->i_first_redir + 1;
-	tmp = cmd->arg[sort->i_first_redir];
-	cmd->arg[sort->i_first_redir] = cmd->arg[sort->i];
-	while (i < sort->len_arg)
-	{
-		tmp2 = cmd->arg[i];
-		cmd->arg[i] = tmp;
-		tmp = tmp2;
-		i++;	
-	}
-	sort->i_first_redir++;
-	return (1);
-} */
 
 int		sort_redir(t_cmd *cmd)
 {
