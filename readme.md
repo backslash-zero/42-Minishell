@@ -7,7 +7,7 @@ Following builtins were self made: `echo`, `cd`, `pwd`, `export`, `unset`, `env`
 ### Functionalities
 `'` and `"`, `;`, `|`, `>`, `>>`, `$?`, `$VARIABLES`, `ctrl+C`, `ctrl+D`, `ctrl+\`  
   
-[Minishell example](https://github.com/backslash-zero/minishell/blob/master/Capture%20d%E2%80%99e%CC%81cran%202020-09-27%20a%CC%80%2016.07.47.png)  
+![Minishell example](https://github.com/backslash-zero/minishell/blob/master/Capture%20d%E2%80%99e%CC%81cran%202020-09-27%20a%CC%80%2016.07.47.png)  
   
 ## Basic Concepts
 - Processes
