@@ -20,8 +20,8 @@ malloc, free, write, open, read, close, fork, wait, waitpid, wait3, wait4, signa
 ```
 
 ## External self code libraries:
-[Libft](https://github.com/backslash-zero/42/tree/master/Libft): Self-made basic functions of C default libraries.
-[ft_printf_fd](https://github.com/backslash-zero/printf_fd): Self-made library with similar behaviour as [printf](http://www.cplusplus.com/reference/cstdio/printf/) with custome file descriptor.
+[Libft](https://github.com/backslash-zero/42/tree/master/Libft): Self-made basic functions of C default libraries.  
+[Printf_fd](https://github.com/backslash-zero/printf_fd): Self-made library with similar behaviour as [printf](http://www.cplusplus.com/reference/cstdio/printf/) with custome file descriptor.
 
 
 ## Project Structure
