@@ -1,4 +1,4 @@
-# Minishell
+# Minishell 42
 
 ## About
 Minishell is simple shell with similar behaviours as [bash](https://www.gnu.org/software/bash/).
