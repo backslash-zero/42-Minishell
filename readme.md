@@ -107,4 +107,12 @@ malloc, free, write, open, read, close, fork, wait, waitpid, wait3, wait4, signa
 [Création d'un minisystème](https://chrtophe.developpez.com/tutoriels/minisysteme/#L11)   
 [Exit Codes](https://tldp.org/LDP/abs/html/exitcodes.html)  
 [Write a shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)  
-[Single quote vs Double quotes](https://stackoverflow.com/questions/6697753/difference-between-single-and-double-quotes-in-bash)  
+[Single quote vs Double quotes](https://stackoverflow.com/questions/6697753/difference-between-single-and-double-quotes-in-bash) 
+
+## 42's norm and principles
+
+The function must conform to 42's [norm](https://cdn.intra.42.fr/pdf/pdf/960/norme.en.pdf).
+
+The function cannot leak. All errors must be handled carefully. In no way can the function quit in an unexpected manner (Segmentation fault, bus error, double free, etc).
+
+Project is therefore check with _valgrind_ and/or _fsanitize_.
