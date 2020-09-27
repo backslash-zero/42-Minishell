@@ -1,11 +1,16 @@
 # Minishell
 
-## Algorithm mindmap
-[Mind map here](https://www.figma.com/file/G5oAf6m91dH57ye0YDG7cs/Minishell-Mindmap?node-id=0%3A1)
+
 
 ## About
 Minishell is simple shell with similar behaviour as [bash](https://www.gnu.org/software/bash/).
+Following builtins were self made: `echo`, `cd`, `pwd`, `export`, `unset`, `env` and `exit` while other calls are made via `execve` and path lookup.
 
+### Functionalities
+`'` and `"`, `;`, `|`, `>`, `>>`, `$?`, `$VARIABLES`, `ctrl+C`, `ctrl+D`, `ctrl+\`  
+  
+[Minishell example](https://github.com/backslash-zero/minishell/blob/master/Capture%20d%E2%80%99e%CC%81cran%202020-09-27%20a%CC%80%2016.07.47.png)  
+  
 ## Basic Concepts
 - Processes
 - Fork, wait, exec functions
