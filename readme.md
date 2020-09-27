@@ -1,7 +1,5 @@
 # Minishell
 
-
-
 ## About
 Minishell is simple shell with similar behaviour as [bash](https://www.gnu.org/software/bash/).
 Following builtins were self made: `echo`, `cd`, `pwd`, `export`, `unset`, `env` and `exit` while other calls are made via `execve` and path lookup.
