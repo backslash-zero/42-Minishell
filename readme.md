@@ -1,11 +1,11 @@
 # Minishell
 
 ## About
-Minishell is simple shell with similar behaviour as [bash](https://www.gnu.org/software/bash/).
-Following builtins were self made: `echo`, `cd`, `pwd`, `export`, `unset`, `env` and `exit` while other calls are made via `execve` and path lookup.
+Minishell is simple shell with similar behaviours as [bash](https://www.gnu.org/software/bash/).
+Following builtins were self made: `echo`, `cd`, `pwd`, `export`, `unset`, `env` and `exit`; while other calls are made via `execve` and path lookup.
 
 ### Functionalities
-`'` and `"`, `;`, `|`, `>`, `>>`, `$?`, `$VARIABLES`, `ctrl+C`, `ctrl+D`, `ctrl+\`  
+`'`, `"`, `;`, `|`, `>`, `>>`, `$?`, `$VARIABLES`, `ctrl+C`, `ctrl+D`, `ctrl+\`  
   
 ![Minishell example](https://github.com/backslash-zero/minishell/blob/master/Capture%20d%E2%80%99e%CC%81cran%202020-09-27%20a%CC%80%2016.07.47.png)  
   
@@ -22,7 +22,7 @@ Following builtins were self made: `echo`, `cd`, `pwd`, `export`, `unset`, `env`
 malloc, free, write, open, read, close, fork, wait, waitpid, wait3, wait4, signal, kill, exit, getcwd, chdir, stat, lstat, fstat, execve, dup, dup2, pipe, opendir, readdir, closedir, strerror, errno
 ```
 
-## External self code libraries:
+## External self coded libraries:
 [Libft](https://github.com/backslash-zero/42/tree/master/Libft): Self-made basic functions of C default libraries.  
 [Printf_fd](https://github.com/backslash-zero/printf_fd): Self-made library with similar behaviour as [printf](http://www.cplusplus.com/reference/cstdio/printf/) with custome file descriptor.
 
