@@ -23,8 +23,8 @@ void	redir_exec(char **arg_list, t_cmd *cmd, int fd, char **arg)
 			ft_strerror(NULL, NULL, "fork", NULL);
 		else if (ret_exec == -2)
 		{
-			ft_printf_fd(2,"baddd\n");
 			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+			free_tool(cmd->arg, cmd->input_arg, 0);
 			free_tool(arg_list, arg, 1);
 			close(fd);
 			exit(127);
