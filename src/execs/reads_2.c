@@ -77,6 +77,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 
 	fd_dup(0);
 	ret_red = redirection(cmd);
+	ft_printf_fd(2, "ret_red = %d\n", ret_red);
 	if (!ret_red)
 	{
 		if (!arg_cleanup(cmd->arg))
@@ -91,6 +92,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 		}
 		return (dup_return(1));
 	}
+	ft_printf_fd(2, "g_ret launch exec= %d\n", g_ret);
 	if (ret_red == -1)
 		return (dup_return(1));
 	return (dup_return(0));

@@ -56,6 +56,11 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 			ret_red = r_dbanglebracket(s, cmd, s[i + 1]);
 		else if (ft_strcmp(s[i], "<") == 0)
 			ret_red = l_anglebracket(s, cmd, s[i + 1]);
+		if (g_ret == 127)
+		{
+			free_tab_3d(pipe_cmd->cmd);
+			free_tab(pipe_cmd->tab_env);
+		}
 		if (ret_red == -1)
 			exit(1);
 		i++;

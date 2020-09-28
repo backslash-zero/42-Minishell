@@ -76,8 +76,11 @@ void	launch_start(t_cmd *cmd, char **arg)
 	}
 	else
 		ret_exec = launch_exec(arg, cmd);
-	if (ret_exec == -2)
+	printf("ret_exec launch start = %d g_ret = %d\n", ret_exec, g_ret);
+	if (ret_exec == -2 || g_ret == 127)
 	{
+		//free_tab(arg);
+		printf("qzdsqzs\n");
 		free_tool(cmd->arg, cmd->input_arg, 1);
 		exit(127);
 	}

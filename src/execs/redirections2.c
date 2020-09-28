@@ -19,14 +19,17 @@ void	redir_exec(char **arg_list, t_cmd *cmd, int fd, char **arg)
 	if (!ft_checkbuiltins(arg_list, cmd))
 	{
 		ret_exec = ft_exec(arg_list);
+		ft_printf_fd(2, "ret_exec in redir_exec00 = %d\n", ret_exec);
 		if (ret_exec == -1)
 			ft_strerror(NULL, NULL, "fork", NULL);
 		else if (ret_exec == -2)
 		{
-			ft_printf_fd(2,"baddd\n");
+			ft_printf_fd(2, "g_ret redir_exec= %d\n", g_ret);
 			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
+			free_tool(cmd->arg, cmd->input_arg, 0);
 			free_tool(arg_list, arg, 1);
 			close(fd);
+			g_ret = 127;
 			exit(127);
 		}
 	}
@@ -47,7 +50,9 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd)
 		free_tab(arg_list);
 		return (ft_strerror(NULL, arg, NULL, NULL));
 	}
+	ft_printf_fd(2, "applyredirection before redir_exec\n");
 	redir_exec(arg_list, cmd, fd, arg);
+	ft_printf_fd(2, "g_ret apply_redirection = %d\n", g_ret);
 	free_tab(arg_list);
 	return (0);
 }
