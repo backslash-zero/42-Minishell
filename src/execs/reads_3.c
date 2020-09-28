@@ -76,14 +76,11 @@ void	launch_start(t_cmd *cmd, char **arg)
 	}
 	else
 		ret_exec = launch_exec(arg, cmd);
-	ft_printf_fd(2, "ret_exec = %d\n", ret_exec);
 	if (ret_exec == -2)
 	{
-		//free_tool(cmd->arg, cmd->input_arg, 1);
 		free_tool(cmd->arg, cmd->input_arg, 1);
 		exit(127);
 	}
-	//free_tab(cmd->arg);
 	free_tmp_tab(cmd->arg);
 }
 

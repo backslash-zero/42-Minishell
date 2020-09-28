@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-void	redir_exec(char **arg_list, t_cmd *cmd, int fd, char **arg)
+void	redir_exec(char **arg_list, t_cmd *cmd, int fd)
 {
 	int		ret_exec;
 
@@ -24,8 +24,8 @@ void	redir_exec(char **arg_list, t_cmd *cmd, int fd, char **arg)
 		else if (ret_exec == -2)
 		{
 			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
-			free_tool(cmd->arg, cmd->input_arg, 0);
-			free_tool(arg_list, arg, 1);
+			free_tool(cmd->arg, cmd->input_arg, 1);
+			free_tab(arg_list);
 			close(fd);
 			exit(127);
 		}
@@ -47,7 +47,7 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd)
 		free_tab(arg_list);
 		return (ft_strerror(NULL, arg, NULL, NULL));
 	}
-	redir_exec(arg_list, cmd, fd, arg);
+	redir_exec(arg_list, cmd, fd);
 	free_tab(arg_list);
 	return (0);
 }
