@@ -26,7 +26,7 @@ void	redir_exec(char **arg_list, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 			free_tool(cmd->arg, cmd->input_arg, 1);
 			free_tab(arg_list);
-			if (pipe_cmd->len > 0)
+			if (pipe_cmd != NULL && pipe_cmd->len > 0)
 			{
 				free_tab_3d(pipe_cmd->cmd);
 				free_tab(pipe_cmd->tab_env);
