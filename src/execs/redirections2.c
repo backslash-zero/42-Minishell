@@ -82,7 +82,8 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name, t_pipe_cmd *pipe_cmd)
 	return (1);
 }
 
-int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name, t_pipe_cmd *pipe_cmd)
+int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name,
+t_pipe_cmd *pipe_cmd)
 {
 	int		fd;
 
