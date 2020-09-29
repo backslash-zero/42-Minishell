@@ -51,11 +51,11 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 	{
 		toggle_redir(s, i, pipe_cmd);
 		if (ft_strcmp(s[i], ">") == 0)
-			ret_red = r_anglebracket(s, cmd, s[i + 1]);
+			ret_red = r_anglebracket(s, cmd, s[i + 1], pipe_cmd);
 		else if (ft_strcmp(s[i], ">>") == 0)
-			ret_red = r_dbanglebracket(s, cmd, s[i + 1]);
+			ret_red = r_dbanglebracket(s, cmd, s[i + 1], pipe_cmd);
 		else if (ft_strcmp(s[i], "<") == 0)
-			ret_red = l_anglebracket(s, cmd, s[i + 1]);
+			ret_red = l_anglebracket(s, cmd, s[i + 1], pipe_cmd);
 		if (ret_red == -1)
 			exit(1);
 		i++;

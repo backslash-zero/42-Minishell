@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-void	redir_exec(char **arg_list, t_cmd *cmd, int fd)
+void	redir_exec(char **arg_list, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 {
 	int		ret_exec;
 
@@ -26,13 +26,18 @@ void	redir_exec(char **arg_list, t_cmd *cmd, int fd)
 			ft_error(CMD_NOT_FOUND, NULL, NULL, arg_list[0]);
 			free_tool(cmd->arg, cmd->input_arg, 1);
 			free_tab(arg_list);
+			if (pipe_cmd->len > 0)
+			{
+				free_tab_3d(pipe_cmd->cmd);
+				free_tab(pipe_cmd->tab_env);
+			}
 			close(fd);
 			exit(127);
 		}
 	}
 }
 
-int		apply_redirections(char **arg, t_cmd *cmd, int fd)
+int		apply_redirections(char **arg, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 {
 	char	**arg_list;
 
@@ -47,12 +52,12 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd)
 		free_tab(arg_list);
 		return (ft_strerror(NULL, arg, NULL, NULL));
 	}
-	redir_exec(arg_list, cmd, fd);
+	redir_exec(arg_list, cmd, fd, pipe_cmd);
 	free_tab(arg_list);
 	return (0);
 }
 
-int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
+int		r_anglebracket(char **arg, t_cmd *cmd, char *name, t_pipe_cmd *pipe_cmd)
 {
 	int		fd;
 
@@ -70,14 +75,14 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name)
 		exit(errno);
 	}
 	if (cmd->apply_redir == cmd->nb_redir)
-		if ((apply_redirections(arg, cmd, fd)) == -1)
+		if ((apply_redirections(arg, cmd, fd, pipe_cmd)) == -1)
 			return (-1);
 	cmd->redir_ok = 1;
 	close(fd);
 	return (1);
 }
 
-int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
+int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name, t_pipe_cmd *pipe_cmd)
 {
 	int		fd;
 
@@ -95,14 +100,14 @@ int		r_dbanglebracket(char **arg, t_cmd *cmd, char *name)
 		exit(errno);
 	}
 	if (cmd->apply_redir == cmd->nb_redir)
-		if ((apply_redirections(arg, cmd, fd)) == -1)
+		if ((apply_redirections(arg, cmd, fd, pipe_cmd)) == -1)
 			return (-1);
 	cmd->redir_ok = 1;
 	close(fd);
 	return (1);
 }
 
-int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
+int		l_anglebracket(char **arg, t_cmd *cmd, char *name, t_pipe_cmd *pipe_cmd)
 {
 	int		fd;
 
@@ -120,7 +125,7 @@ int		l_anglebracket(char **arg, t_cmd *cmd, char *name)
 		exit(errno);
 	}
 	if (cmd->apply_redir == cmd->nb_redir)
-		if ((apply_redirections(arg, cmd, fd)) == -1)
+		if ((apply_redirections(arg, cmd, fd, pipe_cmd)) == -1)
 			return (-1);
 	cmd->redir_ok = 1;
 	close(fd);
