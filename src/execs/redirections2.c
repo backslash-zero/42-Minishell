@@ -18,7 +18,7 @@ void	redir_exec(char **arg_list, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 
 	if (!ft_checkbuiltins(arg_list, cmd))
 	{
-		ret_exec = ft_exec(arg_list);
+		ret_exec = ft_exec(arg_list, cmd);
 		if (ret_exec == -1)
 			ft_strerror(NULL, NULL, "fork", NULL);
 		else if (ret_exec == -2)

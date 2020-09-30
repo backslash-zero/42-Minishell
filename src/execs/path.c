@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-char	*check_paths(char **tab_env, char **arg_list)
+char	*check_paths(char **tab_env, char **arg_list, t_cmd *cmd)
 {
 	char *s;
 
@@ -20,11 +20,18 @@ char	*check_paths(char **tab_env, char **arg_list)
 	if (s != NULL && (ft_strcmp(s, "NOT_FOUND") == 0
 		|| ft_strcmp(s, "IS_DIR") == 0))
 	{
+		(void)cmd;
 		free_tab(tab_env);
 		if (ft_strcmp(s, "NOT_FOUND") == 0)
+		{
+			free_tool(cmd->arg, cmd->input_arg, 1);
 			exit(126);
+		}
 		if (ft_strcmp(s, "IS_DIR") == 0)
+		{
+			free_tool(cmd->arg, cmd->input_arg, 1);
 			exit(127);
+		}
 	}
 	if (s == NULL)
 		s = find_path_env(tab_env, arg_list[0]);
@@ -33,6 +40,11 @@ char	*check_paths(char **tab_env, char **arg_list)
 		free_tab(tab_env);
 		free(s);
 		return (NULL);
+	}
+	if (!ft_strcmp(s, "abcd"))
+	{
+		free_tab(tab_env);
+		return (s);
 	}
 	return (s);
 }
@@ -69,27 +81,34 @@ char	*find_path_env(char **env, char *arg)
 {
 	int		i;
 	int		j;
+	int		ok;
 	char	*s;
 	char	*path;
 
 	i = -1;
-	while (env[++i])
+	ok = 0;
+	while (env[++i] && ok != 1)
 	{
 		if (ft_strncmp(env[i], "PATH=", ft_strlen("PATH=")) == 0)
-		{
-			j = 0;
-			while (env[i][j] != '=')
-				j++;
+			ok = 1;
+	}
+	if (ok == 0)
+		return (ft_strdup("abcd"));
+	i = -1;
+	while (env[++i])
+	{
+		j = 0;
+		while (env[i][j] != '=')
 			j++;
-			s = ft_substr(env[i], j, ft_strlen(env[i]) - j);
-			if ((path = find_correct_path(s, arg)) != NULL)
-			{
-				free(s);
-				return (path);
-			}
+		j++;
+		s = ft_substr(env[i], j, ft_strlen(env[i]) - j);
+		if ((path = find_correct_path(s, arg)) != NULL)
+		{
 			free(s);
-			free(path);
+			return (path);
 		}
+		free(s);
+		free(path);
 	}
 	return (NULL);
 }

@@ -33,12 +33,17 @@ int				ft_exec_father(char **tab_env, char **arg_list)
 	return (0);
 }
 
-int				ft_exec_child(char **tab_env, char **arg_list)
+int				ft_exec_child(char **tab_env, char **arg_list, t_cmd *cmd)
 {
 	char *s;
 
-	if (!(s = check_paths(tab_env, arg_list)))
+	if (!(s = check_paths(tab_env, arg_list, cmd)))
 		return (-2);
+	if (!ft_strcmp(s, "abcd"))
+	{
+		free (s);
+		return (-45);
+	}
 	if ((execve(s, arg_list, tab_env)) == -1)
 	{
 		free_tab(tab_env);
@@ -57,9 +62,14 @@ int				launch_ft_exec(t_cmd *cmd)
 {
 	int	ret_exec;
 
-	ret_exec = ft_exec(cmd->arg);
+	ret_exec = ft_exec(cmd->arg, cmd);
 	if (ret_exec == -1)
 		return (ft_strerror(NULL, NULL, "fork", NULL));
+	else if (ret_exec == -45)
+	{
+		ft_error(NO_FILE, NULL, NULL, cmd->arg[0]);
+		return (-2);
+	}
 	else if (ret_exec == -2)
 	{
 		ft_error(CMD_NOT_FOUND, NULL, NULL, cmd->arg[0]);
@@ -96,7 +106,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 	return (dup_return(0));
 }
 
-int				ft_exec(char **arg_list)
+int				ft_exec(char **arg_list, t_cmd *cmd)
 {
 	pid_t	proc;
 	int		ret_exec;
@@ -111,7 +121,7 @@ int				ft_exec(char **arg_list)
 	}
 	if (proc == 0)
 	{
-		if ((ret_exec = ft_exec_child(tab_env, arg_list)) != 0)
+		if ((ret_exec = ft_exec_child(tab_env, arg_list, cmd)) != 0)
 			return (ret_exec);
 	}
 	else if (proc > 0)
