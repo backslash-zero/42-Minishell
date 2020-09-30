@@ -39,6 +39,11 @@ int		pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
 		*ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i], cmd);
 		if (*ret_exec == -1)
 			ft_strerror(NULL, NULL, "fork", NULL);
+		else if (*ret_exec == -45)
+		{
+			ft_error(NO_FILE, NULL, NULL,
+						pipe_cmd->cmd[pipe_cmd->i][0]);
+		}
 		else if (*ret_exec == -2)
 		{
 			ft_error(CMD_NOT_FOUND, NULL, NULL,
