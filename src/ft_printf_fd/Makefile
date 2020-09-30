@@ -12,7 +12,7 @@
 
 CC		=	clang
 
-CFLAGS	+=	-Wall -Wextra -Werror -I . -c -o -g -fsanitize=address
+CFLAGS	+=	-Wall -Wextra -Werror
 
 SRC 	=		ft_printf_fd.c						\
 				ft_field_width.c				\
@@ -39,7 +39,7 @@ $(NAME): $(OBJ)
 	@echo "libftprintf.a ready"
 
 %.o:	%.c
-		@$(CC) $(FLAGS) -o $@ -c $<
+		@$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
 	@rm -f $(OBJ)
