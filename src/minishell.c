@@ -25,12 +25,12 @@ int		is_forking(int val)
 
 void	signal_handler(int n)
 {
-	if (g_signal == 1)
+/*	if (g_signal == 1)
 	{
 		ft_putstr("\033[1C");
 		ft_putstr("\b\b \b\b \b\b");
 		ft_putstr("\033[1C");
-	}
+	}*/
 	if (n == SIGINT)
 	{
 		if (g_print == 0)

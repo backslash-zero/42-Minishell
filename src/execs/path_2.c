@@ -15,7 +15,7 @@
 void	check_signal(int status)
 {
 	if (WTERMSIG(status) == 3)
-		ft_putstr("Quit: 3\n");
+		ft_putstr("Quitter (core dumped)\n");
 	if (WIFEXITED(status))
 		g_ret = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
