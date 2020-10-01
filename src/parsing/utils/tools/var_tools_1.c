@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_tools_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:28:32 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/21 23:54:46 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/02 01:02:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int		remove_var(t_parsing_tool *tool, int i, char *env_name)
 	len_newstr = ft_strlen(tool->input) - (ft_strlen(env_name) + 1);
 	if (!(newstr = malloc(sizeof(char) * (len_newstr + 1))))
 		return (0);
-	ft_strncpy(newstr, tool->input, i);
+	if (i > 0)
+		ft_strncpy(newstr, tool->input, i);
 	j = i + 1 + ft_strlen(env_name);
 	while (tool->input[j])
 	{
