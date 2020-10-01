@@ -101,7 +101,10 @@ int		check_var(char **arg_list)
 			init_tool(&tool);
 			tool.input = ft_strdup(arg_list[i]);
 			if ((ret = expand_env(&tool, i)) < 1)
+			{
+				assign_and_free(&tool.input, &arg_list[i]);
 				return (ret);
+			}
 			assign_and_free(&tool.input, &arg_list[i]);
 		}
 		i++;
