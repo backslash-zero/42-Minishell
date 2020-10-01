@@ -22,7 +22,7 @@ int		builtin_exit_next(t_cmd *cmd, int i)
 		{
 			ft_error(EXIT_NUM, NULL, NULL, cmd->arg[1]);
 			free_tool(cmd->arg, cmd->input_arg, 1);
-			exit(255);
+			exit(2);
 		}
 		i++;
 	}
@@ -43,7 +43,7 @@ int		builtin_exit_long_arg(t_cmd *cmd, int i)
 		{
 			ft_error(EXIT_NUM, NULL, NULL, cmd->arg[1]);
 			free_tool(cmd->arg, cmd->input_arg, 1);
-			exit(255);
+			exit(2);
 		}
 		i++;
 	}

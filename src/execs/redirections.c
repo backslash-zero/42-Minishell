@@ -12,6 +12,21 @@
 
 #include "../../incs/minishell.h"
 
+int		check_perm(char *name)
+{
+	struct stat file;
+
+	errno = 0;
+	stat(name, &file);
+	if (!(file.st_mode & S_IWOTH))
+	{
+		g_ret = 1;
+		ft_error(NO_RIGHTS, NULL, NULL, name);
+		return (-1);
+	}
+	return (0);
+}
+
 char	**deletebracket_next(char **arg, char **s)
 {
 	int	i;

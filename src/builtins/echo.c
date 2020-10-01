@@ -34,17 +34,22 @@ int		echo_lonely(void)
 int		echo_n(char **arg, int i)
 {
 	int j;
+	int n;
 
 	while (arg[i])
 	{
 		j = 0;
+		n = 0;
 		while (arg[i][j])
 		{
+			n = (i == 1 && arg[i][j + 1] != 'n') ? 1 : 0;
 			if (arg[i][j] == '-' || arg[i][j] == 'n')
 				j++;
 			else
 			{
 				echo_print(arg, i);
+				if (n == 1)
+					ft_putchar('\n');
 				g_ret = 0;
 				return (0);
 			}

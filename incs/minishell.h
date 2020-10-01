@@ -70,6 +70,7 @@ int				find_first_redir(t_cmd *cmd);
 int				arg_is_redir(char *str);
 int				sort_cmd(t_cmd *cmd, t_sort_redir *sort);
 int				sort_redir(t_cmd *cmd);
+int				check_perm(char *name);
 int				redirection(t_cmd *cmd);
 void			redir_exec(char **arg_list, t_cmd *cmd, int fd,
 				t_pipe_cmd *pipe_cmd);
