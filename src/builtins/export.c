@@ -113,11 +113,11 @@ int		builtin_export(char **arg)
 		if ((s = copy_goodarg(arg, l)) == NULL)
 			return (0);
 	}
-	while (s[i] && (j = check_export_arg(s[i])) > 0)
+	while (arg[i] && (j = check_export_arg(arg[i])) > 0)
 	{
-		if ((start = check_if_exist(g_export, s[i])))
+		if ((start = check_if_exist(g_export, arg[i])))
 		{
-			if (!replace_elem(s[i], start))
+			if (!replace_elem(arg[i], start))
 			{
 				free_tab(s);
 				return (0);
@@ -125,7 +125,7 @@ int		builtin_export(char **arg)
 		}
 		else
 		{
-			if (!add_elem(s[i]))
+			if (!add_elem(arg[i]))
 			{
 				free_tab(s);
 				return (0);

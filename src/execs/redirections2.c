@@ -63,10 +63,10 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name, t_pipe_cmd *pipe_cmd)
 
 	fd = -1;
 	cmd->apply_redir++;
-	if (check_perm(name) == -1)
-		return (-1);
-	if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
+	if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC)) == -1)
 	{
+		if (check_perm(name) == -1)
+			return (-1);
 		g_ret = 1;
 		ft_error(NO_FILE, NULL, NULL, name);
 		return (-1);
@@ -91,10 +91,10 @@ t_pipe_cmd *pipe_cmd)
 
 	fd = -1;
 	cmd->apply_redir++;
-	if (check_perm(name) == -1)
-		return (-1);
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
+		if (check_perm(name) == -1)
+			return (-1);
 		g_ret = 1;
 		ft_error(NO_FILE, NULL, NULL, name);
 		return (-1);
@@ -118,10 +118,10 @@ int		l_anglebracket(char **arg, t_cmd *cmd, char *name, t_pipe_cmd *pipe_cmd)
 
 	fd = 0;
 	cmd->apply_redir++;
-	if (check_perm(name) == -1)
-		return (-1);
 	if ((fd = open(name, O_RDONLY, 0644)) == -1)
 	{
+		if (check_perm(name) == -1)
+			return (-1);
 		g_ret = 1;
 		ft_error(NO_FILE, NULL, NULL, name);
 		return (-1);
