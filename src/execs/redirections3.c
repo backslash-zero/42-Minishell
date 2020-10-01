@@ -35,6 +35,7 @@ int		check_if_ranglebracket(t_cmd *cmd, int i)
 		if ((ret = check_arg_redir(cmd->arg)) == -1)
 		{
 			ft_error(AMBIGUOUS, NULL, NULL, cmd->arg[i + 1]);
+			g_ret = 1;
 			return (-1);
 		}
 		if (r_anglebracket(cmd->arg, cmd, cmd->arg[i + 1], NULL) == -1)
@@ -52,6 +53,7 @@ int		check_if_dbanglebracket(t_cmd *cmd, int i)
 		if ((ret = check_arg_redir(cmd->arg)) == -1)
 		{
 			ft_error(AMBIGUOUS, NULL, NULL, cmd->arg[i + 1]);
+			g_ret = 1;
 			return (-1);
 		}
 		if (r_dbanglebracket(cmd->arg, cmd, cmd->arg[i + 1], NULL) == -1)
@@ -69,6 +71,7 @@ int		check_if_langlebracket(t_cmd *cmd, int i)
 		if ((ret = check_arg_redir(cmd->arg)) == -1)
 		{
 			ft_error(AMBIGUOUS, NULL, NULL, cmd->arg[i + 1]);
+			g_ret = 1;
 			return (-1);
 		}
 		if (l_anglebracket(cmd->arg, cmd, cmd->arg[i + 1], NULL) == -1)

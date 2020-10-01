@@ -70,6 +70,7 @@ int		r_anglebracket(char **arg, t_cmd *cmd, char *name, t_pipe_cmd *pipe_cmd)
 	cmd->apply_redir++;
 	if ((fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
 	{
+		ft_printf_fd(2, "name = %s\n", name);
 		if (check_perm(name) == -1)
 			return (-1);
 		g_ret = 1;
