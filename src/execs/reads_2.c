@@ -41,7 +41,7 @@ int				ft_exec_child(char **tab_env, char **arg_list, t_cmd *cmd)
 		return (-2);
 	if (!ft_strcmp(s, "abcd"))
 	{
-		free (s);
+		free(s);
 		return (-45);
 	}
 	if ((execve(s, arg_list, tab_env)) == -1)
