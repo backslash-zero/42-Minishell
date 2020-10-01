@@ -61,14 +61,15 @@ char	**copy_goodarg(char **arg, int l)
 	int		d;
 
 	d = 0;
-	if (!(s = (char **)malloc(sizeof(char *) * (l +1))))
+	if (!(s = (char **)malloc(sizeof(char **) * (l + 2))))
 		return (NULL);
 	l = 0;
 	while (arg[l])
 	{
 		if (ft_strlen(arg[l]) != 0)
 		{
-			s[d] = ft_strdup(arg[l]);
+			if (!(s[d] = ft_strdup(arg[l])))
+				return (NULL);
 			d++;
 		}
 		l++;
@@ -102,25 +103,33 @@ int		builtin_export(char **arg)
 		if (l == arg_len(arg) - 1)
 			return (print_export());
 	}
-	if (l < arg_len(arg) - 1)
-			s = copy_goodarg(arg, l);
-	int d = 0;
-	while (s[d])
+	if (l == 0)
 	{
-		ft_printf_fd(2, "s = %s\n", s[d]);
-		d++;
+		if ((s = copy_goodarg(arg, arg_len(arg))) == NULL)
+			return (0);
+	}
+	else if (l < arg_len(arg) - 1)
+	{
+		if ((s = copy_goodarg(arg, l)) == NULL)
+			return (0);
 	}
 	while (s[i] && (j = check_export_arg(s[i])) > 0)
 	{
 		if ((start = check_if_exist(g_export, s[i])))
 		{
 			if (!replace_elem(s[i], start))
+			{
+				free_tab(s);
 				return (0);
+			}
 		}
 		else
 		{
 			if (!add_elem(s[i]))
+			{
+				free_tab(s);
 				return (0);
+			}
 		}
 		i++;
 	}
