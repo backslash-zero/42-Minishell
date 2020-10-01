@@ -55,28 +55,75 @@ int		export_return(char **arg, int j)
 	return (0);
 }
 
+char	**copy_goodarg(char **arg, int l)
+{
+	char	**s;
+	int		d;
+
+	d = 0;
+	if (!(s = (char **)malloc(sizeof(char *) * (l +1))))
+		return (NULL);
+	l = 0;
+	while (arg[l])
+	{
+		if (ft_strlen(arg[l]) != 0)
+		{
+			s[d] = ft_strdup(arg[l]);
+			d++;
+		}
+		l++;
+	}
+	s[d] = NULL;
+	return (s);
+}
+
 int		builtin_export(char **arg)
 {
 	int		i;
 	int		start;
 	int		j;
+	int		l;
+	char	**s;
 
 	i = 1;
+	l = 0;
+	s = NULL;
 	if (arg_len(arg) == 1)
 		return (print_export());
-	while (arg[i] && (j = check_export_arg(arg[i])) > 0)
+	if (arg_len(arg) > 1)
 	{
-		if ((start = check_if_exist(g_export, arg[i])))
+		j = 1;
+		while (arg[j])
 		{
-			if (!replace_elem(arg[i], start))
+			if (ft_strlen(arg[j]) == 0)
+				l++;
+			j++;
+		}
+		if (l == arg_len(arg) - 1)
+			return (print_export());
+	}
+	if (l < arg_len(arg) - 1)
+			s = copy_goodarg(arg, l);
+	int d = 0;
+	while (s[d])
+	{
+		ft_printf_fd(2, "s = %s\n", s[d]);
+		d++;
+	}
+	while (s[i] && (j = check_export_arg(s[i])) > 0)
+	{
+		if ((start = check_if_exist(g_export, s[i])))
+		{
+			if (!replace_elem(s[i], start))
 				return (0);
 		}
 		else
 		{
-			if (!add_elem(arg[i]))
+			if (!add_elem(s[i]))
 				return (0);
 		}
 		i++;
 	}
+	free_tab(s);
 	return (export_return(arg, j));
 }
