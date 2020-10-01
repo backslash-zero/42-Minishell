@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 20:42:14 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/20 21:06:10 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/01 20:57:40 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ char	*parsing_variable(t_parsing_tool *tool, char *str)
 	while (tmp)
 	{
 		if (!ft_strncmp(str, tmp->content, len) && tmp->content[len] == '=')
-		{
 			return (ft_strdup(&(tmp->content[len + 1])));
-		}
 		tmp = tmp->next;
 	}
 	tool->empty_var = 1;
