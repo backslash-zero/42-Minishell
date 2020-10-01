@@ -40,7 +40,7 @@ void	redir_exec(char **arg_list, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 int		apply_redirections(char **arg, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 {
 	char	**arg_list;
-	int		ret;
+	//int		ret;
 
 	if (!(arg_list = deletebracket(arg)))
 	{
@@ -48,7 +48,7 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	if ((ret = arg_cleanup(arg_list)) < 1)
+/*	if ((ret = arg_cleanup(arg_list)) < 1)
 	{
 		free_tab(arg_list);
 		free(arg);
@@ -56,7 +56,7 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 			return (ft_strerror(NULL, NULL, NULL, NULL));
 		else
 			return (-1);
-	}
+	}*/
 	redir_exec(arg_list, cmd, fd, pipe_cmd);
 	free_tab(arg_list);
 	return (0);

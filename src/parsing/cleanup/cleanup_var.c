@@ -35,7 +35,7 @@ int		insert_env_var(t_parsing_tool *tool, int i, int tab_i)
 	{
 		if (check_emptyarg_redir(tool, tab_i))
 		{
-			ft_error(AMBIGUOUS, NULL, NULL, tool->arg[tab_i]);
+			//ft_error(AMBIGUOUS, NULL, NULL, tool->arg[tab_i]);
 			return (-2);
 		}
 		remove_var(tool, i, env_name);

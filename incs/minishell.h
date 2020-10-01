@@ -70,6 +70,10 @@ int				find_first_redir(t_cmd *cmd);
 int				arg_is_redir(char *str);
 int				sort_cmd(t_cmd *cmd, t_sort_redir *sort);
 int				sort_redir(t_cmd *cmd);
+int				check_arg_redir(char **arg);
+int				check_if_ranglebracket(t_cmd *cmd, int i);
+int				check_if_dbanglebracket(t_cmd *cmd, int i);
+int				check_if_langlebracket(t_cmd *cmd, int i);
 int				check_perm(char *name);
 int				redirection(t_cmd *cmd);
 void			redir_exec(char **arg_list, t_cmd *cmd, int fd,

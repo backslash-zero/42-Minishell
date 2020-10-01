@@ -98,15 +98,12 @@ int		redirection(t_cmd *cmd)
 		return (-1);
 	while (cmd->arg[i])
 	{
-		if (ft_strcmp(cmd->arg[i], ">") == 0)
-			if (r_anglebracket(cmd->arg, cmd, cmd->arg[i + 1], NULL) == -1)
-				return (-1);
-		if (ft_strcmp(cmd->arg[i], ">>") == 0)
-			if (r_dbanglebracket(cmd->arg, cmd, cmd->arg[i + 1], NULL) == -1)
-				return (-1);
-		if (ft_strcmp(cmd->arg[i], "<") == 0)
-			if (l_anglebracket(cmd->arg, cmd, cmd->arg[i + 1], NULL) == -1)
-				return (-1);
+		if (check_if_ranglebracket(cmd, i) == -1)
+			return (-1);
+		if (check_if_dbanglebracket(cmd, i) == -1)
+			return (-1);
+		if (check_if_langlebracket(cmd, i) == -1)
+			return (-1);
 		i++;
 	}
 	if (cmd->redir_ok == 0)
