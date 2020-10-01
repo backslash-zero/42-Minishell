@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/25 16:24:40 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/01 22:33:12 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ int				parsing_checks(int *i, int *j, int *n, t_parsing_tool *tool);
 
 int				arg_cleanup(char **arg);
 
-int				insert_env_var(t_parsing_tool *tool, int i);
+int				check_emptyarg_redir(t_parsing_tool *tool, int tab_i);
+int				insert_env_var(t_parsing_tool *tool, int i, int tab_i);
 int				conditions_expand_env(t_parsing_tool *tool, int i);
-int				expand_env(t_parsing_tool *tool);
+int				expand_env(t_parsing_tool *tool, int tab_i);
 int				check_var(char **arg_list);
 
 int				replace_g_ret(char **arg_list, int i);

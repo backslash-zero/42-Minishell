@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/26 15:27:28 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/01 22:26:51 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	redir_exec(char **arg_list, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 int		apply_redirections(char **arg, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 {
 	char	**arg_list;
+	int		ret;
 
 	if (!(arg_list = deletebracket(arg)))
 	{
@@ -47,10 +48,14 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-	if (!arg_cleanup(arg_list))
+	if ((ret = arg_cleanup(arg_list)) < 1)
 	{
 		free_tab(arg_list);
-		return (ft_strerror(NULL, arg, NULL, NULL));
+		free(arg);
+		if (!ret)
+			return (ft_strerror(NULL, NULL, NULL, NULL));
+		else
+			return (-1);
 	}
 	redir_exec(arg_list, cmd, fd, pipe_cmd);
 	free_tab(arg_list);
