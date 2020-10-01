@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 20:17:21 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/20 21:24:56 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/01 18:12:19 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	ft_clean_and_cpy(t_parsing_tool *tool)
 	while (tool->input[i])
 	{
 		ft_clean_and_cpy_switchers(tool, i);
-		if (tool->expand)
+		if (tool->expand ||
+			(tool->open && tool->quote == '\"' 
+			&& !is_bs_spec(tool->input[i + 1])))
 		{
 			tool->new_str[j] = tool->input[i];
 			j++;
