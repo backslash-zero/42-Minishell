@@ -89,7 +89,11 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
 		if (pipe_fork(pipe_cmd) == -1)
+		{
+			free_tab(pipe_cmd->tab_env);
+			free_tab_3d(pipe_cmd->cmd);
 			return (-1);
+		}
 		if (pipe_cmd->proc == 0)
 			pipe_child(pipe_cmd, cmd, &ret_exec);
 		else

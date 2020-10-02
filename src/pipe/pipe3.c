@@ -57,7 +57,7 @@ void	redir_pipe(char **s, t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 		else if (ft_strcmp(s[i], "<") == 0)
 			ret_red = l_anglebracket(s, cmd, s[i + 1], pipe_cmd);
 		if (ret_red == -1)
-			exit(1);
+			free_and_exit(pipe_cmd, cmd, 1);
 		i++;
 	}
 }
