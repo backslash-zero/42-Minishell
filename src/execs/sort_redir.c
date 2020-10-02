@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 15:43:53 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/26 15:04:23 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/02 02:13:55 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		find_first_redir(t_cmd *cmd)
 	while (cmd->arg[i])
 	{
 		if (arg_is_redir(cmd->arg[i]))
-			return (i);
+			return (1);
 		i++;
 	}
 	return (0);
@@ -67,6 +67,31 @@ void	sort_redir_next(t_sort_redir *sort)
 {
 	sort->prev_redir = 0;
 	sort->prev_file = 1;
+}
+
+int		sort_2(t_cmd *cmd)
+{
+	char	**new_arg;
+	char	**tmp;
+	int		i;
+
+	tmp = cmd->arg;
+	i = 0;
+	if (arg_is_redir(cmd->arg[0]))
+	{
+		if (!(new_arg = malloc(sizeof(char *) * (arg_len(cmd->arg) + 1))))
+			return (0);
+		new_arg[0] = ft_strdup("echo");
+		while(cmd->arg[i])
+		{
+			new_arg[i + 1] = strdup(cmd->arg[i]);
+			i++;
+		}
+		new_arg[i + 1] = NULL;
+		cmd->arg = new_arg;
+		free_tab(tmp);
+	}
+	return (1);
 }
 
 int		sort_redir(t_cmd *cmd)

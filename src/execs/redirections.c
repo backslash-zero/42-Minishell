@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:01:55 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/25 17:27:18 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/02 02:04:04 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int		redirection(t_cmd *cmd)
 	i = 0;
 	cmd->redir_ok = 0;
 	count_redir(cmd);
+	if (!sort_2(cmd))
+		return (-1);
 	if (!sort_redir(cmd))
 		return (-1);
 	while (cmd->arg[i])
