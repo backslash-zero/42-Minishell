@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/10/01 22:26:51 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/02 02:02:08 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 {
 	char	**arg_list;
 	//int		ret;
-
 	if (!(arg_list = deletebracket(arg)))
 	{
 		close(fd);

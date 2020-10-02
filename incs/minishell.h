@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/25 16:51:38 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/02 01:53:38 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int				ft_exec(char **arg_list, t_cmd *cmd);
 int				find_first_redir(t_cmd *cmd);
 int				find_first_redir(t_cmd *cmd);
 int				arg_is_redir(char *str);
+int				sort_2(t_cmd *cmd);
 int				sort_cmd(t_cmd *cmd, t_sort_redir *sort);
 int				sort_redir(t_cmd *cmd);
 int				check_arg_redir(char **arg);
