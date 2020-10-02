@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:59:05 by celestin          #+#    #+#             */
-/*   Updated: 2020/10/02 01:05:35 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/02 15:43:39 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ int		expand_env(t_parsing_tool *tool, int tab_i)
 {
 	int i;
 	int ret;
+	int new_insert;
 
 	i = 0;
+	new_insert = 0;
 	while (tool->input[i])
 	{
 		bs_checker(tool, i);
@@ -78,15 +80,13 @@ int		expand_env(t_parsing_tool *tool, int tab_i)
 					return (ret);
 				if (i > 0)
 					i--;
+				new_insert = 1;
 			}
-			cancel_pre_bs(tool, i);
 		}
-		else
-		{
-			cancel_pre_bs(tool, i);
-			if (tool->input[i])
-				i++;
-		}
+		cancel_pre_bs(tool, i);
+		if (tool->input[i] && !new_insert)
+			i++;
+		new_insert = 0;
 	}
 	return (1);
 }
