@@ -71,7 +71,7 @@ int		pipe_checker(t_parsing_tool *tool, int i, int *n)
 
 int		redir_pipe_checker(t_parsing_tool *tool, int *i, int *n)
 {
-	if (i > 0)
+	if (*i > 0)
 	{
 		if (is_redir_or_pipe(tool->input[*i])
 			&& is_backslash((tool->input[*i - 1])))
