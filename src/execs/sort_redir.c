@@ -81,9 +81,20 @@ int		sort_2(t_cmd *cmd)
 	j = 1;
 	if (arg_is_redir(cmd->arg[0]))
 	{
-		if (!(new_arg = malloc(sizeof(char *) * (arg_len(cmd->arg) + 2))))
-			return (0);
+		if (!ft_strcmp(cmd->arg[0], "<"))
+		{
+			if (!(new_arg = malloc(sizeof(char *) * (arg_len(cmd->arg) + 3))))
+				return (0);
+		}
+		else
+			if (!(new_arg = malloc(sizeof(char *) * (arg_len(cmd->arg) + 2))))
+				return (0);
 		new_arg[0] = ft_strdup("echo");
+		if (!ft_strcmp(cmd->arg[0], "<"))
+		{
+			new_arg[1] = ft_strdup("-n");
+			j++;
+		}
 		while(cmd->arg[i])
 		{
 			new_arg[j] = ft_strdup(cmd->arg[i]);

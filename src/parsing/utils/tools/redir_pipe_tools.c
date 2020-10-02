@@ -35,18 +35,21 @@ int		redir_r_checker(t_parsing_tool *tool, int *i, int *n)
 	return (0);
 }
 
-int		redir_l_checker(t_parsing_tool *tool, int i, int *n)
+int		redir_l_checker(t_parsing_tool *tool, int *i, int *n)
 {
-	if (is_redir_l(tool->input[i]) && !tool->open)
+	int a;
+
+	a = *i;
+	if (is_redir_l(tool->input[a]) && !tool->open)
 	{
 		*n = 2;
 		if (i == 0)
 			return (-1);
-		while (ft_is_space(tool->input[i + 1]))
-			i++;
-		if (is_redir_or_pipe(tool->input[i + 1])
-			|| is_semic(tool->input[i + 1])
-			|| !tool->input[i + 1])
+		while (ft_is_space(tool->input[a + 1]))
+			a++;
+		if (is_redir_or_pipe(tool->input[a + 1])
+			|| is_semic(tool->input[a + 1])
+			|| !tool->input[a + 1])
 			return (-1);
 	}
 	return (0);
@@ -78,7 +81,7 @@ int		redir_pipe_checker(t_parsing_tool *tool, int *i, int *n)
 			return (0);
 	}
 	if (redir_r_checker(tool, i, n) || pipe_checker(tool, *i, n)
-	|| redir_l_checker(tool, *i, n))
+	|| redir_l_checker(tool, i, n))
 	{
 		return (-1);
 	}
