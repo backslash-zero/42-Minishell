@@ -49,9 +49,7 @@ char	**cmd_arg_get(char **arg, int *i)
 	while (ft_strcmp(arg[cmd_arg_len], "|"))
 		cmd_arg_len++;
 	*i += cmd_arg_len;
-	if (!ft_strcmp(arg[0], "<"))
-		cmd_arg_len = cmd_arg_len + 2;
-	if (!ft_strcmp(arg[0], ">"))
+	if (!ft_strcmp(arg[0], "<") || !ft_strcmp(arg[0], ">"))
 		cmd_arg_len = cmd_arg_len + 2;
 	if (!(cmd_arg = (char **)malloc(sizeof(char*) * (cmd_arg_len + 1))))
 		return (NULL);
@@ -61,11 +59,6 @@ char	**cmd_arg_get(char **arg, int *i)
 		cmd_arg[++j] = ft_strdup("-n");
 		j++;
 	}
-	if (!ft_strcmp(arg[0], "<"))
-	{
-		cmd_arg[j] = ft_strdup("-n");
-		j++;
-	}
 	while (j < cmd_arg_len)
 	{
 		cmd_arg[j] = ft_strdup(arg[l]);
@@ -73,12 +66,6 @@ char	**cmd_arg_get(char **arg, int *i)
 		l++;
 	}
 	cmd_arg[j] = NULL;
-	j = 0;
-	while (cmd_arg[j])
-	{
-		ft_printf_fd(2, "cmd_arg[%d] = %s\n", j, cmd_arg[j]);
-		j++;
-	}
 	return (cmd_arg);
 }
 
