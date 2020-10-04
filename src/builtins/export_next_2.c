@@ -36,7 +36,10 @@ int		replace_elem(char *s, int i)
 			if (!set_value(g_env, s, s1))
 			{
 				if (!add_to_list(s, &g_env))
+				{
+					free(s1);
 					return (0);
+				}
 			}
 			free(s1);
 		}

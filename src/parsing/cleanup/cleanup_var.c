@@ -72,15 +72,12 @@ int		expand_env(t_parsing_tool *tool, int tab_i)
 		bs_checker(tool, i);
 		if (is_quote(tool->input[i]))
 			switcher_quote(tool, i);
-		else if (conditions_expand_env(tool, i))
+		else if (conditions_expand_env(tool, i) && (!tool->pre_bs))
 		{
-			if (!tool->pre_bs)
-			{
-				if ((ret = insert_env_var(tool, i, tab_i)) < 1)
-					return (ret);
-				i = (i > 0) ? i-- : i;
-				new_insert = 1;
-			}
+			if ((ret = insert_env_var(tool, i, tab_i)) < 1)
+				return (ret);
+			i = (i > 0) ? i-- : i;
+			new_insert = 1;
 		}
 		cancel_pre_bs(tool, i);
 		if (tool->input[i] && !new_insert)
