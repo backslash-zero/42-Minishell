@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:59:05 by celestin          #+#    #+#             */
-/*   Updated: 2020/10/02 15:43:39 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/04 18:57:07 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ int		expand_env(t_parsing_tool *tool, int tab_i)
 			{
 				if ((ret = insert_env_var(tool, i, tab_i)) < 1)
 					return (ret);
-				if (i > 0)
-					i--;
+				i = (i > 0) ? i-- : i;
 				new_insert = 1;
 			}
 		}
