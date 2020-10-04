@@ -52,12 +52,13 @@ char	**cmd_arg_get(char **arg, int *i)
 	if (!ft_strcmp(arg[0], "<"))
 		cmd_arg_len = cmd_arg_len + 2;
 	if (!ft_strcmp(arg[0], ">"))
-		cmd_arg_len++;
+		cmd_arg_len = cmd_arg_len + 2;
 	if (!(cmd_arg = (char **)malloc(sizeof(char*) * (cmd_arg_len + 1))))
 		return (NULL);
 	if (!ft_strcmp(arg[0], "<") || !ft_strcmp(arg[0], ">"))
 	{
 		cmd_arg[j] = ft_strdup("echo");
+		cmd_arg[++j] = ft_strdup("-n");
 		j++;
 	}
 	if (!ft_strcmp(arg[0], "<"))

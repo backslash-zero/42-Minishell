@@ -107,6 +107,7 @@ char	**parsing(char *input)
 	if (((tool.size = size_arg_tool(&tool)) == -1) || (check_backslash(&tool)))
 	{
 		g_ret = 2;
+		ft_printf_fd(2, "tool.size = %d\n", tool.size);
 		ft_error(SYNTAX_ERR, tool.input, NULL, NULL);
 		return (NULL);
 	}
