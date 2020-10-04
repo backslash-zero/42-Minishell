@@ -43,7 +43,7 @@ int		redir_l_checker(t_parsing_tool *tool, int *i, int *n)
 	if (is_redir_l(tool->input[a]) && !tool->open)
 	{
 		*n = 2;
-		if (*i == 0)
+		if (i == 0)
 			return (-1);
 		while (ft_is_space(tool->input[a + 1]))
 			a++;
