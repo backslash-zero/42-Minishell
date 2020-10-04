@@ -66,9 +66,9 @@ int		expand_env(t_parsing_tool *tool, int tab_i)
 	int new_insert;
 
 	i = 0;
-	new_insert = 0;
 	while (tool->input[i])
 	{
+		new_insert = 0;
 		bs_checker(tool, i);
 		if (is_quote(tool->input[i]))
 			switcher_quote(tool, i);
@@ -86,7 +86,6 @@ int		expand_env(t_parsing_tool *tool, int tab_i)
 		cancel_pre_bs(tool, i);
 		if (tool->input[i] && !new_insert)
 			i++;
-		new_insert = 0;
 	}
 	return (1);
 }

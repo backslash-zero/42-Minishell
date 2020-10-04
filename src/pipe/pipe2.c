@@ -45,7 +45,7 @@ char	**cmd_arg_get(char **arg, int *i)
 
 	cmd_arg_len = 0;
 	j = 0;
-	l = j;
+	l = 0;
 	while (ft_strcmp(arg[cmd_arg_len], "|"))
 		cmd_arg_len++;
 	*i += cmd_arg_len;
@@ -53,19 +53,7 @@ char	**cmd_arg_get(char **arg, int *i)
 		cmd_arg_len = cmd_arg_len + 2;
 	if (!(cmd_arg = (char **)malloc(sizeof(char*) * (cmd_arg_len + 1))))
 		return (NULL);
-	if (!ft_strcmp(arg[0], "<") || !ft_strcmp(arg[0], ">"))
-	{
-		cmd_arg[j] = ft_strdup("echo");
-		cmd_arg[++j] = ft_strdup("-n");
-		j++;
-	}
-	while (j < cmd_arg_len)
-	{
-		cmd_arg[j] = ft_strdup(arg[l]);
-		j++;
-		l++;
-	}
-	cmd_arg[j] = NULL;
+	cmd_arg = copy_arg_pipe(arg, cmd_arg, cmd_arg_len);
 	return (cmd_arg);
 }
 
@@ -81,35 +69,11 @@ char	**last_cmd_arg(char **arg)
 	l = 0;
 	while (arg[cmd_arg_len])
 		cmd_arg_len++;
-	if (!ft_strcmp(arg[0], "<"))
+	if (!ft_strcmp(arg[0], "<") || !ft_strcmp(arg[0], ">"))
 		cmd_arg_len = cmd_arg_len + 2;
-	if (!ft_strcmp(arg[0], ">"))
-		cmd_arg_len++;
 	if (!(cmd_arg = (char **)malloc(sizeof(char*) * (cmd_arg_len + 1))))
 		return (NULL);
-	if (!ft_strcmp(arg[0], "<") || !ft_strcmp(arg[0], ">"))
-	{
-		cmd_arg[j] = ft_strdup("echo");
-		j++;
-	}
-	if (!ft_strcmp(arg[0], "<"))
-	{
-		cmd_arg[j] = ft_strdup("-n");
-		j++;
-	}
-	while (j < cmd_arg_len)
-	{
-		cmd_arg[j] = ft_strdup(arg[l]);
-		j++;
-		l++;
-	}
-	cmd_arg[j] = NULL;
-	j = 0;
-	while (cmd_arg[j])
-	{
-		ft_printf_fd(2, "cmd_arg[%d] = %s\n", j, cmd_arg[j]);
-		j++;
-	}
+	cmd_arg = copy_arg_pipe(arg, cmd_arg, cmd_arg_len);
 	return (cmd_arg);
 }
 
