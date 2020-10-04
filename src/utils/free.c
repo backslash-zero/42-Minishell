@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 11:21:38 by cmeunier          #+#    #+#             */
-/*   Updated: 2020/09/24 15:42:50 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/05 00:54:10 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+void	assign_and_free_3(char ***newtab, char ***oldtab)
+{
+	char	**tmp;
+
+	tmp = *oldtab;
+	*oldtab = *newtab;
+	free_tab(tmp);
+}
 
 void	free_tab(char **tab)
 {

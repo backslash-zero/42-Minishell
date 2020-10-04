@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 20:17:21 by celestin          #+#    #+#             */
-/*   Updated: 2020/10/02 15:43:30 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/02 15:55:19 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int		process_str(char **arg_list, int i)
 	tool.input = arg_list[i];
 	tool.size = ft_strlen(arg_list[i]);
 	len_cleaned_str(&tool);
-	printf("len_cleaned_str=%d\n", tool.new_size);
 	if (!(tool.new_str = malloc(sizeof(char) * (tool.new_size + 1))))
 		return (0);
 	init_tool(&tool);

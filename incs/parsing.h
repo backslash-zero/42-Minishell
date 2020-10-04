@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/10/02 00:00:14 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/03 02:19:42 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int				insert_env_var(t_parsing_tool *tool, int i, int tab_i);
 int				conditions_expand_env(t_parsing_tool *tool, int i);
 int				expand_env(t_parsing_tool *tool, int tab_i);
 int				check_var(char **arg_list);
+
+int				check_space_var(char ***arg);
 
 int				replace_g_ret(char **arg_list, int i);
 int				check_g_ret_var(char **arg_list);
