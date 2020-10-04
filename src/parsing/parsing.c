@@ -25,7 +25,7 @@ int		size_arg_tool(t_parsing_tool *tool)
 	{
 		bs_checker(tool, i);
 		quote_checker(tool, i, &n);
-		if (semic_checker(tool, i, &n) || redir_pipe_checker(tool, &i, &n))
+		if ((semic_checker(tool, i, &n)) || (redir_pipe_checker(tool, &i, &n)))
 			return (-1);
 		if (!ft_is_space(tool->input[i]) && n != 0)
 		{

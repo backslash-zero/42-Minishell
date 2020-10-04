@@ -26,7 +26,7 @@ int		semic_checker(t_parsing_tool *tool, int i, int *n)
 					return (-1);
 			}
 			if (i > 1)
-			{
+			{				
 				if (is_semic(tool->input[i - 1])
 					&& !is_backslash(tool->input[i - 2]) && !tool->open)
 					return (-1);
