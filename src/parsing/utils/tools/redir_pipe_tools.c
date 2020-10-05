@@ -64,9 +64,8 @@ int		pipe_checker(t_parsing_tool *tool, int i, int *n)
 			return (-1);
 		while (ft_is_space(tool->input[i + 1]))
 			i++;
-		if (is_redir_or_pipe(tool->input[i + 1])
-			|| is_semic(tool->input[i + 1])
-			|| !tool->input[i + 1])
+		if (is_redir_or_pipe(tool->input[i + 1]) ||
+		is_semic(tool->input[i + 1]) || !tool->input[i + 1])
 			return (-1);
 	}
 	return (0);
@@ -82,8 +81,6 @@ int		redir_pipe_checker(t_parsing_tool *tool, int *i, int *n)
 	}
 	if (redir_r_checker(tool, i, n) || pipe_checker(tool, *i, n)
 	|| redir_l_checker(tool, i, n))
-	{
 		return (-1);
-	}
 	return (0);
 }

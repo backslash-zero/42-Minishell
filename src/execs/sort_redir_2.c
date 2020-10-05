@@ -1,53 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_next_2.c                                    :+:      :+:    :+:   */
+/*   sort_redir_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/16 12:01:00 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/16 12:07:15 by rzafari          ###   ########.fr       */
+/*   Created: 2020/10/04 18:50:18 by rzafari           #+#    #+#             */
+/*   Updated: 2020/10/04 18:50:33 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		add_elem(char *s)
+int		sort_2(t_cmd *cmd)
 {
-	if (!add_to_list(s, &g_export))
-		return (0);
-	if (ft_strchr(s, '='))
-	{
-		if (!add_to_list(s, &g_env))
-			return (0);
-	}
-	return (1);
-}
+	char	**new_arg;
+	char	**tmp;
+	int		i;
+	int		j;
 
-int		replace_elem(char *s, int i)
-{
-	char *s1;
-
-	if (ft_strchr(s, '='))
+	tmp = cmd->arg;
+	i = 0;
+	j = 2;
+	if (arg_is_redir(cmd->arg[0]))
 	{
-		s1 = ft_substr(s, 0, i);
-		if (set_value(g_export, s, s1))
-		{
-			if (!set_value(g_env, s, s1))
-			{
-				if (!add_to_list(s, &g_env))
-				{
-					free(s1);
-					return (0);
-				}
-			}
-			free(s1);
-		}
-		else
-		{
-			free(s1);
+		if (!(new_arg = malloc(sizeof(char *) * (arg_len(cmd->arg) + 3))))
 			return (0);
+		new_arg[0] = ft_strdup("echo");
+		new_arg[1] = ft_strdup("-n");
+		while (cmd->arg[i])
+		{
+			new_arg[j] = ft_strdup(cmd->arg[i]);
+			i++;
+			j++;
 		}
+		new_arg[j] = NULL;
+		cmd->arg = new_arg;
+		free_tab(tmp);
 	}
 	return (1);
 }
