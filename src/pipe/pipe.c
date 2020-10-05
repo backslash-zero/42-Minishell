@@ -32,8 +32,6 @@ void	pipe_dups(t_pipe_cmd *pipe_cmd)
 
 int		pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
 {
-	if (pipe_arg_cleanup(pipe_cmd) != 1)
-		return (-1);
 	if (!ft_checkbuiltins(pipe_cmd->cmd[pipe_cmd->i], cmd))
 	{
 		*ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i], cmd);
@@ -86,6 +84,8 @@ int		loop_pipe(t_pipe_cmd *pipe_cmd, t_cmd *cmd)
 	int status;
 
 	status = 0;
+	if (pipe_arg_cleanup(pipe_cmd) != 1)
+		return (-1);
 	while (pipe_cmd->cmd[pipe_cmd->i])
 	{
 		if (pipe_fork(pipe_cmd) == -1)
