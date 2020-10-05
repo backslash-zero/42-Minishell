@@ -19,9 +19,6 @@ int		arg_len(char **arg)
 	i = 0;
 	if (arg)
 		while (arg[i])
-		{
-			ft_printf_fd(2, "arg[%d]= %s\n", i, arg[i]);
 			i++;
-		}
 	return (i);
 }
