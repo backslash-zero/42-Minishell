@@ -115,7 +115,7 @@ void			quote_checker(t_parsing_tool *tool, int i, int *n);
 int				switcher_quote(t_parsing_tool *tool, int i);
 
 int				redir_r_checker(t_parsing_tool *tool, int *i, int *n);
-int				redir_l_checker(t_parsing_tool *tool, int i, int *n);
+int				redir_l_checker(t_parsing_tool *tool, int *i, int *n);
 int				pipe_checker(t_parsing_tool *tool, int i, int *n);
 int				redir_pipe_checker(t_parsing_tool *tool, int *i, int *n);
 

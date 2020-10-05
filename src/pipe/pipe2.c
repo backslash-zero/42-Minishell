@@ -40,42 +40,40 @@ char	**cmd_arg_get(char **arg, int *i)
 {
 	int		cmd_arg_len;
 	int		j;
+	int		l;
 	char	**cmd_arg;
 
 	cmd_arg_len = 0;
 	j = 0;
+	l = 0;
 	while (ft_strcmp(arg[cmd_arg_len], "|"))
 		cmd_arg_len++;
 	*i += cmd_arg_len;
+	if (!ft_strcmp(arg[0], "<") || !ft_strcmp(arg[0], ">"))
+		cmd_arg_len = cmd_arg_len + 2;
 	if (!(cmd_arg = (char **)malloc(sizeof(char*) * (cmd_arg_len + 1))))
 		return (NULL);
-	while (j < cmd_arg_len)
-	{
-		cmd_arg[j] = ft_strdup(arg[j]);
-		j++;
-	}
-	cmd_arg[j] = NULL;
+	cmd_arg = copy_arg_pipe(arg, cmd_arg, cmd_arg_len);
 	return (cmd_arg);
 }
 
 char	**last_cmd_arg(char **arg)
 {
-	int		len;
+	int		cmd_arg_len;
 	int		j;
+	int		l;
 	char	**cmd_arg;
 
-	len = 0;
+	cmd_arg_len = 0;
 	j = 0;
-	while (arg[len])
-		len++;
-	if (!(cmd_arg = (char **)malloc(sizeof(char*) * (len + 1))))
+	l = 0;
+	while (arg[cmd_arg_len])
+		cmd_arg_len++;
+	if (!ft_strcmp(arg[0], "<") || !ft_strcmp(arg[0], ">"))
+		cmd_arg_len = cmd_arg_len + 2;
+	if (!(cmd_arg = (char **)malloc(sizeof(char*) * (cmd_arg_len + 1))))
 		return (NULL);
-	while (j < len)
-	{
-		cmd_arg[j] = ft_strdup(arg[j]);
-		j++;
-	}
-	cmd_arg[j] = NULL;
+	cmd_arg = copy_arg_pipe(arg, cmd_arg, cmd_arg_len);
 	return (cmd_arg);
 }
 

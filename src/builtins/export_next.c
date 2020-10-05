@@ -45,6 +45,7 @@ int		set_value(t_list *lst, char *s1, char *s2)
 			tmp = lst->content;
 			lst->content = value;
 			free(tmp);
+			free(s3);
 			return (1);
 		}
 		lst = lst->next;

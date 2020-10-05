@@ -14,9 +14,7 @@
 
 int		is_redir_or_pipe(char c)
 {
-	if (is_pipe(c) ||
-		is_redir_l(c) ||
-		is_redir_r(c))
+	if (is_pipe(c) || is_redir_l(c) || is_redir_r(c))
 		return (1);
 	else
 		return (0);

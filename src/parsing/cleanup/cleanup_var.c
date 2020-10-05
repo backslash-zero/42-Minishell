@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 19:59:05 by celestin          #+#    #+#             */
 /*   Updated: 2020/10/02 18:41:49 by celestin         ###   ########.fr       */
@@ -66,27 +66,22 @@ int		expand_env(t_parsing_tool *tool, int tab_i)
 	int new_insert;
 
 	i = 0;
-	new_insert = 0;
 	while (tool->input[i])
 	{
+		new_insert = 0;
 		bs_checker(tool, i);
 		if (is_quote(tool->input[i]))
 			switcher_quote(tool, i);
-		else if (conditions_expand_env(tool, i))
+		else if (conditions_expand_env(tool, i) && (!tool->pre_bs))
 		{
-			if (!tool->pre_bs)
-			{
-				if ((ret = insert_env_var(tool, i, tab_i)) < 1)
-					return (ret);
-				if (i > 0)
-					i--;
-				new_insert = 1;
-			}
+			if ((ret = insert_env_var(tool, i, tab_i)) < 1)
+				return (ret);
+			i = (i > 0) ? i-- : i;
+			new_insert = 1;
 		}
 		cancel_pre_bs(tool, i);
 		if (tool->input[i] && !new_insert)
 			i++;
-		new_insert = 0;
 	}
 	return (1);
 }

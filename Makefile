@@ -56,6 +56,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 				\
 				execs/redirections2.c						\
 				execs/redirections3.c						\
 				execs/sort_redir.c							\
+				execs/sort_redir_2.c							\
 				utils/semicolon.c							\
 				execs/path.c								\
 				execs/path_2.c								\

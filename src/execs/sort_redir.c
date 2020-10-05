@@ -69,34 +69,6 @@ void	sort_redir_next(t_sort_redir *sort)
 	sort->prev_file = 1;
 }
 
-int		sort_2(t_cmd *cmd)
-{
-	char	**new_arg;
-	char	**tmp;
-	int		i;
-	int		j;
-
-	tmp = cmd->arg;
-	i = 0;
-	j = 1;
-	if (arg_is_redir(cmd->arg[0]))
-	{
-		if (!(new_arg = malloc(sizeof(char *) * (arg_len(cmd->arg) + 2))))
-			return (0);
-		new_arg[0] = ft_strdup("echo");
-		while(cmd->arg[i])
-		{
-			new_arg[j] = ft_strdup(cmd->arg[i]);
-			i++;
-			j++;
-		}
-		new_arg[j] = NULL;
-		cmd->arg = new_arg;
-		free_tab(tmp);
-	}
-	return (1);
-}
-
 int		sort_redir(t_cmd *cmd)
 {
 	t_sort_redir	sort;

@@ -85,3 +85,17 @@ int		check_export_arg_next(char *arg, int i)
 	}
 	return (1);
 }
+
+int		export_return(char **arg, int j)
+{
+	if (j == 0 || j == -1 || j == -2)
+		g_ret = 1;
+	if (j == 0)
+		return (ft_error(INVALID_ID_X, NULL, NULL, arg[1]));
+	if (j == -1)
+		return (ft_error(INVALID_OPT_ID_X, NULL, NULL, arg[1]));
+	if (j == -2)
+		return (ft_error(SYNTAX_ERR, NULL, NULL, arg[1]));
+	g_ret = 0;
+	return (0);
+}

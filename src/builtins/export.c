@@ -41,20 +41,6 @@ int		check_export_arg(char *arg)
 	return (0);
 }
 
-int		export_return(char **arg, int j)
-{
-	if (j == 0 || j == -1 || j == -2)
-		g_ret = 1;
-	if (j == 0)
-		return (ft_error(INVALID_ID_X, NULL, NULL, arg[1]));
-	if (j == -1)
-		return (ft_error(INVALID_OPT_ID_X, NULL, NULL, arg[1]));
-	if (j == -2)
-		return (ft_error(SYNTAX_ERR, NULL, NULL, arg[1]));
-	g_ret = 0;
-	return (0);
-}
-
 char	**copy_goodarg(char **arg, int l)
 {
 	char	**s;
@@ -78,41 +64,10 @@ char	**copy_goodarg(char **arg, int l)
 	return (s);
 }
 
-int		builtin_export(char **arg)
+int		builtin_export_next_2(char **arg, int i, int j, char **s)
 {
-	int		i;
 	int		start;
-	int		j;
-	int		l;
-	char	**s;
 
-	i = 1;
-	l = 0;
-	s = NULL;
-	if (arg_len(arg) == 1)
-		return (print_export());
-	if (arg_len(arg) > 1)
-	{
-		j = 1;
-		while (arg[j])
-		{
-			if (ft_strlen(arg[j]) == 0)
-				l++;
-			j++;
-		}
-		if (l == arg_len(arg) - 1)
-			return (print_export());
-	}
-	if (l == 0)
-	{
-		if ((s = copy_goodarg(arg, arg_len(arg))) == NULL)
-			return (0);
-	}
-	else if (l < arg_len(arg) - 1)
-	{
-		if ((s = copy_goodarg(arg, l)) == NULL)
-			return (0);
-	}
 	while (arg[i] && (j = check_export_arg(arg[i])) > 0)
 	{
 		if ((start = check_if_exist(g_export, arg[i])))
@@ -135,4 +90,48 @@ int		builtin_export(char **arg)
 	}
 	free_tab(s);
 	return (export_return(arg, j));
+}
+
+int		builtin_export_next(char **arg, int l, int j)
+{
+	char	**s;
+	int		i;
+
+	s = NULL;
+	i = 1;
+	if (l == 0)
+	{
+		if ((s = copy_goodarg(arg, arg_len(arg))) == NULL)
+			return (0);
+	}
+	else if (l < arg_len(arg) - 1)
+	{
+		if ((s = copy_goodarg(arg, l)) == NULL)
+			return (0);
+	}
+	return (builtin_export_next_2(arg, i, j, s));
+}
+
+int		builtin_export(char **arg)
+{
+	int		j;
+	int		l;
+
+	l = 0;
+	j = 0;
+	if (arg_len(arg) == 1)
+		return (print_export());
+	if (arg_len(arg) > 1)
+	{
+		j = 1;
+		while (arg[j])
+		{
+			if (ft_strlen(arg[j]) == 0)
+				l++;
+			j++;
+		}
+		if (l == arg_len(arg) - 1)
+			return (print_export());
+	}
+	return (builtin_export_next(arg, l, j));
 }

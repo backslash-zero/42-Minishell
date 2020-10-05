@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_bs_quote.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 20:17:21 by celestin          #+#    #+#             */
 /*   Updated: 2020/10/02 15:55:19 by celestin         ###   ########.fr       */

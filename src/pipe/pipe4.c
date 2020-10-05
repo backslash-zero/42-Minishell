@@ -89,3 +89,26 @@ void	count_redir_pipe(char **s, t_cmd *cmd)
 		i++;
 	}
 }
+
+char	**copy_arg_pipe(char **arg, char **cmd_arg, int cmd_arg_len)
+{
+	int l;
+	int j;
+
+	l = 0;
+	j = 0;
+	if (!ft_strcmp(arg[0], "<") || !ft_strcmp(arg[0], ">"))
+	{
+		cmd_arg[j] = ft_strdup("echo");
+		cmd_arg[++j] = ft_strdup("-n");
+		j++;
+	}
+	while (j < cmd_arg_len)
+	{
+		cmd_arg[j] = ft_strdup(arg[l]);
+		j++;
+		l++;
+	}
+	cmd_arg[j] = NULL;
+	return (cmd_arg);
+}

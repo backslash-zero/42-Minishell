@@ -39,6 +39,7 @@ int				init_t_pipe(t_pipe_cmd *pipe_cmd, char **arg_list);
 int				ft_pipe_2(char **arg_list, t_cmd *cmd);
 char			**cmd_arg_get(char **arg, int *i);
 char			**last_cmd_arg(char **arg);
+char			**copy_arg_pipe(char **arg, char **cmd_arg, int cmd_arg_len);
 char			***prepare_cmd(char **arg_list, t_pipe_cmd *pipe_cmd);
 void			pipe_wait(int status, t_pipe_cmd *pipe_cmd);
 int				pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec);
