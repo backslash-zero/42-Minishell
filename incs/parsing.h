@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/10/02 00:00:14 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/05 03:24:05 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
+typedef struct	s_parse
+{
+	char		*builtnb[NB_BUILINS];
+}				t_parse;
+
+typedef struct	s_cmd{
+	char		**arg;
+	char		**input_arg;
+	int			nb_redir;
+	int			apply_redir;
+	int			redir_ok;
+	int			pipe_ret;
+	t_parse		parse;
+}				t_cmd;
 
 typedef struct	s_parsing_tool
 {
@@ -36,11 +51,6 @@ typedef struct	s_sort_redir
 	int		len_arg;
 }				t_sort_redir;
 
-typedef struct	s_parse
-{
-	char		*builtnb[NB_BUILINS];
-}				t_parse;
-
 int				size_arg_tool(t_parsing_tool *tool);
 int				conditions_split(t_parsing_tool *tool, int j);
 int				ft_split_args(t_parsing_tool *tool);
@@ -53,13 +63,15 @@ int				append_semicolon(int *i, int *j, int *n, t_parsing_tool *tool);
 int				append_redir_pipe(int *i, int *j, int *n, t_parsing_tool *tool);
 int				parsing_checks(int *i, int *j, int *n, t_parsing_tool *tool);
 
-int				arg_cleanup(char **arg);
+int				arg_cleanup(t_cmd *cmd);
 
 int				check_emptyarg_redir(t_parsing_tool *tool, int tab_i);
 int				insert_env_var(t_parsing_tool *tool, int i, int tab_i);
 int				conditions_expand_env(t_parsing_tool *tool, int i);
 int				expand_env(t_parsing_tool *tool, int tab_i);
 int				check_var(char **arg_list);
+
+int				check_space_var(t_cmd *cmd);
 
 int				replace_g_ret(char **arg_list, int i);
 int				check_g_ret_var(char **arg_list);

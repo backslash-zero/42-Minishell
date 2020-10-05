@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:05:54 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/24 23:08:12 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:28:58 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void			toggle_redir(char **s, int i, t_pipe_cmd *pipe_cmd);
 int				pipe_fork(t_pipe_cmd *pipe_cmd);
 void			pipe_dups(t_pipe_cmd *pipe_cmd);
 void			free_and_exit(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int exit_code);
+int				pipe_arg_cleanup(t_pipe_cmd *pipe_cmd);
 
 #endif

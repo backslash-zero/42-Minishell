@@ -6,17 +6,17 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/10/02 02:03:29 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 03:28:43 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		check_arg_redir(char **arg)
+int		check_arg_redir(t_cmd *cmd)
 {
 	int		ret;
 
-	if ((ret = arg_cleanup(arg)) < 1)
+	if ((ret = arg_cleanup(cmd)) < 1)
 	{
 		if (!ret)
 			return (ft_strerror(NULL, NULL, NULL, NULL));
@@ -32,7 +32,7 @@ int		check_if_ranglebracket(t_cmd *cmd, int i)
 
 	if (ft_strcmp(cmd->arg[i], ">") == 0)
 	{
-		if ((ret = check_arg_redir(cmd->arg)) == -1)
+		if ((ret = check_arg_redir(cmd)) == -1)
 		{
 			ft_error(AMBIGUOUS, NULL, NULL, cmd->arg[i + 1]);
 			g_ret = 1;
@@ -50,7 +50,7 @@ int		check_if_dbanglebracket(t_cmd *cmd, int i)
 
 	if (ft_strcmp(cmd->arg[i], ">>") == 0)
 	{
-		if ((ret = check_arg_redir(cmd->arg)) == -1)
+		if ((ret = check_arg_redir(cmd)) == -1)
 		{
 			ft_error(AMBIGUOUS, NULL, NULL, cmd->arg[i + 1]);
 			g_ret = 1;
@@ -68,7 +68,7 @@ int		check_if_langlebracket(t_cmd *cmd, int i)
 
 	if (ft_strcmp(cmd->arg[i], "<") == 0)
 	{
-		if ((ret = check_arg_redir(cmd->arg)) == -1)
+		if ((ret = check_arg_redir(cmd)) == -1)
 		{
 			ft_error(AMBIGUOUS, NULL, NULL, cmd->arg[i + 1]);
 			g_ret = 1;
