@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 00:53:51 by celestin          #+#    #+#             */
-/*   Updated: 2020/09/30 18:09:53 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:29:16 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int				launch_exec(char **arg, t_cmd *cmd)
 	int	ret_exec;
 
 	fd_dup(0);
-	if (!arg_cleanup(cmd->arg))
+	if (!arg_cleanup(cmd))
 	{
 		free_tab(cmd->arg);
 		return (ft_strerror(NULL, arg, NULL, NULL));

@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 15:56:23 by rzafari           #+#    #+#             */
-/*   Updated: 2020/10/02 02:02:08 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 03:15:26 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,6 @@ int		apply_redirections(char **arg, t_cmd *cmd, int fd, t_pipe_cmd *pipe_cmd)
 		ft_strerror(NULL, NULL, NULL, NULL);
 		return (-1);
 	}
-/*	if ((ret = arg_cleanup(arg_list)) < 1)
-	{
-		free_tab(arg_list);
-		free(arg);
-		if (!ret)
-			return (ft_strerror(NULL, NULL, NULL, NULL));
-		else
-			return (-1);
-	}*/
 	redir_exec(arg_list, cmd, fd, pipe_cmd);
 	free_tab(arg_list);
 	return (0);

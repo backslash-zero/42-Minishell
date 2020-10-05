@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/10/05 01:38:07 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 03:17:57 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int				arg_is_redir(char *str);
 int				sort_2(t_cmd *cmd);
 int				sort_cmd(t_cmd *cmd, t_sort_redir *sort);
 int				sort_redir(t_cmd *cmd);
-int				check_arg_redir(char **arg);
+int				check_arg_redir(t_cmd *cmd);
 int				check_if_ranglebracket(t_cmd *cmd, int i);
 int				check_if_dbanglebracket(t_cmd *cmd, int i);
 int				check_if_langlebracket(t_cmd *cmd, int i);

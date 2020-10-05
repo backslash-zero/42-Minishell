@@ -6,22 +6,12 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:26:35 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/23 15:02:14 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 03:22:19 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
-
-typedef struct	s_cmd{
-	char		**arg;
-	char		**input_arg;
-	int			nb_redir;
-	int			apply_redir;
-	int			redir_ok;
-	int			pipe_ret;
-	t_parse		parse;
-}				t_cmd;
 
 int				echo_n(char **arg, int i);
 int				echo_lonely(void);

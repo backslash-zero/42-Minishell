@@ -6,23 +6,13 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 17:14:22 by celestin          #+#    #+#             */
-/*   Updated: 2020/10/05 01:50:05 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 12:38:00 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incs/minishell.h"
 
-static void		printtab(char **arg)
-{
-	int i = 0;
-	while (arg[i])
-	{
-		printf("str-%d	%s\n", i, arg[i]);
-		i++;
-	}
-}
-
-static	int		create_new_arg_space(char **new_arg, char **arg, char **split_arg, int i)
+int		create_new_arg_space(char **new_arg, char **arg, char **split_arg, int i)
 {
 	int	j;
 	int	new_arg_pos;
@@ -58,28 +48,22 @@ static	int		create_new_arg_space(char **new_arg, char **arg, char **split_arg, i
 	return (1);
 }
 
-static	int		reassign_space(char ***arg, int i)
+static	int		reassign_space(t_cmd *cmd, int i)
 {
 	char	**split_arg;
 	char	**new_arg;
 	char	**tmp;
 
-	tmp = *arg;
+	tmp = cmd->arg;
 	if (!(split_arg = parsing(tmp[i])))
 		return (0);
-	printf("split\n");
-	printtab(split_arg);
 	if (!(new_arg = malloc(sizeof(char *) * (arg_len(tmp) + arg_len(split_arg) - 1 + 1))))
 		return (0);
 	if (!(create_new_arg_space(new_arg, tmp, split_arg, i)))
 		return (0);
-	printf("new arg\n");
-	printtab(new_arg);
-	assign_and_free_3(&new_arg, arg);
-	printf("assign and free\n");
+	cmd->arg = new_arg;
 	free_tab(split_arg);
-	printf("after free\n");
-	printf("after free\n");
+	free_tab(tmp);
 	return (1);
 }
 
@@ -116,16 +100,14 @@ static int		check_space_args(char **arg)
 	return (-1);
 }
 
-int		check_space_var(char ***arg)
+int		check_space_var(t_cmd *cmd)
 {
 	int		index_space;
 
-	while ((index_space = check_space_args(*arg)) != -1)
+	while ((index_space = check_space_args(cmd->arg)) != -1)
 	{
-		printf("entered index space\n");
-		if (!(reassign_space(arg, index_space)))
+		if (!(reassign_space(cmd, index_space)))
 			return (0);
 	}
-	printf("exiting\n");
 	return (1);
 }

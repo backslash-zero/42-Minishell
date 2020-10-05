@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 14:03:41 by rzafari           #+#    #+#             */
-/*   Updated: 2020/09/25 00:50:26 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:28:09 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	pipe_dups(t_pipe_cmd *pipe_cmd)
 
 int		pipe_default(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int *ret_exec)
 {
-	if (!arg_cleanup(pipe_cmd->cmd[pipe_cmd->i]))
-		return (ft_strerror(NULL, pipe_cmd->cmd[pipe_cmd->i], NULL, NULL));
+	if (pipe_arg_cleanup(pipe_cmd) != 1)
+		return (-1);
 	if (!ft_checkbuiltins(pipe_cmd->cmd[pipe_cmd->i], cmd))
 	{
 		*ret_exec = ft_exec(pipe_cmd->cmd[pipe_cmd->i], cmd);
