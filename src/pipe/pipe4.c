@@ -6,34 +6,11 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:52:27 by celestin          #+#    #+#             */
-/*   Updated: 2020/10/05 13:26:54 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 15:32:18 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-int		pipe_arg_cleanup(t_pipe_cmd *pipe_cmd)
-{
-	int		i;
-	t_cmd	new_cmd;
-	char	**tmp;
-
-	tmp = pipe_cmd->cmd[pipe_cmd->i];
-	i = 0;
-	if (!(new_cmd.arg = malloc(sizeof(char *) * (arg_len(pipe_cmd->cmd[pipe_cmd->i]) + 1))))
-		return (ft_strerror(NULL, pipe_cmd->cmd[pipe_cmd->i], NULL, NULL));
-	while (pipe_cmd->cmd[pipe_cmd->i][i])
-	{
-		new_cmd.arg[i] = ft_strdup(pipe_cmd->cmd[pipe_cmd->i][i]);
-		i++;
-	}
-	new_cmd.arg[i] = NULL;
-	if (!arg_cleanup(&new_cmd))
-		return (ft_strerror(NULL, pipe_cmd->cmd[pipe_cmd->i], NULL, NULL));
-	pipe_cmd->cmd[pipe_cmd->i] = new_cmd.arg;
-	free_tab(tmp);
-	return (1);
-}
 
 void	free_and_exit(t_pipe_cmd *pipe_cmd, t_cmd *cmd, int exit_code)
 {

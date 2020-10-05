@@ -27,6 +27,7 @@ SRC_NAME	=	builtins/builtins_nametab.c 				\
 				parsing/cleanup/cleanup_var.c				\
 				parsing/cleanup/cleanup_gret.c				\
 				parsing/cleanup/cleanup_var_space.c			\
+				parsing/cleanup/cleanup_var_space_2.c		\
 				parsing/cleanup/cleanup_bs_quote.c			\
 				parsing/utils/is_funcs/is_funcs_1.c			\
 				parsing/utils/is_funcs/is_funcs_2.c			\

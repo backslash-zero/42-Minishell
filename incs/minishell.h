@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:35:56 by rzafari           #+#    #+#             */
-/*   Updated: 2020/10/05 03:17:57 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 15:33:06 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void			free_tab(char **tab);
 void			free_tab_3d(char ***tab);
 void			free_tmp_tab(char **tofree);
 void			assign_and_free(char **newstr, char **oldstr);
-void			assign_and_free_3(char ***newtab, char ***oldtab);
 void			ft_strncpy(char *dest, char *src, int len);
 int				arg_len(char **arg);
 int				ft_exec(char **arg_list, t_cmd *cmd);

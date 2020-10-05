@@ -6,7 +6,7 @@
 /*   By: celestin <celestin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 14:30:06 by rzafari           #+#    #+#             */
-/*   Updated: 2020/10/05 03:24:05 by celestin         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:04:36 by celestin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int				expand_env(t_parsing_tool *tool, int tab_i);
 int				check_var(char **arg_list);
 
 int				check_space_var(t_cmd *cmd);
+int				create_new_arg_space(char **new_arg,
+				char **arg, char **split, int i);
 
 int				replace_g_ret(char **arg_list, int i);
 int				check_g_ret_var(char **arg_list);
